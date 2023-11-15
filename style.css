@@ -81,6 +81,10 @@ element.style {
     font-size: 0.9rem;
 }
 
+.btnShowMenu, .btnShowMenu:hover, .btnShowMenu:active {
+    color: #C5831A;
+}
+
 .cardCategoria {
     border: 2px solid #C5831A;
     color: black;
@@ -108,7 +112,12 @@ element.style {
 .fade-enter, .fade-leave-to {
     opacity: 0
 }
-
+.fade {
+    transition: opacity .15s linear;
+}
+.fade:not(.show) {
+    opacity: 0;
+}
 body {
     overflow-x: hidden;
     background-color:#FAFAFA;
@@ -120,7 +129,15 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
+.navbar-brand {
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
 p {
     margin-bottom:5px;
 }
@@ -199,10 +216,10 @@ input[type=number] {
 }
 
 .header {
-    display:flex;
-    background-color:#fefefe;
-    text-align:center;
-    justify-content:center;
+    display: flex;
+    background-color: #000;
+    text-align: center;
+    justify-content: center;
 }
 
 .infosEstabecimento {
@@ -310,6 +327,17 @@ input[type=number] {
     border-radius: 50%;
     -webkit-animation: spinner-border .75s linear infinite;
     animation: spinner-border .75s linear infinite;
+}
+.detalheProduto {
+    width: 100%;
+    height: 100%;
+    /* background-color: white; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px;
+    padding: 1em;
 }
 .produtoContainer img {
     height: 8em;
@@ -771,6 +799,11 @@ div.scrollmenu a:hover {
     font-weight:bold;
 }
 
+.textHeader {
+    color: #FFFFFF;
+    font-weight:bold;
+}
+
 .text-center {
     text-align: center!important;
 }
@@ -792,4 +825,6 @@ ul {
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 0.25rem;
 }
-
+*, ::after, ::before {
+    box-sizing: border-box;
+}
