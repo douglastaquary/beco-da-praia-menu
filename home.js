@@ -131,14 +131,12 @@ menu.forEach(m => {
                 {
                     box.classList.remove('d-none')
                 }
-                
             }
             else if(e.target.innerHTML==='Lunch'){
                 if(box.classList.contains('Lunch'))
                 {
                     box.classList.remove('d-none')
                 }
-                
             }
             else if(e.target.innerHTML==='Entradas'){
                 if(box.classList.contains('Entradas'))
@@ -158,3 +156,18 @@ menu.forEach(m => {
         
     })
 })
+
+
+$(function(){
+    $('body').on('click','div.divCardProduto',function(){
+      var list = $(this);
+      var data=list.html();
+       $('#imagemAmpliada .modal-title').html('User Information');
+      $('#imagemAmpliada .modal-body').html(data);
+      $('#imagemAmpliada .modal-body p').removeClass('hidden');
+      $('.modalTrigger').trigger('click');;
+      
+    });
+    
+    
+  });
