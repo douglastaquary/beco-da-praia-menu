@@ -8,6 +8,12 @@
       src: url('../../fonts/MADE-TOMMY.ttf') format('truetype');
     } */
     
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+    .opensans {
+      font-family: "Open Sans", sans-serif;
+    }
+
     body {
         overflow-x: hidden;
         background-color:#FAFAFA;
@@ -667,6 +673,7 @@
 
     .imagemProduto {
       cursor:pointer;
+      border-radius: 12px;
     }
 
     .ImageCropperCarrinho {
