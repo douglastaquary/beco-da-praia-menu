@@ -1,0 +1,40 @@
+<app-top-bar></app-top-bar>
+<div >
+  <div class="card">
+    <div class="mainCard">
+      <div class="produtos text-center">
+        <div *ngFor="let product of products">
+          <div id="tituloGrupo4451" class="subtituloGrupos"></div>
+          <div *ngIf="product" class="produtoContainer" [routerLink]="['/products', product.id]">
+            <div class="container_foto">
+              <picture>
+              <img loading="lazy" src="./assets/images/{{product.image_name}}" class="imagemProduto"
+                style="box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;">
+              </picture>
+            </div>
+            
+            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+              <p class="titulo_produto">{{product?.name}}</p>
+              <p class="threeDots" style="font-size: 0.8em; text-align: left;">{{product?.description}}</p> <!---->
+              <div style="display: flex; flex-direction: row; align-items: center;"><!---->
+                <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">
+                  <span>{{product?.price | currency }}</span>
+                </p>
+              </div>
+              <div style="display: flex; flex-flow: wrap; align-items: center; margin: 5px 0px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <product-component [routerLink]="['/products', product.id]"> {{ product.name }}>
+    {{product}}
+  </product-component>
+  <button type="button" (click)="share()">
+    Saber mais
+  </button> -->

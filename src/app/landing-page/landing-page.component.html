@@ -1,0 +1,63 @@
+<div class="container_banner">
+    <div>
+        <div>
+            <a [routerLink]="['/products']" class="button" >CLIQUE AQUI E VEJA O CARDÁPIO</a>
+        </div>
+        <div *ngFor="let banner of banners">
+            <img class="banner" src="{{banner.image_path}}" alt="Banner">
+        </div>
+    </div>
+</div>
+
+<!-- <app-modal id="modal-landing" class="modal-landing" [preventOutsideClickClose]="true">
+	<div class="modal-landing__section">
+		<tag-loading *ngIf=""
+			class="loading"
+			[ngStyle]="{
+				width: '100px',
+				height: '100px'
+			}"
+		></tag-loading>
+
+		<h2 class="modal-landing__section__header">
+			{{ liveMenuSettingsLanding?.title }}
+		</h2>
+
+		<p class="modal-landing__section__description">
+			{{ liveMenuSettingsLanding?.subtitle }}
+		</p>
+
+		<tg-button
+			type="outline-main"
+			(click)="closeLanding()"
+			class="modal-landing__section__button"
+			text="{{ 'clickAndSeeMenu' | translate }}"
+			customStyles="
+				width: 75%;
+				padding: 10px 0;
+				margin-bottom: 20px;
+				border: 1px solid white;
+				background-color: white;
+				color: var(--primary-color);
+				box-shadow: 2px 2px 3px #777;
+				border-radius: var(--rounded-tagme-buttons);
+			"
+		></tg-button>
+
+		<div class="modal-landing__images" *ngFor="let image of images">
+			<img
+				class="modal-landing__images__image"
+				[src]="image"
+				alt="{{ 'welcome' | translate }}"
+				width="100%"
+				height="100%"
+				[ngClass]="{
+					loading: !isLoaded,
+					loaded: isLoaded
+				}"
+				(load)="stopLoading()"
+			/>
+		</div>
+	</div>
+</app-modal> -->
+

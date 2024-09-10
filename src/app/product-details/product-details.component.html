@@ -1,0 +1,36 @@
+
+<button _ngcontent-efc-c98="" icon="back" iconposition="left" color="var(--primary-color)" type="button" class="menu-item__back-button" _nghost-efc-c33="">
+  <a _ngcontent-efc-c33="" class="link link--button" style="border-color: var(--border-color); border-radius: var(--rounded-tagme-buttons); font-size: var(--font-size-sm); line-height: var(--line-height-sm); color: var(--primary-color);">
+      <span _ngcontent-efc-c31="" class="icon">
+        <svg  href="javascript:void(0)" (click)="goBack()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <polyline points="10 5 3 12 10 19" fill="none" stroke="#000" stroke-miterlimit="10"/><line x1="3" y1="12" x2="22" y2="12" fill="none" stroke="#000" stroke-miterlimit="10"/>
+        </svg>
+      </span>
+     Voltar
+  </a>
+</button>
+  
+  <div>
+    <div *ngIf="product">
+      <div>
+        <img _ngcontent-efc-c98="" class="menu-item__image" alt="Bloomin’ Onion" src="../../assets/images/{{product.image_name}}">
+      </div>
+      <h3>{{ product.name }}</h3>
+      <h4>{{ product.price | currency }}</h4>
+      <p>{{ product.description }}</p>
+    </div>
+    <section _ngcontent-efc-c98="" class="menu-item__features">
+      <div _ngcontent-efc-c98="" class="menu-item__features__row">
+        <img _ngcontent-efc-c98="" class="menu-item__features__row__icon menu-item__features__row__icon--custom_tag" src="//tagmeimages.azureedge.net?q=80&amp;w=24&amp;h=24&amp;url=https://tagmepub.blob.core.windows.net/pubimg/Feature/d0900c70-4d4b-11ec-8e30-9dfa39acf470.png&amp;output=png&amp;dpr=2" alt="Contém Glúten"><!---->
+        <p _ngcontent-efc-c98="">Contém Glúten</p>
+      </div>
+      <div _ngcontent-efc-c98="" class="menu-item__features__row"><!---->
+        <img _ngcontent-efc-c98="" class="menu-item__features__row__icon menu-item__features__row__icon--custom_tag" src="//tagmeimages.azureedge.net?q=80&amp;w=24&amp;h=24&amp;url=https://tagmepub.blob.core.windows.net/pubimg/Feature/e4d89d50-4d4b-11ec-b76b-97c0ab1dd728.png&amp;output=png&amp;dpr=2" alt="Contém Lactose"><!---->
+        <p _ngcontent-efc-c98="">Contém Lactose</p>
+      </div>
+      <div _ngcontent-efc-c98="" class="menu-item__features__row"><!---->
+        <img _ngcontent-efc-c98="" class="menu-item__features__row__icon menu-item__features__row__icon--custom_tag" src="//tagmeimages.azureedge.net?q=80&amp;w=24&amp;h=24&amp;url=https://tagmepub.blob.core.windows.net/pubimg/Feature/098a3af0-4d4c-11ec-8230-1749c7f44129.png&amp;output=png&amp;dpr=2" alt="Vegetariano"><!---->
+        <p _ngcontent-efc-c98="">Vegetariano</p>
+      </div><!---->
+    </section>
+  </div>
