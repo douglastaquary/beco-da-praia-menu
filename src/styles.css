@@ -1,5 +1,5 @@
 * {
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: "Open Sans", sans-serif;
   color: #616161;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -8,7 +8,7 @@
 
 body {
   overflow-x: hidden;
-  background-color: #fafafa;
+  background-color: #f5f2ea;
 }
 
 .banner {
@@ -19,35 +19,11 @@ body {
   border-radius: 18px;
 }
 
-.container {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 router-outlet + * {
   padding: 0 16px;
 }
 
 /* Text */
-
-h1 {
-  font-size: 32px;
-}
-
-h2 {
-  font-size: 20px;
-}
-
-h1,
-h2 {
-  font-weight: lighter;
-}
-
-p {
-  font-size: 14px;
-}
 
 /* Hyperlink */
 
@@ -165,18 +141,19 @@ app-top-bar h1 {
   flex-direction: column;
 }
 
-@media (min-width: 768px) {
-  .mainContainer {
-    max-width: 720px;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-  }
+
+h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
 }
 
-@media (min-width: 992px) {
-  .mainContainer {
-    max-width: 975px;
-  }
+.menu__categories {
+  margin: 0 10px;
+  border-radius: 4px 4px 0 0;
 }
