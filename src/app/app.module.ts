@@ -8,6 +8,10 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -18,7 +22,12 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
       { path: '', component: LandingPageComponent },
       { path: 'products', component: ProductListComponent },
       { path: 'products/:productId', component: ProductDetailsComponent },
-    ])
+    ]),
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatTabsModule
+
   ],
   declarations: [
     AppComponent,

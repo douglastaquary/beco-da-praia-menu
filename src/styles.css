@@ -11,6 +11,35 @@ body {
   background-color: #f5f2ea;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
+}
+
+a {
+  display: block;
+  font-size: 1.2em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  background-color: #e4dfd0;
+  text-decoration: none; 
+}
+
+h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+
 .banner {
   width: 292px;
   height: 476px;
@@ -21,20 +50,6 @@ body {
 
 router-outlet + * {
   padding: 0 16px;
-}
-
-/* Text */
-
-/* Hyperlink */
-
-a {
-  cursor: pointer;
-  color: #1976d2;
-  text-decoration: none;
-}
-
-a:hover {
-  opacity: 0.8;
 }
 
 /* Input */
@@ -81,66 +96,20 @@ app-modal {
 /* Top Bar */
 
 app-top-bar {
-  width: 100%;
-  height: 68px;
-  background-color: #ffffff;
-  padding: 16px;
+  background-color: #f5f2ea;;
+  height: 48px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  
+  position: -webkit-sticky;
+  position: sticky;
+  top: 4;
+  z-index: 3;
+  margin: -10px 30px -10px;
+  width: 100%;
 }
 
-app-top-bar h1 {
-  color: white;
-  margin: 0;
-}
 
 /* Checkout Cart, Shipping Prices */
-
-.cart-item,
-.shipping-item {
-  width: 100%;
-  min-width: 400px;
-  max-width: 450px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 16px 32px;
-  margin-bottom: 8px;
-  border-radius: 2px;
-  background-color: #eeeeee;
-}
-
-#vid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  width: 95px;
-  height: 60px;
-  background-color: #ffff;
-  border: none;
-  font-size: 13px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-#h5-text-vid {
-  border: solid 1px black;
-  border-radius: 25px;
-  padding: 3px;
-  font-size: 6pt;
-  font-weight: 800;
-}
-
-.mainContainer {
-  background-color: #fafafa;
-  width: 100%;
-  min-height: 43em;
-  display: flex;
-  flex-direction: column;
-}
-
 
 h2 {
   display: block;

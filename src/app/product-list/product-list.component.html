@@ -1,5 +1,4 @@
-<!-- <app-top-bar></app-top-bar><div> -->
-  <!-- <div class="menus">
+<!-- <div class="menus">
     <ul>
       <li class="menus__items" title="Excutivos">
         <img _ngcontent-efc-c90="" width="225" loading="lazy" alt="Menu Principal" src="//tagmeimages.azureedge.net/?q=70&amp;url=https://tagmepub.azureedge.net/pubimg/Menu/f22ac7f0-4d5d-11ec-b0ce-9b18a8f9dc4c.jpg&amp;output=jpg">
@@ -7,12 +6,12 @@
       <li class="menus__items" title="Sobremesa"></li>
     </ul>
   </div> -->
-  <!-- <div _ngcontent-efc-c90="" class="limitTextHeight">
+<!-- <div _ngcontent-efc-c90="" class="limitTextHeight">
     <span _ngcontent-efc-c90="" class="menu-description">
       Sabia que aqui no Outback é você quem monta o seu almoço por um preço fixo? É só escolher! Válido de segunda a sexta-feira das 12h às 15h (exceto feriados e pontos facultativos).
     </span>
   </div> -->
-  <!-- <div class="menu__bar">
+<!-- <div class="menu__bar">
       <nav _ngcontent-efc-c35="" class="nav">
         <div _ngcontent-efc-c35="" class="nav__item nav__item--default nav__item--default--active">Entradas</div><div _ngcontent-efc-c35="" class="nav__item nav__item--default">
           Prato Principal R$ 49,90
@@ -29,11 +28,11 @@
         <div _ngcontent-efc-c35="" class="nav__item nav__item--default" style="border-top-color: ; border-right-color: ; border-left-color: ;">
           E complete com a sobremesa
         </div><!---->
-      <!-- </nav> -->
-    
+<!-- </nav> -->
 
-  <!-- </div> -->
-  <!-- <div class="card">
+
+<!-- </div> -->
+<!-- <div class="card">
     <div class="mainCard">
       <div class="produtos text-center">
         <div *ngFor="let product of products">
@@ -49,8 +48,8 @@
             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
               <p class="titulo_produto">{{product?.name}}</p>
               <p class="threeDots" style="font-size: 0.8em; text-align: left;">{{product?.description}}</p> <!---->
-              <!-- <div style="display: flex; flex-direction: row; align-items: center;"><!---->
-                <!-- <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">
+<!-- <div style="display: flex; flex-direction: row; align-items: center;"><!---->
+<!-- <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">
                   <span>{{product?.price | currency }}</span>
                 </p>
               </div>
@@ -71,26 +70,36 @@
   <button type="button" (click)="share()">
     Saber mais
   </button> -->
-  <div class="menu__bar">
-    <div class="menu__categories">
-      <!-- <mat-tab-group>
-        <mat-tab label="First"> Content 1 </mat-tab>
-        <mat-tab label="Second"> Content 2 </mat-tab>
-        <mat-tab label="Third"> Content 3 </mat-tab>
-      </mat-tab-group> -->
-    </div>
-  </div>
+<!-- <div>
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Pratos feitos">Content 1</mat-tab>
+      <mat-tab label="Nordestino">Content 2</mat-tab>
+      <mat-tab label="Tábuas">Content 3</mat-tab>
+    </mat-tab-group>
+  </div> -->
+<!-- <app-top-bar></app-top-bar> -->
+<ul style="padding-left: 0;">
+  <img style="padding-left: 0;padding-right: 0;"
+  src="//tagmeimages.azureedge.net/?q=70&amp;url=https://tagmepub.azureedge.net/pubimg/thumbs/admin/theme/d576a0b0-92a3-11ee-924a-0f869b0d3d63.jpg&amp;output=jpg"
+  alt="">
+  
   <div class="menu__list">
+    <div class="menu__category__header">
+      <a>Pratos feitos</a>
+    </div>
     <div *ngFor="let product of products">
       <div class="app-menu-item app-menu-item-container" [routerLink]="['/products', product.id]">
         <h3 class="menu_item__title">{{product?.name}}</h3>
         <div class="menu_item__descript">{{product?.description}}</div>
         <h2 class="menu_item__price">R$ {{product?.price}}</h2>
         <div class="menu_item__image_container container_list_base">
-          <img width="80" height="80" loading="lazy" class="menu_item__image_container__image menu_item__image_container__image--dish" src="./assets/images/{{product.image_name}}" alt="">
+          <img width="80" height="80" loading="lazy"
+            class="menu_item__image_container__image menu_item__image_container__image--dish"
+            src="./assets/images/{{product.image_name}}" alt="">
           <!-- <img _ngcontent-mpd-c54="" loading="lazy" class="menu_item__features__row__icon menu_item__features__row__icon--custom_tag" src="//tagmeimages.azureedge.net?q=80&amp;w=24&amp;h=24&amp;url=https://tagmepub.blob.core.windows.net/pubimg/Feature/e4d89d50-4d4b-11ec-b76b-97c0ab1dd728.png&amp;output=png&amp;dpr=2" alt="Contém Lactose"> -->
         </div>
         <h2 class="read_more" [routerLink]="['/products', product.id]">Saiba mais</h2>
       </div>
     </div>
   </div>
+</ul>
