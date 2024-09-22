@@ -79,19 +79,19 @@
   </div> -->
 <!-- <app-top-bar></app-top-bar> -->
 <ul style="padding-left: 0;">
-  <img style="padding-left: 0;padding-right: 0;"
-  src="//tagmeimages.azureedge.net/?q=70&amp;url=https://tagmepub.azureedge.net/pubimg/thumbs/admin/theme/d576a0b0-92a3-11ee-924a-0f869b0d3d63.jpg&amp;output=jpg"
-  alt="">
-  
+  <img style="padding-left: 0;padding-right: 0;" src="//tagmeimages.azureedge.net/?q=70&amp;url=https://tagmepub.azureedge.net/pubimg/thumbs/admin/theme/d576a0b0-92a3-11ee-924a-0f869b0d3d63.jpg&amp;output=jpg" alt="">
   <div class="menu__list">
-    <div class="menu__category__header">
-      <a>Pratos feitos</a>
+    <div>
+      <a>
+        Pratos feitos
+        <div class="descript__category">Pratos executivos servidos mais com uma boa quantidade e vale muito a pena comer no beco da praia.</div>
+      </a>
     </div>
     <div *ngFor="let product of products">
       <div class="app-menu-item app-menu-item-container" [routerLink]="['/products', product.id]">
         <h3 class="menu_item__title">{{product?.name}}</h3>
         <div class="menu_item__descript">{{product?.description}}</div>
-        <h2 class="menu_item__price">R$ {{product?.price}}</h2>
+        <h2 class="menu_item__price">R$ {{product?.price}},00</h2>
         <div class="menu_item__image_container container_list_base">
           <img width="80" height="80" loading="lazy"
             class="menu_item__image_container__image menu_item__image_container__image--dish"

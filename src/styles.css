@@ -19,19 +19,23 @@ body {
 
 a {
   display: block;
-  font-size: 1.2em;
+  line-height: 1.125rem;
+  font-size: .875rem;
   margin-block-start: 0.83em;
   margin-block-end: 0.83em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  font-weight: bold;
+  padding-bottom: 10px;
+  padding-left: 6px;
+  font-weight: 600;
+  color: #30323b;
   background-color: #e4dfd0;
   text-decoration: none; 
 }
 
 h3 {
   display: block;
-  font-size: 1.17em;
+  font-size: 1rem;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;
@@ -68,24 +72,6 @@ label {
   margin-bottom: 4px;
   display: block;
   text-transform: uppercase;
-}
-
-/* Button */
-.button,
-button {
-  margin-top: 78px;
-  margin-bottom: 24px;
-}
-/* Fancy Button */
-
-.fancy-button {
-  background-color: white;
-  color: #1976d2;
-}
-
-.fancy-button i.material-icons {
-  color: #1976d2;
-  padding-right: 4px;
 }
 
 /* Modal v2 styles */

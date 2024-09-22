@@ -115,6 +115,13 @@ a.mat-stroked-button .mat-icon {
   border-radius: 4px 4px 0 0;
 }
 
+.menu__category__header {
+  display: block;
+  margin: 0 10px 10px;
+  color: #e4dfd0;
+  height: 24px;
+}
+
 .nav[_ngcontent-efc-c35] {
   display: flex;
   height: 100%;
@@ -153,32 +160,51 @@ body {
 
 .menu_item__title {
   display: block;
-  font-size: 1.17em;
-  line-height: var(--line-height-base) !important;
+  font-size: 1rem;
+  line-height: 1.5rem;
   font-weight: 600;
   margin-bottom: 4px;
-  color: var(--heading-color);
+  color: #30323B;
 }
 
 .menu_item__descript {
   overflow: hidden;
+  font-family: sans-serif;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   margin-bottom: 10px;
   grid-area: desc;
-  max-height: 45px;
-  color: var(--paragraph-color);
+  color: #30323B;
+  font-size: .875rem;
+  font-weight: 300;
+  
+}
+
+.descript__category {
+  overflow: hidden;
+  font-family: sans-serif;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  grid-area: desc;
+  color: #30323B;
+  font-size: .875rem;
+  font-weight: 300;
+  
 }
 
 .menu_item__price {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  font-size: var(--font-size-sm) !important;
-  line-height: var(--line-height-sm) !important;
-  color: var(--price-color);
+  font-size: .875rem;
+  line-height: 1.125rem;
+  color: #30323B;
   margin-top: 4px;
   margin-bottom: 4px;
 }
@@ -236,17 +262,19 @@ body {
       "features img"
       "price img";
   grid-template-columns: 1fr 100px;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .read_more {
   color: #f96436;
-  font-size: var(--font-size-base) !important;
-  line-height: var(--line-height-base) !important;
-  font-weight: 600;
+  line-height: 1.5;
+  font-weight: 300;
   margin-top: 4px;
   margin-bottom: 4px;
+  font-weight: bold;
   display: block;
-  font-size: 1.5em;
+  font-size: .875rem;
 }
 
 .menu__categories {
