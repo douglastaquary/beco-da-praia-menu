@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Product, products } from '../products';
-import { MatIconModule } from '@angular/material/icon';
+import { Product } from '../common/product';
+import { categories } from '../common/categories';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class ProductDetailsComponent implements OnInit {
     const productIdFromRoute = Number(routeParams.get('productId'));
   
     // Find the product that correspond with the id provided in route.
-    this.product = products.find(product => product.id === productIdFromRoute);
+    //this.product = products.find(product => product.id === productIdFromRoute);
   }
 
 

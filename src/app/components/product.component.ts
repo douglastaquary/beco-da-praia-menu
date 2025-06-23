@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Product } from '../products';
+import { Product } from '../common/product';
 
 @Component({
   selector: 'product-component',
