@@ -20,31 +20,59 @@
 
 <body>
     <div id="app" class="mainContainer">
-        <div class="infosEstabecimento">
-            <img src="images/header_beco_da_praia.png" alt="Banner" class="FotoBanner">
-            <!-- <img src="./images/beco_logo.png" alt="Foto Perfil" class="FotoPerfilEstabelecimento">  -->
-            <div class="divRow" style="padding: 0px 15px; margin-bottom: -30px;">
-                <img src="images/logo-beco-bg-black.png" alt="Foto Perfil" class="FotoPerfilEstabelecimento">
-                <div class="divColumn1" style="margin-left: 1em; margin-top: -40px;">
-                    <p class="threeDots2"
-                        style="font-weight: bold; font-size: 1.1em; margin-bottom: 0em; margin-top: 8px;">Beco da Praia
-                    </p>
-                    <span>Culinária Nordestina🌵🥩</span>
-                    <div class="divRow">
-                        <a href="https://www.dguests.com/Oxebar" target="_blank"
-                            style="margin-right: 12px; font-size: 1.3em;">
-                            <svg class="svg-inline--fa fa-home fa-w-18 colorGray" aria-hidden="true" focusable="false"
-                                data-prefix="fas" data-icon="home" role="img" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 576 512" data-fa-i2svg>
-                                <path fill="currentColor"
-                                    d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z">
-                                </path>
-                            </svg>
-                        </a>
-                    </div>
+        <!-- Página inicial -->
+        <section id="pagina-inicial" class="pagina-inicial">
+            <header class="header-beco">
+                <div class="header-beco-bg" style="background-image: url('images/header_beco_da_praia.png');"></div>
+                <div class="header-beco-overlay"></div>
+                <div class="header-beco-conteudo">
+                    <img src="images/logo-beco-bg-black.png" alt="Beco da Praia" class="header-beco-logo">
+                    <h1 class="header-beco-nome">Beco da Praia</h1>
+                    <p class="header-beco-subtitulo">Culinária Nordestina <span class="header-beco-emoji">🌵🥩</span></p>
+                </div>
+            </header>
+            <div class="pagina-inicial-conteudo">
+                <div class="pagina-inicial-botoes">
+                    <button type="button" id="btn-cardapio" class="btn-inicial btn-primario">Cardápio Online</button>
+                    <a href="https://wa.me/5513981267849" target="_blank" class="btn-inicial btn-secundario">Reservar Mesa</a>
+                    <a href="https://maps.google.com/?q=Av.+Siqueira+Campos,+606+-+Boqueirão,+Santos+-+SP" target="_blank" class="btn-inicial btn-secundario">Localização</a>
+                </div>
+                <div class="pagina-inicial-secao">
+                    <h3>Descrição</h3>
+                    <p>Um cantinho pra lá de arretado com o melhor da culinária nordestina! Cerveja gelada, pratos saborosos e aquele acolhimento que só o sertão sabe dar. 🌵</p>
+                </div>
+                <div class="pagina-inicial-secao">
+                    <h3>Horário de Funcionamento</h3>
+                    <p class="horario-item">Segunda-feira: 12:00 às 18:00</p>
+                    <p class="horario-item">Quinta-feira: 12:00 às 18:00</p>
+                    <p class="horario-item">Sexta-feira: 18:00 às 23:00</p>
+                    <p class="horario-item">Sábado: 12:00 às 22:00</p>
+                    <p class="horario-item">Domingo: 12:00 às 18:00</p>
+                </div>
+                <div class="pagina-inicial-secao">
+                    <h3>Formas de Pagamento</h3>
+                    <p>Dinheiro • Cartão de crédito • Cartão de débito • Pix </p>
+                </div>
+                <div class="pagina-inicial-secao">
+                    <h3>Localização</h3>
+                    <p>Av. Vicente de Carvalho, 763 - Centro, Bertioga - SP</p>
+                    <a href="https://maps.google.com/?q=Av.+Vicente+de+Carvalho,+763+-+Centro,+Bertioga+-+SP" target="_blank" class="link-mapa">Mostrar no mapa</a>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Página do cardápio -->
+        <section id="pagina-cardapio" class="pagina-cardapio" style="display: none;">
+            <header class="header-beco header-cardapio">
+                <div class="header-beco-bg" style="background-image: url('images/header_beco_da_praia.png');"></div>
+                <div class="header-beco-overlay"></div>
+                <button type="button" id="btn-voltar" class="header-voltar" aria-label="Voltar">← Voltar</button>
+                <div class="header-beco-conteudo">
+                    <img src="images/logo-beco-bg-black.png" alt="Beco da Praia" class="header-beco-logo">
+                    <h1 class="header-beco-nome">Beco da Praia</h1>
+                    <p class="header-beco-subtitulo">Culinária Nordestina <span class="header-beco-emoji">🌵🥩</span></p>
+                </div>
+            </header>
         <div class="card">
             <div class="mainCard">
                 <div class="menuMobile">
@@ -139,7 +167,7 @@
                                 <picture>
                                     <source srcset="images/casquinha-de-siri.jpg" type="image/webp">
                                     <source srcset="images/casquinha-de-siri.jpg" type="image/jpeg">
-                                    <img loading="lazy" alt="Imagem Produto" src="images/images/casquinha-de-siri.jpg"
+                                    <img loading="lazy" alt="Imagem Produto" src="images/casquinha-de-siri.jpg"
                                         class="imagemProduto"
                                         style="box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;">
                                 </picture> <!---->
@@ -390,7 +418,7 @@
                                 <picture>
                                     <source srcset="images/arrumadinho-gpt.png" type="image/webp">
                                     <source srcset="images/arrumadinho-gpt.png" type="image/png"> <img loading="lazy"
-                                        alt="Imagem Produto" src="arrumadinho-gpt.png" class="imagemProduto"
+                                        alt="Imagem Produto" src="images/arrumadinho-gpt.png" class="imagemProduto"
                                         style="box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;">
                                 </picture> <!---->
                             </div>
@@ -2258,15 +2286,105 @@
                             </div>
 
                         </div>
-                        <script>
-                            $(document).on('click', 'a', function (event) {
-                                event.preventDefault();
+            </div>
+        </section>
+                <!-- Modal de detalhe do prato -->
+                <div id="modalPrato" class="modal-prato" aria-hidden="true">
+                    <div class="modal-prato-conteudo modal-prato-wrap">
+                        <button class="modal-prato-fechar" onclick="fecharModalPrato()" aria-label="Fechar">&times;</button>
+                        <img id="modalPratoImg" class="modal-prato-imagem" src="" alt="">
+                        <div class="modal-prato-body">
+                            <h2 id="modalPratoTitulo" class="modal-prato-titulo"></h2>
+                            <p id="modalPratoDescricao" class="modal-prato-descricao"></p>
+                            <div id="modalPratoPrecos" class="modal-prato-precos"></div>
+                        </div>
+                    </div>
+                </div>
 
-                                $('html, body').animate({
-                                    scrollTop: $($.attr(this, 'href')).offset().top
-                                }, 1000);
-                            });
-                        </script>
+                <script>
+                    // Navegação entre página inicial e cardápio
+                    document.getElementById('btn-cardapio').addEventListener('click', function() {
+                        document.getElementById('pagina-inicial').style.display = 'none';
+                        document.getElementById('pagina-cardapio').style.display = 'block';
+                        document.body.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
+                    });
+                    document.getElementById('btn-voltar').addEventListener('click', function() {
+                        document.getElementById('pagina-cardapio').style.display = 'none';
+                        document.getElementById('pagina-inicial').style.display = 'block';
+                        document.body.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
+                    });
+
+                    // Scroll suave para categorias
+                    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                        anchor.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const target = document.querySelector(this.getAttribute('href'));
+                            if (target) target.scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
+
+                    // Modal de detalhe - ao clicar no produto
+                    document.querySelectorAll('.produtoContainer').forEach(container => {
+                        container.addEventListener('click', function(e) {
+                            if (e.target.closest('a')) return;
+                            const imgEl = this.querySelector('.container_foto img, picture img');
+                            const titulo = this.querySelector('.listaProdutoTitulo');
+                            const descricao = this.querySelector('.threeDots');
+                            const precoDivs = this.querySelectorAll('.divCardProduto > div[style*="flex-direction: row"] p, .divCardProduto > div[style*="display: flex"] p');
+
+                            const modal = document.getElementById('modalPrato');
+                            const modalImg = document.getElementById('modalPratoImg');
+                            const modalTitulo = document.getElementById('modalPratoTitulo');
+                            const modalDescricao = document.getElementById('modalPratoDescricao');
+                            const modalPrecos = document.getElementById('modalPratoPrecos');
+
+                            if (imgEl && imgEl.tagName === 'IMG') {
+                                const imgSrc = imgEl.currentSrc || imgEl.getAttribute('src') || imgEl.src;
+                                modalImg.src = imgSrc || '';
+                                modalImg.style.display = imgSrc ? 'block' : 'none';
+                            } else {
+                                modalImg.src = '';
+                                modalImg.style.display = 'none';
+                            }
+                            if (titulo) modalTitulo.textContent = titulo.textContent.trim();
+                            if (descricao) modalDescricao.textContent = descricao.textContent.trim();
+                            else modalDescricao.textContent = '';
+
+                            modalPrecos.innerHTML = '';
+                            const precosUnicos = new Set();
+                            const divCard = container.querySelector('.divCardProduto');
+                            if (divCard) {
+                                divCard.querySelectorAll('p, span').forEach(el => {
+                                    const texto = el.textContent.trim();
+                                    if (texto && texto.includes('R$') && !precosUnicos.has(texto) && !el.classList.contains('listaProdutoTitulo')) {
+                                        precosUnicos.add(texto);
+                                        const span = document.createElement('div');
+                                        span.className = 'modal-prato-preco';
+                                        span.textContent = texto;
+                                        modalPrecos.appendChild(span);
+                                    }
+                                });
+                            }
+
+                            modal.classList.add('ativo');
+                            document.body.style.overflow = 'hidden';
+                        });
+                    });
+
+                    function fecharModalPrato() {
+                        document.getElementById('modalPrato').classList.remove('ativo');
+                        document.body.style.overflow = '';
+                    }
+
+                    document.getElementById('modalPrato').addEventListener('click', function(e) {
+                        if (e.target === this) fecharModalPrato();
+                    });
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') fecharModalPrato();
+                    });
+                </script>
 </body>
 
 </html>
