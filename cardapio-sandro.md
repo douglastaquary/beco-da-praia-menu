@@ -5,20 +5,11 @@
 | Nome | Valor |
 |------|-------|
 | Dadinhos de tapioca com geleia de pimenta | R$ 27,00 |
-| Caldinho de feijão | R$ 15,00 | 
-| Pastelzinho do Beco (Calabresa, pizza, geleia de pimenta com queijo, queijo) | UNID: R$ 9,00 | Duplinha: R$ 16,00 | PORÇÃO 4 UNID: R$ 35,00 |
-| Torresmo | UNID: R$12,00 / Duplinha: R$ 16,90 / Porção 500g: R$ 42,00 |
+| Pastelzinho do Beco | UNID: R$ 8,90 |
+| Torresmo | UNID: R$10,00 / Duplinha: R$ 18,00 / Porção 500g: R$ 42,00 |
 | Queijo coalho com mel | R$ 19,90 | 
-| Batata frita tradicional | R$ 32,00 |
+| Batata frita tradicional | R$ 35,00 |
 
-## Bolinhos (Novidades)
-
-| Nome | Valor |
-|------|-------|
-| Bolinho de muqueca | R$ ?? |
-| Bolinho de costela | R$ ?? | Vamos testar | 
-| Bolinho de siri | R$ ?? |
-| Bolinho de batata c queijo| R$ ??|
 
 ## Mais pedidos no Beco
 
@@ -27,20 +18,6 @@
 | Baiao de dois do Beco (Serve até 3 pessoas) | R$ 87,00 |
 | Trio Nordestino (Serve 2 pessoas) | R$ 99,90 |
 | Arrumadinho do Beco (Serve 2 pessoas) | R$ 59,90 |
-| Carne de Sol na telha (maria isabel, queijo coalho, mandioca frita/batata, carne de sol acebolada e molhos: vinagrete, farofa, molho da casa) (Serve 2 pessoas) | R$ 110,00 |
-
-## Pratos individuais (Executivos)
-
-| Nome | Valor |
-|------|-------|
-| Porção de Mocotó | Com arroz: R$ 32,00 / Sem arroz: R$ 24,90 | 🔴 (Por dia) obs: Com osso ou sem osso
-| Dobradinha com arroz | Com arroz: R$ 35,00 / Sem arroz: R$ 26,90,00 | 🔴 (Por dia)
-
-| Executivo de baiao de dois | R$ 29,90 | Adicional de ovo: R$ 6,00 | Adicional: triozinho de mandioca: R$ 6,90, 150g de carne de sol: R$ 15,00 |
-| Executivo de carne de sol | R$ 44,00 |
-| Peixe com molho de camarão | R$ 45,00 |
-| Carne sertaneja| R$ |
-| Peixe | Crocante: R$ 40,00 | Grelhado: R$ 39,00 |
 
 ## Porções com mandioca ou fritas
 
@@ -82,7 +59,6 @@
 
 | Nome | Valor |
 |------|-------|
-| Caju Amigo | Cachaça: R$ 35,00 / Vodka: R$ 39,90 / Saquê: R$ 37,00 |
 | Rapadura | Cachaça: R$ 32,00 / Vodka: R$ 37,00 / Saquê: R$ 35,00 |
 | Goiabada com limão | Cachaça: R$ 34,00 / Vodka: R$ 39,00 / Saquê: R$ 35,00 |
 | Manga com pimenta | Cachaça: R$ 33,90 / Vodka: R$ 39,00 / Saquê: R$ 35,00 |
@@ -113,16 +89,6 @@
 | Laranja com morango | R$ 17,90 |
 | Morango | R$ 15,00 |
 
-## Drinks (Gin & Tônica)
-
-| Nome | Valor |
-|------|-------|
-| Gin eternity com gelo de coco | R$ |
-| Gin e tônica| Nacional: R$ 35,00 | Importado: R$ 45 / Sabores: Morango, maça verde e limão siciliano |
-| Copao de gin com energetico| Gelo de coco: R$ 27,00 | gelo normal: 24,90 |
-| Copao de gin c Red Bull | Gelo de coco: R$ 47,00 | gelo normal: 45,00 |
-| Gin + Redbull | R$ 37,00 até R$ 45,00 |
-
 ## Cachaça e bebidas quentes
 
 | Nome | Valor |
@@ -144,9 +110,9 @@
 |------|-------|
 | Arroz branco | R$ 19,00 |
 | Feijão| R$ 17,00 |
-| Mandioca cozida | R$ ,00 |
+| Mandioca cozida | R$ 35,00 |
 | Mandioca frita | R$ 37,00 |
-| Batata frita tradicional | R$ 32,00 |
+| Batata frita tradicional | R$ 35,00 |
 
 ## Pastéis
 
