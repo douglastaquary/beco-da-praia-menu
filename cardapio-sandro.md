@@ -6,7 +6,7 @@
 |------|-------|
 | Dadinhos de tapioca com geleia de pimenta | R$ 27,00 |
 | Pastelzinho do Beco | UNID: R$ 8,90 |
-| Torresmo | UNID: R$10,00 / Duplinha: R$ 18,00 / Porção 500g: R$ 42,00 |
+| Torresmo | UNID: R$10,00 / Duplinha: R$ 18,00 / Porção 500g: R$ 45,00 |
 | Queijo coalho com mel | R$ 19,90 | 
 | Batata frita tradicional | R$ 35,00 |
 
