@@ -1651,6 +1651,21 @@
       border-color: #C5831A;
     }
 
+    /* Garante que a categoria selecionada permaneça com a cor correta
+       mesmo quando o mouse sai (há regras posteriores para .cardCategoria). */
+    .cardCategoriaSelected {
+      background: #C5831A !important;
+      color: #fff !important;
+      border-color: #C5831A !important;
+    }
+
+    .cardCategoriaSelected:hover,
+    .cardCategoriaSelected:active {
+      background: #C5831A !important;
+      color: #fff !important;
+      border-color: #C5831A !important;
+    }
+
     #entradinhas > p,
     #maisPedidos > p,
     #individuais > p,
