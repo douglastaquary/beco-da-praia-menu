@@ -335,6 +335,7 @@
     .pagina-cardapio {
       background: #FAFAFA;
       min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
     }
 
     .header-cardapio {
@@ -1501,39 +1502,56 @@
     /* ===== REDESIGN MODERNO - CARDÁPIO ===== */
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
 
+    .cardapioCategoria {
+      text-align: left !important;
+    }
+
+    .cardapioCategoriaTitulo {
+      font-size: 1.4rem !important;
+      font-weight: 800 !important;
+      color: #C5831A !important;
+      margin: 32px 0 16px !important;
+      letter-spacing: -0.02em;
+      text-transform: uppercase !important;
+    }
+
     .mainCard {
       padding: 0 16px 40px;
     }
 
     .produtoContainer {
       width: 100%;
-      max-width: 320px;
+      max-width: none;
       min-height: auto;
       max-height: none;
-      border-radius: 16px;
-      padding: 0;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      margin-bottom: 16px;
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 0;
+      padding: 14px 16px 16px;
+      box-shadow: none;
+      margin-bottom: 0;
+      overflow: visible;
+      transition: none;
       cursor: pointer;
-      border: 1px solid rgba(197, 131, 26, 0.15);
+      border: 0;
       display: flex;
       flex-direction: column;
-      background: #fff;
+      align-items: stretch;
+      background: transparent;
+      border-bottom: 2px dotted rgba(197, 131, 26, 0.18);
+      text-align: left;
     }
 
     .produtoContainer:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(197, 131, 26, 0.12);
-      border-color: rgba(197, 131, 26, 0.3);
+      transform: none;
+      box-shadow: none;
+      border-color: transparent;
     }
 
     .produtoContainer .container_foto {
       width: 100%;
-      height: 140px;
+      height: auto;
       overflow: hidden;
-      background: #f8f8f8;
+      background: transparent;
+      display: none;
     }
 
     .produtoContainer .container_foto img,
@@ -1541,7 +1559,7 @@
       width: 100%;
       height: 100%;
       max-width: 100%;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: 0;
       transition: transform 0.3s ease;
     }
@@ -1551,14 +1569,16 @@
     }
 
     .produtoContainer .divCardProduto {
-      padding: 16px;
+      padding: 0 !important;
       align-items: flex-start;
       flex: 1;
+      justify-content: flex-start !important;
+      margin-top: 0 !important;
     }
 
     .produtoContainer .listaProdutoTitulo {
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 800;
       margin-bottom: 4px;
       color: #1a1a1a;
       line-height: 1.3;
@@ -1566,35 +1586,31 @@
       display: -webkit-box;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
     .produtoContainer .threeDots {
       font-size: 0.8rem;
-      color: #666;
+      color: #111;
       -webkit-line-clamp: 2;
       margin-bottom: 8px;
+      font-style: italic;
     }
 
     .produtoContainer .divCardProduto > div[style*="flex-direction: row"] p {
       font-size: 0.95rem !important;
-      color: #C5831A !important;
-      font-weight: 600 !important;
+      color: #000000 !important;
+      font-weight: 800 !important;
     }
 
     .produtos {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-      justify-content: center;
-      justify-items: center;
-      padding: 20px 0;
-    }
-
-    @media (max-width: 640px) {
-      .produtos {
-        grid-template-columns: 1fr;
-        justify-items: center;
-      }
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      justify-content: flex-start;
+      align-items: stretch;
+      padding: 0;
     }
 
     /* Mobile: lista em linha (imagem à esquerda) */
@@ -1603,23 +1619,28 @@
         width: 100%;
         max-width: none;
         flex-direction: row;
+        gap: 12px;
+        padding: 12px 12px 16px;
+        align-items: flex-start;
       }
 
       .produtoContainer .container_foto {
-        width: 120px;
-        height: 120px;
-        flex: 0 0 120px;
-        border-radius: 16px 0 0 16px;
+        display: block;
+        width: 96px;
+        height: 96px;
+        flex: 0 0 96px;
+        border-radius: 16px;
+        background: #f8f8f8;
       }
 
       .produtoContainer .container_foto img,
       .produtoContainer .imagemProduto {
-        border-radius: 0;
+        border-radius: 16px;
       }
 
       .produtoContainer .divCardProduto {
         margin-top: 0 !important;
-        padding: 12px 16px 12px 14px !important;
+        padding: 0 !important;
       }
 
       .produtoContainer .listaProdutoTitulo {
@@ -1629,6 +1650,22 @@
       .produtoContainer .threeDots {
         -webkit-line-clamp: 3;
       }
+    }
+
+    /* Layout em lista: alinhamento à esquerda como no cardápio */
+    #entradinhas,
+    #maisPedidos,
+    #individuais,
+    #porcoes,
+    #sobremesas,
+    #cervejas,
+    #caipirinhas,
+    #acompanhamentos,
+    #bebidasemalcool,
+    #sucosnaturais,
+    #gintonica,
+    #pasteis {
+      text-align: left !important;
     }
 
     .divCategorias {
@@ -1680,10 +1717,11 @@
     #pasteis > p,
     [id="sobremesas"] > p {
       font-size: 1.4rem !important;
-      font-weight: 600 !important;
+      font-weight: 800 !important;
       color: #C5831A !important;
       margin: 32px 0 16px !important;
       letter-spacing: -0.02em;
+      text-transform: uppercase !important;
     }
 
     /* Modal de detalhe do prato */
