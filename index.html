@@ -9,6 +9,9 @@
     <!-- css -->
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
 
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -23,12 +26,12 @@
         <!-- Página inicial -->
         <section id="pagina-inicial" class="pagina-inicial">
             <header class="header-beco">
-                <div class="header-beco-bg" style="background-image: url('images/header_beco_da_praia.png');"></div>
-                <div class="header-beco-overlay"></div>
                 <div class="header-beco-conteudo">
                     <img src="images/logo-beco-bg-black.png" alt="Beco da Praia" class="header-beco-logo">
-                    <h1 class="header-beco-nome">Beco da Praia</h1>
-                    <p class="header-beco-subtitulo">Culinária Nordestina <span class="header-beco-emoji">🌵🥩</span></p>
+                    <div class="header-beco-textos">
+                        <h1 class="header-beco-nome">BECO DA PRAIA</h1>
+                        <p class="header-beco-subtitulo">• culinária nordestina •</p>
+                    </div>
                 </div>
             </header>
             <div class="pagina-inicial-conteudo">
@@ -64,13 +67,13 @@
         <!-- Página do cardápio -->
         <section id="pagina-cardapio" class="pagina-cardapio" style="display: none;">
             <header class="header-beco header-cardapio">
-                <div class="header-beco-bg" style="background-image: url('images/header_beco_da_praia.png');"></div>
-                <div class="header-beco-overlay"></div>
-                <button type="button" id="btn-voltar" class="header-voltar" aria-label="Voltar">← Voltar</button>
                 <div class="header-beco-conteudo">
+                    <button type="button" id="btn-voltar" class="header-voltar" aria-label="Voltar">← Voltar</button>
                     <img src="images/logo-beco-bg-black.png" alt="Beco da Praia" class="header-beco-logo">
-                    <h1 class="header-beco-nome">Beco da Praia</h1>
-                    <p class="header-beco-subtitulo">Culinária Nordestina <span class="header-beco-emoji">🌵🥩</span></p>
+                    <div class="header-beco-textos">
+                        <h1 class="header-beco-nome">BECO DA PRAIA</h1>
+                        <p class="header-beco-subtitulo">• culinária nordestina •</p>
+                    </div>
                 </div>
             </header>
         <div class="card">
@@ -453,11 +456,6 @@
                         </div>
                         <div class="produtoContainer" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
-                            <div class="container_foto">
-                                <picture>
-                                    <img loading="lazy" alt="" src="images/logo-beco-bg-black.png" class="imagemProduto">
-                                </picture>
-                            </div>
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
                                 <p class="listaProdutoTitulo">Adicionais (consulte no balcão)</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Mandioca ou batata frita • Carne de sol • Ovo</p>
@@ -1285,6 +1283,23 @@
                 </div>
 
                 <script>
+                    let categoriaAtivaAtual = null;
+
+                    function centralizarCategoriaNoMenu(linkAtivo) {
+                        if (!linkAtivo) return;
+                        const menuCategorias = linkAtivo.closest('.divCategorias');
+                        if (!menuCategorias) return;
+
+                        const alvoCentro = linkAtivo.offsetLeft + (linkAtivo.offsetWidth / 2) - (menuCategorias.clientWidth / 2);
+                        const maxScroll = Math.max(0, menuCategorias.scrollWidth - menuCategorias.clientWidth);
+                        const destino = Math.min(maxScroll, Math.max(0, alvoCentro));
+
+                        menuCategorias.scrollTo({
+                            left: destino,
+                            behavior: 'smooth'
+                        });
+                    }
+
                     function selecionarCategoria(id, rolar = true) {
                         // Remove seleção de todas as categorias do menu mobile
                         document.querySelectorAll('.cardCategoria').forEach(a => {
@@ -1293,7 +1308,10 @@
 
                         // Marca a categoria correspondente
                         const linkAtivo = document.querySelector(`.cardCategoria[href="#${id}"]`);
-                        if (linkAtivo) linkAtivo.classList.add('cardCategoriaSelected');
+                        if (linkAtivo) {
+                            linkAtivo.classList.add('cardCategoriaSelected');
+                            centralizarCategoriaNoMenu(linkAtivo);
+                        }
 
                         // Rola para o bloco de detalhe da categoria
                         if (rolar) {
@@ -1304,6 +1322,43 @@
                                 }, 50);
                             }
                         }
+
+                        categoriaAtivaAtual = id;
+                    }
+
+                    function paginaCardapioEstaVisivel() {
+                        const paginaCardapio = document.getElementById('pagina-cardapio');
+                        return paginaCardapio && paginaCardapio.style.display !== 'none';
+                    }
+
+                    function atualizarCategoriaPorScroll() {
+                        if (!paginaCardapioEstaVisivel()) return;
+
+                        const secoes = Array.from(document.querySelectorAll('#pagina-cardapio .cardapioCategoria'));
+                        if (!secoes.length) return;
+
+                        const pontoReferencia = Math.max(140, window.innerHeight * 0.3);
+                        let secaoAtiva = null;
+
+                        for (const secao of secoes) {
+                            const rect = secao.getBoundingClientRect();
+                            if (rect.top <= pontoReferencia && rect.bottom > pontoReferencia) {
+                                secaoAtiva = secao;
+                                break;
+                            }
+                            if (rect.top <= pontoReferencia) {
+                                secaoAtiva = secao;
+                            }
+                        }
+
+                        if (!secaoAtiva) {
+                            secaoAtiva = secoes[0];
+                        }
+
+                        const idAtivo = secaoAtiva.id;
+                        if (idAtivo && idAtivo !== categoriaAtivaAtual) {
+                            selecionarCategoria(idAtivo, false);
+                        }
                     }
 
                     // Navegação entre página inicial e cardápio
@@ -1313,6 +1368,7 @@
                         document.body.scrollTop = 0;
                         document.documentElement.scrollTop = 0;
                         selecionarCategoria('entradinhas', true);
+                        setTimeout(atualizarCategoriaPorScroll, 120);
                     });
                     document.getElementById('btn-voltar').addEventListener('click', function() {
                         document.getElementById('pagina-cardapio').style.display = 'none';
@@ -1330,6 +1386,9 @@
                         const id = href.replace('#', '');
                         if (id) selecionarCategoria(id, true);
                     });
+
+                    window.addEventListener('scroll', atualizarCategoriaPorScroll, { passive: true });
+                    window.addEventListener('resize', atualizarCategoriaPorScroll);
 
                     // Modal de detalhe - delegação
                     document.addEventListener('click', function(e) {
