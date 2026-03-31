@@ -1597,6 +1597,40 @@
       }
     }
 
+    /* Mobile: lista em linha (imagem à esquerda) */
+    @media (max-width: 640px) {
+      .produtoContainer {
+        width: 100%;
+        max-width: none;
+        flex-direction: row;
+      }
+
+      .produtoContainer .container_foto {
+        width: 120px;
+        height: 120px;
+        flex: 0 0 120px;
+        border-radius: 16px 0 0 16px;
+      }
+
+      .produtoContainer .container_foto img,
+      .produtoContainer .imagemProduto {
+        border-radius: 0;
+      }
+
+      .produtoContainer .divCardProduto {
+        margin-top: 0 !important;
+        padding: 12px 16px 12px 14px !important;
+      }
+
+      .produtoContainer .listaProdutoTitulo {
+        -webkit-line-clamp: 3;
+      }
+
+      .produtoContainer .threeDots {
+        -webkit-line-clamp: 3;
+      }
+    }
+
     .divCategorias {
       padding: 12px 0;
       gap: 8px;
@@ -1679,8 +1713,11 @@
 
     .modal-prato-imagem {
       width: 100%;
-      height: 220px;
-      object-fit: cover;
+      height: auto;
+      max-height: 70vh;
+      object-fit: contain;
+      display: block;
+      background: #fff;
       border-radius: 20px 20px 0 0;
     }
 
