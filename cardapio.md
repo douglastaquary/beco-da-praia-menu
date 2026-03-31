@@ -44,8 +44,8 @@
 | Nome | Categoria/Descrição | Valor |
 |------|----------------------|-------|
 | Disponibilidade | Disponível no almoço até às 17h • Pratos individuais. | |
-| Baião de Dois | Delicioso baião de dois preparado com arroz, feijão, calabresa, bacon e temperos nordestinos que trazem todo o sabor da tradição. | R$ 29,90 |
-| Adicionais (consulte no balcão) | Mandioca ou batata frita • Carne de sol • Ovo | Mandioca ou batata frita: R$ 8,90 / Carne de sol: R$ 16,90 / Ovo: R$ 6,00 |
+| Baião de Dois | Delicioso baião de dois preparado com arroz, feijão, calabresa, bacon e temperos nordestinos que trazem todo o sabor da tradição. | R$ 32,90 |
+| Adicionais (consulte no balcão) | Mandioca ou batata frita • Carne de sol • Ovo | Mandioca ou batata frita: R$ 4,90 / Carne de sol: R$ 14,90 / Ovo: R$ 6,00 |
 | Carne de sol | Arroz branco, carne de sol artesanal preparada na casa, mandioca cozida na manteiga, feijão e farofa. | R$ 42,00 |
 | Bife acebolado | Arroz branco e bife de alcatra grelhado com cebola dourada, acompanhado de batata frita, feijão e farofa. | R$ 39,00 |
 | Peixe com molho de camarão | Arroz branco e peixe empanado na panko regado com um delicioso molho de camarão, acompanhado de farofa e purê de batata cremoso. | R$ 45,00 |
@@ -101,8 +101,8 @@
 | Tradicional | Cachaça, limão-tahiti e açúcar. | R$ 24,90 |
 | De frutas | Escolha uma fruta. | R$ 35,00 |
 | Caipirinhas da semana | De segunda a sexta (exceto feriados), uma sugestão com frutas sazonais. Peça com vodka ou saquê se preferir. | R$ 27,90 |
-| Caipirinhas especiais (cada uma) | Todas por R$ 34,90 | |
-| Cajú Amigo | Uma combinação tropical irresistível: destilado, compota de caju, suco de caju, limão e gelo. | R$ 34,90 |
+| Cajú Amigo | Uma combinação tropical irresistível: destilado, compota de caju, suco de caju, limão e gelo. | R$ 39,90 |
+| Caipirinhas especiais | Todas por R$ 34,90 | |
 | Rapadura | Destilado, limão e calda de rapadura, finalizada com raspas de rapadura. | R$ 34,90 |
 | Goiabada com limão | Destilado, calda de goiabada, limão e gelo. | R$ 34,90 |
 | Manga com pimenta | Destilado, manga e gelo finalizada com pimenta dedo-de-moça. | R$ 34,90 |
