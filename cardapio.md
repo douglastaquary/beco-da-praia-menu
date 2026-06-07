@@ -38,6 +38,7 @@
 | Dobradinha (Prato individual) | Clássico nordestino cheio de sabor: bucho em tirinhas cozido com feijão branco, calabresa e bacon, bem temperado. | c/ arroz: R$ 29,00 / sem arroz: R$ 24,00 |
 | Mocotó (Prato individual) | Caldo tradicional e encorpado, preparado com mocotó cozido lentamente e temperos especiais, resultando em um prato rico em sabor. | c/ arroz: R$ 26,00 / sem arroz: R$ 22,90 |
 | Panelinha de Língua (Prato individual) | Língua bovina macia, cozida lentamente em molho bem temperado e servida na panelinha. Um prato caseiro, cheio de sabor e tradição. | c/ arroz: R$ 32,00 / sem arroz: R$ 25,00 |
+| Caldo Pela Égua | | R$ 25,00 |
 
 ## Pratos executivos
 
@@ -114,6 +115,7 @@
 | Gin e tônica | Gin, tônica e Monin de limão siciliano, morango ou maçã verde. | R$ 29,90 |
 | Gin e Red Bull | Gin e Red Bull tropical, melancia, zero açúcar ou tradicional. | R$ 40,00 |
 | Batidinhas — Coco, paçoca, maracujá | Vodka, leite condensado, fruta ou paçoca. | R$ 15,00 |
+| Conhaque com mel e limão | Sugestão do conhaque: São João da Barra. | R$ 15,00 |
 | Cachaças | Consulte nosso atendimento para informações sobre disponibilidade e preço. | |
 
 ## Água e refrigerantes
