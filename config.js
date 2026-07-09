@@ -1,0 +1,1 @@
+window.BECO_ORDERS_API_BASE_URL = window.BECO_ORDERS_API_BASE_URL || '';
