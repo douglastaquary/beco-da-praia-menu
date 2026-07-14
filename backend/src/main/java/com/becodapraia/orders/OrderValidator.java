@@ -2,6 +2,7 @@ package com.becodapraia.orders;
 
 import com.becodapraia.orders.OrderModels.CreateOrderRequest;
 import com.becodapraia.orders.OrderModels.OrderItem;
+import com.becodapraia.orders.OrderModels.OrderOption;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
@@ -35,6 +36,13 @@ public class OrderValidator {
             }
             if (isBlank(item.unitPriceText()) || !item.unitPriceText().contains("R$")) {
                 errors.add("Preco invalido para " + item.name() + ".");
+            }
+            if (item.options() != null) {
+                for (OrderOption option : item.options()) {
+                    if (option == null || isBlank(option.name()) || isBlank(option.value())) {
+                        errors.add("Opcional invalido para " + item.name() + ".");
+                    }
+                }
             }
         }
         return errors;

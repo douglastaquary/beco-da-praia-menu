@@ -1744,7 +1744,7 @@
     .modal-prato-conteudo {
       background: #fff;
       border-radius: 20px;
-      max-width: 480px;
+      max-width: 560px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
@@ -1759,9 +1759,9 @@
 
     .modal-prato-imagem {
       width: 100%;
-      height: auto;
-      max-height: 70vh;
-      object-fit: contain;
+      height: 180px;
+      max-height: 25vh;
+      object-fit: cover;
       display: block;
       background: #fff;
       border-radius: 20px 20px 0 0;
@@ -1784,6 +1784,10 @@
       color: #555;
       line-height: 1.5;
       margin: 0 0 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .modal-prato-precos {
@@ -1824,6 +1828,198 @@
 
     .modal-prato-wrap {
       position: relative;
+    }
+
+    .pagina-detalhe-produto {
+      min-height: 100vh;
+      background: #FAFAFA;
+      color: #1f1f1f;
+      padding-bottom: 112px;
+    }
+
+    .detalhe-produto-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: max(14px, env(safe-area-inset-top)) 16px 12px;
+      background: rgba(250, 250, 250, 0.86);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(18px);
+    }
+
+    .detalhe-voltar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(20, 20, 20, 0.72);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .detalhe-voltar span {
+      display: block;
+      font-size: 3rem;
+      line-height: 0.8;
+      transform: translateY(-2px);
+    }
+
+    .detalhe-header-textos {
+      min-width: 0;
+    }
+
+    .detalhe-header-textos p {
+      margin: 0;
+      color: #7a6b5c;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .detalhe-header-textos h1 {
+      margin: 0;
+      color: #1f1f1f;
+      font-size: 1.08rem;
+      font-weight: 800;
+      line-height: 1.15;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .detalhe-produto-conteudo {
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .detalhe-imagem-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #eee;
+      overflow: hidden;
+    }
+
+    .detalhe-imagem-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .detalhe-produto-body {
+      padding: 22px 18px 0;
+    }
+
+    .detalhe-produto-body h2 {
+      margin: 0 0 8px;
+      color: #1f1f1f;
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .detalhe-produto-body > p {
+      margin: 0 0 16px;
+      color: #4d4d4d;
+      font-size: 1rem;
+      line-height: 1.48;
+    }
+
+    .detalhe-precos {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #ece5dc;
+      color: #C5831A;
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+
+    .detalhe-mensagem {
+      min-height: 22px;
+      margin-top: 12px;
+      color: #27613a;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .detalhe-mensagem-erro {
+      color: #9d2727;
+    }
+
+    .detalhe-controles {
+      padding-top: 10px;
+    }
+
+    .detalhe-form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .detalhe-opcionais {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .detalhe-info,
+    .detalhe-indisponivel {
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: #7a4a10;
+      background: #fff7e8;
+      border: 1px solid #f0d6a7;
+      font-weight: 800;
+    }
+
+    .detalhe-acao-wrap {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 30;
+      padding: 12px 16px max(16px, env(safe-area-inset-bottom));
+      background: rgba(250, 250, 250, 0.88);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .detalhe-adicionar {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 999px;
+      box-shadow: 0 10px 24px rgba(197, 131, 26, 0.34);
+      font-size: 1rem;
+    }
+
+    body.detalhe-produto-ativo .pedido-carrinho {
+      display: none;
+    }
+
+    @media (min-width: 576px) {
+      .detalhe-produto-conteudo {
+        padding: 18px;
+      }
+
+      .detalhe-imagem-wrap {
+        border-radius: 16px;
+      }
+
+      .detalhe-form-grid,
+      .detalhe-opcionais {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     .pedido-modal-controles {
@@ -1884,6 +2080,20 @@
     .pedido-adicionar:hover,
     .pedido-enviar:hover {
       background: #a86d14;
+    }
+
+    .pedido-indisponivel {
+      display: block;
+      color: #7a4a10;
+      background: #fff7e8;
+      border: 1px solid #f0d6a7;
+      border-radius: 8px;
+    }
+
+    .pedido-indisponivel p {
+      margin: 0;
+      font-weight: 700;
+      text-align: left;
     }
 
     .pedido-enviar:disabled {
@@ -2041,8 +2251,38 @@
     }
 
     @media (max-width: 575px) {
+      .modal-prato {
+        padding: 14px;
+      }
+
+      .modal-prato-conteudo {
+        border-radius: 14px;
+      }
+
+      .modal-prato-imagem {
+        height: 180px;
+        max-height: 22vh;
+        border-radius: 14px 14px 0 0;
+      }
+
+      .modal-prato-body {
+        padding: 18px;
+      }
+
+      .modal-prato-titulo {
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+      }
+
+      .modal-prato-descricao {
+        margin-bottom: 12px;
+      }
+
       .pedido-modal-controles {
         grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 12px;
+        padding-top: 12px;
       }
 
       .pedido-carrinho {

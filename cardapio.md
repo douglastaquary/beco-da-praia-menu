@@ -20,8 +20,6 @@
 | Trio Nordestino (Serve 2 pessoas) | O queridinho da casa. Baião de dois, carne de sol artesanal e mandioca cozida na manteiga de garrafa. | R$ 99,90 |
 | Baião de Dois (Serve até 3 pessoas) | O nosso "feijão com arroz" incrementado com queijo coalho, calabresa, bacon e carne seca. | R$ 87,00 |
 | Arrumadinho (Serve 2 pessoas) | Feijão-fradinho temperado, vinagrete fresquinho, farofa crocante e carne seca desfiada refogada na cebola com manteiga de garrafa. | R$ 62,00 |
-| Carne de Sol na Telha (Serve 3 pessoas) | Suculenta carne de sol refogada na cebola, servida na telha acompanhada de arroz Maria Isabel e batata frita crocante. | R$ 109,90 |
-| Linguiça na Cachaça (Serve 2 pessoas) | Linguiça suculenta preparada na cachaça, realçando um sabor marcante. Servida com molho de pimenta artesanal para dar aquele toque especial. | R$ 56,90 |
 
 ## Porções do Beco
 

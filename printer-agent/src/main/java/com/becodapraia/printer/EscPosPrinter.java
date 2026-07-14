@@ -40,6 +40,13 @@ public class EscPosPrinter {
                     if (!isBlank(item.variant())) {
                         write(out, "   Opcao: " + item.variant() + "\n");
                     }
+                    if (item.options() != null) {
+                        for (PrintOrderOption option : item.options()) {
+                            if (option != null && !isBlank(option.name()) && !isBlank(option.value())) {
+                                write(out, "   " + option.name() + ": " + option.value() + "\n");
+                            }
+                        }
+                    }
                     if (!isBlank(item.notes())) {
                         write(out, "   Obs: " + item.notes() + "\n");
                     }

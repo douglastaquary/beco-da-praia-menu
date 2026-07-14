@@ -21,7 +21,14 @@ public final class OrderModels {
             String variant,
             Integer quantity,
             String unitPriceText,
+            List<OrderOption> options,
             String notes
+    ) {
+    }
+
+    public record OrderOption(
+            String name,
+            String value
     ) {
     }
 

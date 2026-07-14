@@ -2,6 +2,7 @@ package com.becodapraia.orders;
 
 import com.becodapraia.orders.OrderModels.CreateOrderRequest;
 import com.becodapraia.orders.OrderModels.OrderItem;
+import com.becodapraia.orders.OrderModels.OrderOption;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -17,7 +18,7 @@ class OrderValidatorTest {
         CreateOrderRequest request = new CreateOrderRequest(
                 "Douglas",
                 "Pix",
-                List.of(new OrderItem("Baiao de Dois", "R$ 87,00", 2, "R$ 87,00", "")),
+                List.of(new OrderItem("Baiao de Dois", "R$ 87,00", 2, "R$ 87,00", List.of(), "")),
                 "R$ 174,00"
         );
 
@@ -41,7 +42,7 @@ class OrderValidatorTest {
         CreateOrderRequest request = new CreateOrderRequest(
                 "Douglas",
                 "Cartao de credito",
-                List.of(new OrderItem("Torresmo", "UNID", 0, "UNID", "")),
+                List.of(new OrderItem("Torresmo", "UNID", 0, "UNID", List.of(), "")),
                 "R$ 0,00"
         );
 
@@ -50,5 +51,21 @@ class OrderValidatorTest {
         assertEquals(2, errors.size());
         assertTrue(errors.get(0).contains("Quantidade invalida"));
         assertTrue(errors.get(1).contains("Preco invalido"));
+    }
+
+    @Test
+    void rejectsInvalidItemOptions() {
+        CreateOrderRequest request = new CreateOrderRequest(
+                "Douglas",
+                "Pix",
+                List.of(new OrderItem("Mix de churrasco", "INTEIRA: R$ 95,00", 1, "INTEIRA: R$ 95,00",
+                        List.of(new OrderOption("Ponto da carne", "")), "")),
+                "R$ 95,00"
+        );
+
+        List<String> errors = validator.validate(request);
+
+        assertEquals(1, errors.size());
+        assertTrue(errors.get(0).contains("Opcional invalido"));
     }
 }

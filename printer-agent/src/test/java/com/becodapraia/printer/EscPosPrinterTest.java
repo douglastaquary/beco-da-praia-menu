@@ -23,7 +23,12 @@ class EscPosPrinterTest {
                     "B123",
                     "Douglas",
                     "Pix",
-                    List.of(new PrintOrderItem("Trio Nordestino", "R$ 99,90", 1, "R$ 99,90", "Sem cebola")),
+                    List.of(new PrintOrderItem("Trio Nordestino", "R$ 99,90", 1, "R$ 99,90",
+                            List.of(
+                                    new PrintOrderOption("Ponto da carne", "Ao ponto"),
+                                    new PrintOrderOption("Acompanhamento", "Batata frita")
+                            ),
+                            "Sem cebola")),
                     "R$ 99,90",
                     "2026-07-09T12:00:00Z"
             ));
@@ -34,6 +39,8 @@ class EscPosPrinterTest {
             assertTrue(ticket.contains("Cliente: Douglas"));
             assertTrue(ticket.contains("Pagamento: Pix"));
             assertTrue(ticket.contains("1x Trio Nordestino"));
+            assertTrue(ticket.contains("Ponto da carne: Ao ponto"));
+            assertTrue(ticket.contains("Acompanhamento: Batata frita"));
             assertTrue(ticket.contains("Obs: Sem cebola"));
             assertTrue(ticket.contains("Total: R$ 99,90"));
         }
