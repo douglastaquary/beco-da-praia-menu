@@ -2579,6 +2579,8 @@
         --app-safe-top: max(env(safe-area-inset-top), 44px);
         --app-safe-bottom: max(env(safe-area-inset-bottom), 24px);
         --app-side: 16px;
+        --app-floating-control-width: 300px;
+        --app-floating-panel-width: 320px;
       }
 
       body.screenshot-mode {
@@ -2722,17 +2724,23 @@
       }
 
       .pedido-carrinho {
-        right: var(--app-side);
+        right: 0;
         bottom: calc(var(--app-safe-bottom) + 10px);
-        left: var(--app-side);
+        left: 0;
         display: flex;
         justify-content: center;
+        padding-right: var(--app-side);
+        padding-left: var(--app-side);
       }
 
       .pedido-carrinho-toggle {
-        width: 100%;
-        max-width: 520px;
+        width: var(--app-floating-control-width) !important;
+        max-width: calc(100% - 64px) !important;
+        min-width: 0 !important;
+        flex: 0 0 auto;
         min-height: 56px;
+        margin-right: auto;
+        margin-left: auto;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -2742,10 +2750,12 @@
       }
 
       .pedido-carrinho-painel {
-        right: 0;
-        left: 0;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
         bottom: calc(78px + var(--app-safe-bottom));
-        width: 100%;
+        width: var(--app-floating-panel-width);
+        max-width: calc(100% - 32px);
         max-height: calc(100vh - var(--app-safe-top) - 96px);
         border-radius: 14px;
       }
@@ -2812,12 +2822,16 @@
       .detalhe-acao-wrap {
         display: flex;
         justify-content: center;
-        padding: 12px var(--app-side) calc(var(--app-safe-bottom) + 10px);
+        padding: 12px 0 calc(var(--app-safe-bottom) + 10px);
       }
 
       .detalhe-adicionar {
-        width: 100%;
-        max-width: 520px;
+        width: var(--app-floating-control-width) !important;
+        max-width: calc(100% - 64px) !important;
+        min-width: 0 !important;
+        flex: 0 0 auto;
+        margin-right: auto;
+        margin-left: auto;
       }
 
       .pix-qrcode {
@@ -2869,6 +2883,44 @@
       body.screenshot-mode .mainCard {
         padding-right: 16px !important;
         padding-left: 16px !important;
+      }
+
+      body.screenshot-mode .pedido-carrinho {
+        right: auto !important;
+        left: 0 !important;
+        width: 390px !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+      }
+
+      body.screenshot-mode .pedido-carrinho-toggle {
+        width: 300px !important;
+        max-width: 300px !important;
+        margin-right: 45px !important;
+        margin-left: 45px !important;
+      }
+
+      body.screenshot-mode .pedido-carrinho-painel {
+        right: auto !important;
+        left: 24px !important;
+        width: 342px !important;
+        max-width: 342px !important;
+        transform: none !important;
+      }
+
+      body.screenshot-mode .detalhe-acao-wrap {
+        right: auto !important;
+        left: 0 !important;
+        width: 390px !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+      }
+
+      body.screenshot-mode .detalhe-adicionar {
+        width: 300px !important;
+        max-width: 300px !important;
+        margin-right: 45px !important;
+        margin-left: 45px !important;
       }
 
       body.screenshot-mode .produtoContainer .divCardProduto {
