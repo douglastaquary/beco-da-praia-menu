@@ -13,6 +13,20 @@ Parameters:
     Type: String
     Default: ''
     Description: Optional AWS IoT data endpoint URL, for example https://xxxxxxxxxxxxxx-ats.iot.us-east-1.amazonaws.com.
+  OpenPixBaseUrl:
+    Type: String
+    Default: https://api.woovi-sandbox.com
+  OpenPixAppId:
+    Type: String
+    NoEcho: true
+    Default: ''
+  OpenPixWebhookToken:
+    Type: String
+    NoEcho: true
+    Default: ''
+  PixChargeExpiresInSeconds:
+    Type: Number
+    Default: 900
 
 Globals:
   Function:
@@ -26,6 +40,10 @@ Globals:
         ORDERS_TABLE: !Ref OrdersTable
         PRINTER_ORDERS_TOPIC: !Ref PrinterOrdersTopic
         IOT_DATA_ENDPOINT: !Ref IotDataEndpoint
+        OPENPIX_BASE_URL: !Ref OpenPixBaseUrl
+        OPENPIX_APP_ID: !Ref OpenPixAppId
+        OPENPIX_WEBHOOK_TOKEN: !Ref OpenPixWebhookToken
+        PIX_CHARGE_EXPIRES_IN_SECONDS: !Ref PixChargeExpiresInSeconds
 
 Resources:
   OrdersApi:
@@ -79,6 +97,12 @@ Resources:
             ApiId: !Ref OrdersApi
             Path: /orders/{orderId}/print-status
             Method: POST
+        OpenPixWebhook:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref OrdersApi
+            Path: /payments/openpix/webhook
+            Method: POST
 
   OrdersTable:
     Type: AWS::DynamoDB::Table
@@ -106,3 +130,6 @@ Outputs:
   PrinterOrdersTopic:
     Description: AWS IoT Core topic consumed by the Raspberry Pi printer agent.
     Value: !Ref PrinterOrdersTopic
+  OpenPixWebhookUrl:
+    Description: Webhook URL to configure in OpenPix/Woovi.
+    Value: !Sub https://${OrdersApi}.execute-api.${AWS::Region}.amazonaws.com/payments/openpix/webhook?token=CONFIGURE_OPENPIX_WEBHOOK_TOKEN

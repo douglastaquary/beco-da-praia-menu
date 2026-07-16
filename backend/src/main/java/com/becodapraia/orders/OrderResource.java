@@ -4,6 +4,7 @@ import com.becodapraia.orders.OrderModels.CreateOrderRequest;
 import com.becodapraia.orders.OrderModels.OrderItem;
 import com.becodapraia.orders.OrderModels.OrderRecord;
 import com.becodapraia.orders.OrderModels.OrderResponse;
+import com.becodapraia.orders.OrderModels.PaymentDetails;
 import com.becodapraia.orders.OrderModels.PrintStatusRequest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -37,6 +38,9 @@ public class OrderResource {
     @Inject
     PrintPublisher printPublisher;
 
+    @Inject
+    OpenPixClient openPixClient;
+
     @POST
     public Response create(CreateOrderRequest request) {
         List<String> errors = validator.validate(request);
@@ -51,6 +55,10 @@ public class OrderResource {
         BigDecimal total = request.items().stream()
                 .map(this::lineTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        boolean pixPayment = isPix(request.paymentMethod());
+        PaymentDetails payment = pixPayment
+                ? openPixClient.createCharge(orderId, total, request.customerName().trim())
+                : null;
         OrderRecord order = new OrderRecord(
                 orderId,
                 request.customerName().trim(),
@@ -58,18 +66,21 @@ public class OrderResource {
                 request.items(),
                 request.totalText(),
                 total,
-                "RECEIVED",
+                pixPayment ? "PAYMENT_PENDING" : "RECEIVED",
+                payment,
                 now,
                 now,
                 0
         );
 
         repository.save(order);
-        printPublisher.publish(order);
-        repository.markPrintRequested(orderId);
+        if (!pixPayment) {
+            printPublisher.publish(order);
+            repository.markPrintRequested(orderId);
+        }
 
         return Response.status(Response.Status.CREATED)
-                .entity(OrderResponse.success(orderId, "PRINT_REQUESTED"))
+                .entity(OrderResponse.success(orderId, pixPayment ? "PAYMENT_PENDING" : "PRINT_REQUESTED", payment))
                 .build();
     }
 
@@ -115,4 +126,9 @@ public class OrderResource {
     private String newOrderId() {
         return "B" + Instant.now().toEpochMilli() + "-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
+
+    private boolean isPix(String paymentMethod) {
+        return paymentMethod != null && "pix".equalsIgnoreCase(paymentMethod.trim());
+    }
+
 }

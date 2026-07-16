@@ -2,6 +2,7 @@ package com.becodapraia.orders;
 
 import com.becodapraia.orders.OrderModels.OrderItem;
 import com.becodapraia.orders.OrderModels.OrderRecord;
+import com.becodapraia.orders.OrderModels.PaymentDetails;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.GetItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.ConditionalCheckFailedException;
 import software.amazon.awssdk.services.dynamodb.model.UpdateItemRequest;
 
 import java.time.Instant;
@@ -44,6 +46,7 @@ public class OrderRepository {
         item.put("totalText", s(order.totalText()));
         item.put("totalAmount", AttributeValue.builder().n(order.totalAmount().toPlainString()).build());
         item.put("status", s(order.status()));
+        putPayment(item, order.payment());
         item.put("createdAt", s(order.createdAt().toString()));
         item.put("updatedAt", s(order.updatedAt().toString()));
         item.put("printAttempts", AttributeValue.builder().n(Integer.toString(order.printAttempts())).build());
@@ -90,6 +93,41 @@ public class OrderRepository {
                 .build());
     }
 
+    public boolean markPaidIfPending(String orderId) {
+        Map<String, AttributeValue> values = new HashMap<>();
+        values.put(":status", s("PAID"));
+        values.put(":paymentStatus", s("PAID"));
+        values.put(":updatedAt", s(Instant.now().toString()));
+        values.put(":pending", s("PAYMENT_PENDING"));
+        try {
+            dynamoDb.updateItem(UpdateItemRequest.builder()
+                    .tableName(tableName)
+                    .key(Map.of("PK", s("ORDER#" + orderId), "SK", s("METADATA")))
+                    .updateExpression("SET #status = :status, paymentStatus = :paymentStatus, updatedAt = :updatedAt")
+                    .conditionExpression("#status = :pending")
+                    .expressionAttributeNames(Map.of("#status", "status"))
+                    .expressionAttributeValues(values)
+                    .build());
+            return true;
+        } catch (ConditionalCheckFailedException e) {
+            return false;
+        }
+    }
+
+    public void markPaymentExpired(String orderId) {
+        Map<String, AttributeValue> values = new HashMap<>();
+        values.put(":status", s("PAYMENT_EXPIRED"));
+        values.put(":paymentStatus", s("PAYMENT_EXPIRED"));
+        values.put(":updatedAt", s(Instant.now().toString()));
+        dynamoDb.updateItem(UpdateItemRequest.builder()
+                .tableName(tableName)
+                .key(Map.of("PK", s("ORDER#" + orderId), "SK", s("METADATA")))
+                .updateExpression("SET #status = :status, paymentStatus = :paymentStatus, updatedAt = :updatedAt")
+                .expressionAttributeNames(Map.of("#status", "status"))
+                .expressionAttributeValues(values)
+                .build());
+    }
+
     private AttributeValue s(String value) {
         return AttributeValue.builder().s(value == null ? "" : value).build();
     }
@@ -102,6 +140,22 @@ public class OrderRepository {
         }
     }
 
+    private void putPayment(Map<String, AttributeValue> item, PaymentDetails payment) {
+        if (payment == null) {
+            return;
+        }
+        item.put("paymentProvider", s(payment.provider()));
+        item.put("paymentStatus", s(payment.status()));
+        item.put("paymentCorrelationId", s(payment.correlationId()));
+        item.put("paymentTxId", s(payment.txId()));
+        item.put("paymentBrCode", s(payment.brCode()));
+        item.put("paymentQrCodeImage", s(payment.qrCodeImage()));
+        item.put("paymentLinkUrl", s(payment.paymentLinkUrl()));
+        if (payment.expiresAt() != null) {
+            item.put("paymentExpiresAt", s(payment.expiresAt().toString()));
+        }
+    }
+
     private OrderRecord fromItem(Map<String, AttributeValue> item) {
         return new OrderRecord(
                 string(item, "orderId"),
@@ -111,9 +165,27 @@ public class OrderRepository {
                 string(item, "totalText"),
                 number(item, "totalAmount"),
                 string(item, "status"),
+                payment(item),
                 instant(item, "createdAt"),
                 instant(item, "updatedAt"),
                 number(item, "printAttempts").intValue()
+        );
+    }
+
+    private PaymentDetails payment(Map<String, AttributeValue> item) {
+        String provider = string(item, "paymentProvider");
+        if (provider.isBlank()) {
+            return null;
+        }
+        return new PaymentDetails(
+                provider,
+                string(item, "paymentStatus"),
+                string(item, "paymentCorrelationId"),
+                string(item, "paymentTxId"),
+                string(item, "paymentBrCode"),
+                string(item, "paymentQrCodeImage"),
+                string(item, "paymentLinkUrl"),
+                instant(item, "paymentExpiresAt")
         );
     }
 

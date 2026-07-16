@@ -1,6 +1,7 @@
 (function () {
     const API_BASE_URL = (window.BECO_ORDERS_API_BASE_URL || '').replace(/\/$/, '');
     const ORDER_ENDPOINT = `${API_BASE_URL}/orders`;
+    const PAYMENT_POLL_INTERVAL_MS = 4000;
     const paymentMethods = ['Pix', 'Cartão de crédito', 'Cartão de débito', 'Dinheiro'];
     const productRules = {
         'entradinhas|Pastelzinhos do Beco': { orderable: false, message: 'Item disponível apenas com atendimento.' },
@@ -52,18 +53,22 @@
     const state = {
         currentProduct: null,
         items: [],
-        cardapioScrollY: 0
+        cardapioScrollY: 0,
+        paymentPollId: null
     };
 
     document.addEventListener('DOMContentLoaded', function () {
         createProductDetailUi();
+        createPixPaymentUi();
+        createOrderSuccessUi();
         createCartUi();
         updateCartUi();
+        setupScreenshotMode();
     });
 
     document.addEventListener('click', function (event) {
         const product = event.target.closest('.produtoContainer');
-        if (!product || event.target.closest('.pedido-carrinho') || event.target.closest('.pagina-detalhe-produto')) {
+        if (!product || event.target.closest('.pedido-carrinho') || event.target.closest('.pagina-detalhe-produto') || event.target.closest('.pagina-pagamento-pix') || event.target.closest('.pagina-sucesso-pedido')) {
             return;
         }
         event.preventDefault();
@@ -123,6 +128,66 @@
         document.getElementById('detalhe-voltar').addEventListener('click', backToMenu);
     }
 
+    function createPixPaymentUi() {
+        if (document.getElementById('pagina-pagamento-pix')) return;
+
+        const payment = document.createElement('section');
+        payment.id = 'pagina-pagamento-pix';
+        payment.className = 'pagina-pagamento-pix';
+        payment.style.display = 'none';
+        payment.innerHTML = `
+            <header class="pix-header">
+                <button type="button" id="pix-voltar" class="detalhe-voltar" aria-label="Voltar">
+                    <span aria-hidden="true">‹</span>
+                </button>
+                <div class="detalhe-header-textos">
+                    <p>Pagamento</p>
+                    <h1>Pix</h1>
+                </div>
+            </header>
+            <div class="pix-conteudo">
+                <div class="pix-status" id="pix-status">Aguardando pagamento</div>
+                <h2>Finalize o Pix no app do banco</h2>
+                <p>Use o QR Code ou copie o código Pix. O pedido será enviado para a cozinha automaticamente após a confirmação.</p>
+                <div id="pix-qrcode" class="pix-qrcode"></div>
+                <label class="pix-codigo">
+                    <span>Pix copia e cola</span>
+                    <textarea id="pix-brcode" readonly></textarea>
+                </label>
+                <button type="button" id="pix-copiar" class="pix-copiar">Copiar código Pix</button>
+                <p id="pix-expira" class="pix-expira"></p>
+                <p id="pix-mensagem" class="pix-mensagem" aria-live="polite"></p>
+            </div>
+        `;
+        document.getElementById('app').appendChild(payment);
+        document.getElementById('pix-voltar').addEventListener('click', backToMenu);
+        document.getElementById('pix-copiar').addEventListener('click', copyPixCode);
+    }
+
+    function createOrderSuccessUi() {
+        if (document.getElementById('pagina-sucesso-pedido')) return;
+
+        const success = document.createElement('section');
+        success.id = 'pagina-sucesso-pedido';
+        success.className = 'pagina-sucesso-pedido';
+        success.style.display = 'none';
+        success.innerHTML = `
+            <div class="sucesso-conteudo">
+                <div class="sucesso-icone" aria-hidden="true">✓</div>
+                <p class="sucesso-status">Pagamento confirmado</p>
+                <h2>Pedido enviado para a cozinha</h2>
+                <p>Agora é só aguardar. A equipe já recebeu os detalhes do seu pedido.</p>
+                <div class="sucesso-pedido">
+                    <span>Número do pedido</span>
+                    <strong id="sucesso-order-id"></strong>
+                </div>
+                <button type="button" id="sucesso-voltar" class="sucesso-voltar">Voltar ao cardápio</button>
+            </div>
+        `;
+        document.getElementById('app').appendChild(success);
+        document.getElementById('sucesso-voltar').addEventListener('click', backToMenu);
+    }
+
     function showProductDetail() {
         state.cardapioScrollY = window.scrollY || document.documentElement.scrollTop || 0;
         const detail = document.getElementById('pagina-detalhe-produto');
@@ -140,11 +205,18 @@
     }
 
     function backToMenu() {
+        stopPaymentPolling();
         const detail = document.getElementById('pagina-detalhe-produto');
+        const payment = document.getElementById('pagina-pagamento-pix');
+        const success = document.getElementById('pagina-sucesso-pedido');
         const paginaCardapio = document.getElementById('pagina-cardapio');
         if (detail) detail.style.display = 'none';
+        if (payment) payment.style.display = 'none';
+        if (success) success.style.display = 'none';
         if (paginaCardapio) paginaCardapio.style.display = 'block';
         document.body.classList.remove('detalhe-produto-ativo');
+        document.body.classList.remove('pagamento-pix-ativo');
+        document.body.classList.remove('sucesso-pedido-ativo');
         requestAnimationFrame(function () {
             window.scrollTo(0, state.cardapioScrollY || 0);
         });
@@ -448,14 +520,125 @@
             }
             state.items = [];
             updateCartUi();
-            showCartMessage(`Pedido enviado: ${body.orderId || 'recebido'}.`);
+            closeCart();
+            if (body.status === 'PAYMENT_PENDING' && body.payment) {
+                showPixPayment(body);
+            } else {
+                showCartMessage(`Pedido enviado: ${body.orderId || 'recebido'}.`);
+                openCart();
+            }
         } catch (error) {
             showCartMessage(error.message || 'Falha ao enviar pedido.', true);
+            openCart();
         } finally {
             button.disabled = false;
             button.textContent = 'Enviar pedido';
-            openCart();
         }
+    }
+
+    function showPixPayment(order) {
+        const payment = document.getElementById('pagina-pagamento-pix');
+        const paginaCardapio = document.getElementById('pagina-cardapio');
+        const paginaInicial = document.getElementById('pagina-inicial');
+        const pix = order.payment || {};
+        if (!payment) return;
+
+        if (paginaInicial) paginaInicial.style.display = 'none';
+        if (paginaCardapio) paginaCardapio.style.display = 'none';
+        payment.style.display = 'block';
+        document.body.classList.add('pagamento-pix-ativo');
+        document.body.classList.remove('detalhe-produto-ativo');
+        setText('pix-status', 'Aguardando pagamento');
+        setText('pix-mensagem', `Pedido ${order.orderId}. Assim que o Pix for confirmado, a cozinha receberá seu pedido.`);
+        setText('pix-expira', pix.expiresAt ? `Este Pix expira em ${formatDateTime(pix.expiresAt)}.` : '');
+
+        const codeInput = document.getElementById('pix-brcode');
+        if (codeInput) codeInput.value = pix.brCode || '';
+        renderQrCode(pix.qrCodeImage);
+        window.scrollTo(0, 0);
+        startPaymentPolling(order.orderId);
+    }
+
+    function renderQrCode(value) {
+        const wrap = document.getElementById('pix-qrcode');
+        if (!wrap) return;
+        wrap.innerHTML = '';
+        if (!value) {
+            wrap.innerHTML = '<p>Use o código Pix copia e cola abaixo.</p>';
+            return;
+        }
+        const img = document.createElement('img');
+        img.alt = 'QR Code Pix';
+        img.src = value.startsWith('data:') || value.startsWith('http') ? value : `data:image/png;base64,${value}`;
+        wrap.appendChild(img);
+    }
+
+    async function copyPixCode() {
+        const codeInput = document.getElementById('pix-brcode');
+        const code = codeInput ? codeInput.value : '';
+        if (!code) {
+            setText('pix-mensagem', 'Código Pix indisponível. Chame o atendimento.');
+            return;
+        }
+        try {
+            await navigator.clipboard.writeText(code);
+            setText('pix-mensagem', 'Código Pix copiado.');
+        } catch (error) {
+            codeInput.focus();
+            codeInput.select();
+            setText('pix-mensagem', 'Selecione e copie o código Pix manualmente.');
+        }
+    }
+
+    function startPaymentPolling(orderId) {
+        stopPaymentPolling();
+        checkPaymentStatus(orderId);
+        state.paymentPollId = window.setInterval(function () {
+            checkPaymentStatus(orderId);
+        }, PAYMENT_POLL_INTERVAL_MS);
+    }
+
+    function stopPaymentPolling() {
+        if (state.paymentPollId) {
+            window.clearInterval(state.paymentPollId);
+            state.paymentPollId = null;
+        }
+    }
+
+    async function checkPaymentStatus(orderId) {
+        try {
+            const response = await fetch(`${ORDER_ENDPOINT}/${encodeURIComponent(orderId)}`);
+            if (!response.ok) return;
+            const order = await response.json();
+            if (['PAID', 'PRINT_REQUESTED', 'PRINTED'].includes(order.status)) {
+                stopPaymentPolling();
+                showOrderSuccess(orderId);
+            } else if (order.status === 'PAYMENT_EXPIRED') {
+                stopPaymentPolling();
+                setText('pix-status', 'Pix expirado');
+                setText('pix-mensagem', 'Este Pix expirou. Refaca o pedido ou chame o atendimento.');
+            }
+        } catch (error) {
+            setText('pix-mensagem', 'Aguardando confirmação do pagamento...');
+        }
+    }
+
+    function showOrderSuccess(orderId) {
+        const success = document.getElementById('pagina-sucesso-pedido');
+        const payment = document.getElementById('pagina-pagamento-pix');
+        const detail = document.getElementById('pagina-detalhe-produto');
+        const paginaCardapio = document.getElementById('pagina-cardapio');
+        if (!success) return;
+
+        if (payment) payment.style.display = 'none';
+        if (detail) detail.style.display = 'none';
+        if (paginaCardapio) paginaCardapio.style.display = 'none';
+        setText('sucesso-order-id', orderId || '');
+        success.style.display = 'block';
+        document.body.classList.remove('pagamento-pix-ativo');
+        document.body.classList.remove('detalhe-produto-ativo');
+        document.body.classList.add('sucesso-pedido-ativo');
+        window.scrollTo(0, 0);
     }
 
     function calculateTotal() {
@@ -472,6 +655,12 @@
 
     function formatCurrency(value) {
         return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function formatDateTime(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '';
+        return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     }
 
     function showCartMessage(message, error) {
@@ -575,5 +764,127 @@
                 "'": '&#039;'
             }[char];
         });
+    }
+
+    function setupScreenshotMode() {
+        const params = new URLSearchParams(window.location.search);
+        const step = params.get('screenshot');
+        if (!step) return;
+
+        const paginaInicial = document.getElementById('pagina-inicial');
+        const paginaCardapio = document.getElementById('pagina-cardapio');
+        if (paginaInicial) paginaInicial.style.display = 'none';
+        if (paginaCardapio) paginaCardapio.style.display = 'block';
+        document.body.classList.add('screenshot-mode');
+
+        if (step === 'cardapio') {
+            window.scrollTo(0, 0);
+            return;
+        }
+        if (step === 'detalhe') {
+            openScreenshotProductDetail();
+            return;
+        }
+        if (step === 'carrinho') {
+            addScreenshotItem();
+            openCart();
+            return;
+        }
+        if (step === 'pix' || step === 'pix-copiado') {
+            showPixPayment(screenshotOrder());
+            stopPaymentPolling();
+            if (step === 'pix-copiado') {
+                setText('pix-mensagem', 'Código Pix copiado.');
+            }
+            return;
+        }
+        if (step === 'sucesso') {
+            showOrderSuccess(screenshotOrder().orderId);
+        }
+    }
+
+    function openScreenshotProductDetail() {
+        const product = findProductByTitle('Mix de churrasco');
+        if (!product) return;
+        state.currentProduct = readProduct(product);
+        showProductDetail();
+        setSelectValue('pedido-preco', 'INTEIRA: R$ 95,00');
+        setSelectValueByOptionName('Acompanhamento', 'Batata frita');
+        setSelectValueByOptionName('Ponto da carne', 'Ao ponto');
+        const notes = document.getElementById('pedido-observacao');
+        if (notes) notes.value = 'Sem vinagrete';
+    }
+
+    function addScreenshotItem() {
+        state.items = [{
+            name: 'Mix de churrasco',
+            variant: 'INTEIRA: R$ 95,00',
+            quantity: 1,
+            unitPriceText: 'INTEIRA: R$ 95,00',
+            options: [
+                { name: 'Tamanho', value: 'INTEIRA' },
+                { name: 'Acompanhamento', value: 'Batata frita' },
+                { name: 'Ponto da carne', value: 'Ao ponto' }
+            ],
+            notes: 'Sem vinagrete'
+        }];
+        updateCartUi();
+        const customer = document.getElementById('pedido-cliente');
+        const payment = document.getElementById('pedido-pagamento');
+        if (customer) customer.value = 'Mesa 04';
+        if (payment) payment.value = 'Pix';
+    }
+
+    function screenshotOrder() {
+        return {
+            orderId: 'B1752607100000-DEMO01',
+            status: 'PAYMENT_PENDING',
+            payment: {
+                brCode: '00020101021226870014br.gov.bcb.pix2565pix.openpix.com.br/qr/v2/demo-beco-da-praia520400005303986540595.005802BR5925BECO DA PRAIA RESTAURANTE6009FORTALEZA62070503***6304ABCD',
+                qrCodeImage: screenshotQrCode(),
+                expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
+            }
+        };
+    }
+
+    function screenshotQrCode() {
+        const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="260" height="260" viewBox="0 0 260 260">
+              <rect width="260" height="260" fill="#fff"/>
+              <rect x="18" y="18" width="58" height="58" fill="#111"/>
+              <rect x="30" y="30" width="34" height="34" fill="#fff"/>
+              <rect x="184" y="18" width="58" height="58" fill="#111"/>
+              <rect x="196" y="30" width="34" height="34" fill="#fff"/>
+              <rect x="18" y="184" width="58" height="58" fill="#111"/>
+              <rect x="30" y="196" width="34" height="34" fill="#fff"/>
+              <path d="M96 22h18v18H96zM132 22h14v14h-14zM98 58h42v14H98zM160 92h18v18h-18zM94 96h42v18H94zM142 120h58v18h-58zM96 150h18v18H96zM126 150h18v18h-18zM160 154h20v20h-20zM198 154h18v18h-18zM94 190h48v18H94zM154 194h18v18h-18zM190 196h42v18h-42zM96 224h18v18H96zM132 224h74v14h-74z" fill="#111"/>
+            </svg>
+        `;
+        return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function findProductByTitle(title) {
+        return Array.from(document.querySelectorAll('.produtoContainer')).find(function (product) {
+            return text(product.querySelector('.listaProdutoTitulo')) === title;
+        });
+    }
+
+    function scrollToMenuItem(title) {
+        const product = findProductByTitle(title);
+        if (product) {
+            product.scrollIntoView({ block: 'center' });
+        }
+    }
+
+    function setSelectValue(id, value) {
+        const select = document.getElementById(id);
+        if (select) select.value = value;
+    }
+
+    function setSelectValueByOptionName(name, value) {
+        const select = Array.from(document.querySelectorAll('[data-option-name]')).find(function (element) {
+            return element.dataset.optionName === name;
+        });
+        if (select) select.value = value;
     }
 })();

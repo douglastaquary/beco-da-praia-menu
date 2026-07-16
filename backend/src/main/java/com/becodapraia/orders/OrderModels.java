@@ -36,15 +36,32 @@ public final class OrderModels {
             boolean ok,
             String orderId,
             String status,
+            PaymentDetails payment,
             String error
     ) {
         public static OrderResponse success(String orderId, String status) {
-            return new OrderResponse(true, orderId, status, null);
+            return new OrderResponse(true, orderId, status, null, null);
+        }
+
+        public static OrderResponse success(String orderId, String status, PaymentDetails payment) {
+            return new OrderResponse(true, orderId, status, payment, null);
         }
 
         public static OrderResponse error(String error) {
-            return new OrderResponse(false, null, null, error);
+            return new OrderResponse(false, null, null, null, error);
         }
+    }
+
+    public record PaymentDetails(
+            String provider,
+            String status,
+            String correlationId,
+            String txId,
+            String brCode,
+            String qrCodeImage,
+            String paymentLinkUrl,
+            Instant expiresAt
+    ) {
     }
 
     public record OrderRecord(
@@ -55,6 +72,7 @@ public final class OrderModels {
             String totalText,
             BigDecimal totalAmount,
             String status,
+            PaymentDetails payment,
             Instant createdAt,
             Instant updatedAt,
             int printAttempts

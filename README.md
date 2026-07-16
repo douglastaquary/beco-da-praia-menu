@@ -49,8 +49,22 @@ Cliente no celular
 5. O item e adicionado ao carrinho.
 6. O cliente informa nome, mesa e forma de pagamento.
 7. O frontend envia o pedido para `POST /orders`.
-8. O backend valida, salva no DynamoDB e publica o pedido no topico do AWS IoT Core.
-9. O Raspberry Pi recebe a mensagem e imprime na cozinha.
+8. Para Pix, o backend cria uma cobranca dinamica na OpenPix/Woovi e retorna QR Code/copia-e-cola.
+9. O webhook da OpenPix/Woovi confirma o pagamento e libera a impressao.
+10. O Raspberry Pi recebe a mensagem e imprime na cozinha.
+
+### Fluxo visual do pedido
+
+Os prints abaixo usam dados mockados para demonstrar o fluxo mobile de pedido e pagamento Pix.
+
+| Etapa | Print |
+| --- | --- |
+| Cardapio | <img src="docs/screenshots/01-cardapio.png" alt="Cardapio mobile" width="220"> |
+| Detalhe do item | <img src="docs/screenshots/02-detalhe-item.png" alt="Detalhe do item com opcoes" width="220"> |
+| Carrinho | <img src="docs/screenshots/03-carrinho.png" alt="Carrinho do pedido" width="220"> |
+| Pagamento Pix | <img src="docs/screenshots/04-pix-pagamento.png" alt="Pagamento Pix com QR Code e copia e cola" width="220"> |
+| Pix copiado | <img src="docs/screenshots/05-pix-copiado.png" alt="Confirmacao de codigo Pix copiado" width="220"> |
+| Sucesso | <img src="docs/screenshots/06-sucesso-cozinha.png" alt="Pedido enviado para a cozinha" width="220"> |
 
 ## Regras de cardapio
 
@@ -118,12 +132,26 @@ Endpoints:
 - `GET /orders/{orderId}`: consulta pedido.
 - `POST /orders/{orderId}/reprint`: republica pedido para impressao.
 - `POST /orders/{orderId}/print-status`: atualiza status de impressao.
+- `POST /payments/openpix/webhook`: recebe eventos de pagamento Pix.
 
 Variaveis de ambiente:
 
 - `ORDERS_TABLE`: tabela DynamoDB de pedidos.
 - `PRINTER_ORDERS_TOPIC`: topico IoT usado pela cozinha.
 - `IOT_DATA_ENDPOINT`: endpoint data plane do AWS IoT Core.
+- `OPENPIX_BASE_URL`: URL da OpenPix/Woovi.
+- `OPENPIX_APP_ID`: credencial da aplicacao OpenPix/Woovi.
+- `OPENPIX_WEBHOOK_TOKEN`: token compartilhado para proteger o webhook Pix.
+- `PIX_CHARGE_EXPIRES_IN_SECONDS`: tempo de expiracao da cobranca Pix.
+
+Status principais:
+
+- `PAYMENT_PENDING`: pedido Pix criado e aguardando pagamento.
+- `PAID`: Pix confirmado pelo webhook.
+- `PRINT_REQUESTED`: pedido enviado para impressao.
+- `PRINTED`: agente confirmou impressao.
+- `PRINT_FAILED`: agente falhou ao imprimir.
+- `PAYMENT_EXPIRED`: cobranca Pix expirou.
 
 ### Printer Agent
 
@@ -163,12 +191,14 @@ O arquivo `template.yaml` define:
 - `AWS::Serverless::Function` Java 17 arm64 para o backend Quarkus.
 - `AWS::DynamoDB::Table` com billing `PAY_PER_REQUEST`.
 - Permissoes da Lambda para DynamoDB e `iot:Publish`.
+- Rota de webhook `/payments/openpix/webhook` para confirmacao do Pix.
 
 Outputs principais:
 
 - `OrdersApiUrl`
 - `OrdersTableName`
 - `PrinterOrdersTopic`
+- `OpenPixWebhookUrl`
 
 ## Build e testes
 
