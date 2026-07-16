@@ -2576,14 +2576,14 @@
 
     @media (max-width: 640px) {
       :root {
-        --app-safe-top: max(env(safe-area-inset-top), 18px);
-        --app-safe-bottom: max(env(safe-area-inset-bottom), 16px);
+        --app-safe-top: max(env(safe-area-inset-top), 44px);
+        --app-safe-bottom: max(env(safe-area-inset-bottom), 24px);
         --app-side: 16px;
       }
 
       body.screenshot-mode {
-        --app-safe-top: 34px;
-        --app-safe-bottom: 22px;
+        --app-safe-top: 54px;
+        --app-safe-bottom: 34px;
       }
 
       .mainContainer,
@@ -2615,7 +2615,7 @@
 
       .header-beco,
       .header-cardapio {
-        padding-top: var(--app-safe-top);
+        padding: calc(var(--app-safe-top) + 10px) var(--app-side) 14px;
       }
 
       .header-cardapio .header-voltar {
@@ -2723,19 +2723,28 @@
 
       .pedido-carrinho {
         right: var(--app-side);
-        bottom: var(--app-safe-bottom);
+        bottom: calc(var(--app-safe-bottom) + 10px);
         left: var(--app-side);
+        display: flex;
+        justify-content: center;
       }
 
       .pedido-carrinho-toggle {
         width: 100%;
+        max-width: 520px;
         min-height: 56px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding-right: 18px;
+        padding-left: 18px;
       }
 
       .pedido-carrinho-painel {
         right: 0;
         left: 0;
-        bottom: calc(64px + var(--app-safe-bottom));
+        bottom: calc(78px + var(--app-safe-bottom));
         width: 100%;
         max-height: calc(100vh - var(--app-safe-top) - 96px);
         border-radius: 14px;
@@ -2749,7 +2758,7 @@
 
       .detalhe-produto-header,
       .pix-header {
-        padding: var(--app-safe-top) var(--app-side) 12px;
+        padding: calc(var(--app-safe-top) + 8px) var(--app-side) 12px;
       }
 
       .detalhe-voltar {
@@ -2801,7 +2810,14 @@
       }
 
       .detalhe-acao-wrap {
-        padding: 12px var(--app-side) var(--app-safe-bottom);
+        display: flex;
+        justify-content: center;
+        padding: 12px var(--app-side) calc(var(--app-safe-bottom) + 10px);
+      }
+
+      .detalhe-adicionar {
+        width: 100%;
+        max-width: 520px;
       }
 
       .pix-qrcode {
