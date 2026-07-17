@@ -38,6 +38,7 @@ class EscPosPrinterTest {
             String ticket = new String(received.get(5, TimeUnit.SECONDS), Charset.forName("CP850"));
             assertTrue(ticket.contains("BECO DA PRAIA"));
             assertTrue(ticket.contains("Pedido: B123"));
+            assertTrue(ticket.contains("Senha: 123"));
             assertTrue(ticket.contains("Consumo: Local"));
             assertTrue(ticket.contains("Mesa: 04"));
             assertTrue(ticket.contains("Pagamento: Pix"));

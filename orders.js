@@ -183,15 +183,18 @@
                 <h2>Pedido enviado para a cozinha</h2>
                 <p>Agora é só aguardar. A equipe já recebeu os detalhes do seu pedido.</p>
                 <div class="sucesso-pedido">
-                    <span>Número do pedido</span>
-                    <strong id="sucesso-order-id"></strong>
+                    <span>Senha do pedido</span>
+                    <strong id="sucesso-order-password"></strong>
+                    <small>Número do pedido: <b id="sucesso-order-id"></b></small>
                 </div>
                 <div class="sucesso-orientacao" id="sucesso-orientacao"></div>
+                <button type="button" id="sucesso-salvar" class="sucesso-salvar">Salvar número do pedido</button>
                 <button type="button" id="sucesso-voltar" class="sucesso-voltar">Voltar ao cardápio</button>
             </div>
         `;
         document.getElementById('app').appendChild(success);
         document.getElementById('sucesso-voltar').addEventListener('click', backToMenu);
+        document.getElementById('sucesso-salvar').addEventListener('click', saveOrderNumber);
     }
 
     function showProductDetail() {
@@ -701,6 +704,7 @@
         if (detail) detail.style.display = 'none';
         if (paginaCardapio) paginaCardapio.style.display = 'none';
         setText('sucesso-order-id', orderData.orderId || '');
+        setText('sucesso-order-password', orderPassword(orderData.orderId));
         renderSuccessGuidance(orderData);
         document.getElementById('pix-status')?.classList.remove('pix-status-shimmer');
         success.style.display = 'block';
@@ -714,17 +718,43 @@
         const element = document.getElementById('sucesso-orientacao');
         if (!element) return;
         const isTakeaway = order.consumptionType === 'TAKEAWAY';
+        const password = orderPassword(order.orderId);
         const identity = isTakeaway
-            ? (order.customerName ? ` pelo nome ${escapeHtml(order.customerName)}` : ' pelo nome informado')
+            ? (password ? ` pela senha ${escapeHtml(password)}` : ' pela senha do pedido')
             : (order.tableNumber ? ` na mesa ${escapeHtml(order.tableNumber)}` : ' na sua mesa');
         const mainMessage = isTakeaway
-            ? `Enquanto seu pedido é preparado, nossa equipe chamará${identity} assim que estiver pronto.`
+            ? `Enquanto seu pedido é preparado, ele será chamado${identity} assim que estiver pronto.`
             : `Enquanto seu pedido é preparado, nossa equipe irá se apresentar${identity} e preparar a sua mesa.`;
         element.innerHTML = `
             <strong>Enquanto aguarda</strong>
             <p>${mainMessage}</p>
             <p>Bom apetite! A qualquer momento você pode chamar nossos atendentes.</p>
         `;
+    }
+
+    async function saveOrderNumber() {
+        const order = state.lastPixOrder || {};
+        const orderId = order.orderId || text(document.getElementById('sucesso-order-id'));
+        const password = orderPassword(orderId);
+        const content = `Beco da Praia\nPedido: ${orderId}\nSenha: ${password}`;
+        try {
+            if (navigator.share) {
+                await navigator.share({ title: 'Pedido Beco da Praia', text: content });
+                return;
+            }
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(content);
+                return;
+            }
+        } catch (error) {
+            // Fall back to file download below.
+        }
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `pedido-${password || 'beco'}.txt`;
+        link.click();
+        URL.revokeObjectURL(link.href);
     }
 
     function setupPixOnlyNotice() {
@@ -760,10 +790,15 @@
         const location = order.consumptionType === 'LOCAL'
             ? `Mesa ${escapeHtml(order.tableNumber || '')}`
             : `Viagem${order.customerName ? ` - ${escapeHtml(order.customerName)}` : ''}`;
+        const password = orderPassword(order.orderId);
         summary.innerHTML = `
             <div>
                 <span>Valor do Pix</span>
                 <strong>${escapeHtml(order.totalText || formatCurrency(calculateTotal()))}</strong>
+            </div>
+            <div class="pix-senha">
+                <span>Senha do pedido</span>
+                <strong>${escapeHtml(password)}</strong>
             </div>
             <p>${items.map(item => `<span>${escapeHtml(item.quantity || 1)}x ${escapeHtml(item.name)}</span>`).join('') || escapeHtml(itemNames)}</p>
             <small>${location}</small>
@@ -790,6 +825,11 @@
         const date = new Date(value);
         if (Number.isNaN(date.getTime())) return '';
         return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function orderPassword(orderId) {
+        const digits = String(orderId || '').replace(/\D/g, '');
+        return digits.length <= 3 ? digits : digits.slice(-3);
     }
 
     function showCartMessage(message, error) {
@@ -973,7 +1013,7 @@
 
     function screenshotOrder() {
         return {
-            orderId: 'B1752607100000-DEMO01',
+            orderId: 'B1752607100000-123',
             status: 'PAYMENT_PENDING',
             consumptionType: 'LOCAL',
             tableNumber: '04',

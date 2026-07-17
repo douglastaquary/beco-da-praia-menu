@@ -29,6 +29,7 @@ public class EscPosPrinter {
             write(out, "------------------------------\n");
             out.write(new byte[]{0x1B, 0x61, 0x00});
             write(out, "Pedido: " + safe(order.orderId()) + "\n");
+            write(out, "Senha: " + safe(OrderPassword.fromOrderId(order.orderId())) + "\n");
             if ("LOCAL".equalsIgnoreCase(safe(order.consumptionType()))) {
                 write(out, "Consumo: Local\n");
                 write(out, "Mesa: " + safe(order.tableNumber()) + "\n");

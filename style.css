@@ -2192,6 +2192,18 @@
       font-weight: 900;
     }
 
+    .pix-resumo .pix-senha {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #f0e8dd;
+    }
+
+    .pix-resumo .pix-senha strong {
+      color: #4f1b14;
+      font-size: 1.7rem;
+      letter-spacing: 0.08em;
+    }
+
     .pix-resumo p {
       margin: 10px 0 6px;
       color: #1f1f1f;
@@ -2362,7 +2374,16 @@
     .sucesso-pedido strong {
       margin-top: 6px;
       color: #1f1f1f;
-      font-size: 1.06rem;
+      font-size: 2rem;
+      word-break: break-word;
+    }
+
+    .sucesso-pedido small {
+      display: block;
+      margin-top: 6px;
+      color: #7a6b5c;
+      font-size: 0.78rem;
+      font-weight: 800;
       word-break: break-word;
     }
 
@@ -2398,17 +2419,28 @@
       font-weight: 800;
     }
 
+    .sucesso-salvar,
     .sucesso-voltar {
       width: 100%;
       min-height: 54px;
       border: none;
       border-radius: 999px;
-      color: #fff;
-      background: #C5831A;
-      box-shadow: 0 10px 24px rgba(197, 131, 26, 0.34);
       font-size: 1rem;
       font-weight: 800;
       cursor: pointer;
+    }
+
+    .sucesso-salvar {
+      margin-bottom: 12px;
+      color: #4f1b14;
+      background: #fff;
+      border: 1px solid #ece5dc;
+    }
+
+    .sucesso-voltar {
+      color: #fff;
+      background: #C5831A;
+      box-shadow: 0 10px 24px rgba(197, 131, 26, 0.34);
     }
 
     body.detalhe-produto-ativo .pedido-carrinho,

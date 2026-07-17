@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Path("/orders")
 @Produces(MediaType.APPLICATION_JSON)
@@ -128,7 +127,7 @@ public class OrderResource {
     }
 
     private String newOrderId() {
-        return "B" + Instant.now().toEpochMilli() + "-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+        return OrderPassword.newOrderId();
     }
 
     private boolean isPix(String paymentMethod) {

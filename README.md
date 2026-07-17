@@ -53,6 +53,7 @@ Cliente no celular
 9. O backend cria uma cobranca dinamica na OpenPix/Woovi e retorna QR Code/copia-e-cola.
 10. O webhook da OpenPix/Woovi confirma o pagamento e libera a impressao.
 11. O Raspberry Pi recebe a mensagem e imprime na cozinha.
+12. O cliente acompanha pela senha do pedido, formada pelos 3 ultimos digitos numericos do pedido.
 
 ### Fluxo visual do pedido
 
@@ -77,6 +78,7 @@ O fluxo de pedido respeita regras especificas para evitar pedidos incompletos:
 - Itens disponiveis para compra exibem a tag visual `Pedido online`.
 - Pedidos online e direto da mesa aceitam somente pagamento via Pix.
 - Pedido para comer no local exige mesa; pedido para viagem exige nome para retirada.
+- A senha exibida ao cliente e impressa na cozinha usa os 3 ultimos digitos numericos do pedido.
 - Pratos com carne exigem escolha do ponto quando necessario: ao ponto, bem passado ou mal passado.
 - Arrumadinho e Panelinha de Lingua nao exigem ponto da carne.
 - Porcoes com preco meia/inteira exigem escolha do tamanho antes de adicionar ao carrinho.
