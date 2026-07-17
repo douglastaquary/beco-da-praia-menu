@@ -29,7 +29,15 @@ public class EscPosPrinter {
             write(out, "------------------------------\n");
             out.write(new byte[]{0x1B, 0x61, 0x00});
             write(out, "Pedido: " + safe(order.orderId()) + "\n");
-            write(out, "Cliente: " + safe(order.customerName()) + "\n");
+            if ("LOCAL".equalsIgnoreCase(safe(order.consumptionType()))) {
+                write(out, "Consumo: Local\n");
+                write(out, "Mesa: " + safe(order.tableNumber()) + "\n");
+            } else if ("TAKEAWAY".equalsIgnoreCase(safe(order.consumptionType()))) {
+                write(out, "Consumo: Viagem\n");
+                write(out, "Cliente: " + safe(order.customerName()) + "\n");
+            } else {
+                write(out, "Cliente: " + safe(order.customerName()) + "\n");
+            }
             write(out, "Pagamento: " + safe(order.paymentMethod()) + "\n");
             write(out, "Data: " + safe(order.createdAt()) + "\n");
             write(out, "------------------------------\n");

@@ -6,6 +6,8 @@ public record PrintOrder(
         String orderId,
         String customerName,
         String paymentMethod,
+        String consumptionType,
+        String tableNumber,
         List<PrintOrderItem> items,
         String totalText,
         String createdAt

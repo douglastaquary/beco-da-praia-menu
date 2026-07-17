@@ -42,6 +42,8 @@ public class OrderRepository {
         item.put("orderId", s(order.orderId()));
         item.put("customerName", s(order.customerName()));
         item.put("paymentMethod", s(order.paymentMethod()));
+        item.put("consumptionType", s(order.consumptionType()));
+        item.put("tableNumber", s(order.tableNumber()));
         item.put("itemsJson", s(toJson(order.items())));
         item.put("totalText", s(order.totalText()));
         item.put("totalAmount", AttributeValue.builder().n(order.totalAmount().toPlainString()).build());
@@ -161,6 +163,8 @@ public class OrderRepository {
                 string(item, "orderId"),
                 string(item, "customerName"),
                 string(item, "paymentMethod"),
+                string(item, "consumptionType"),
+                string(item, "tableNumber"),
                 items(item),
                 string(item, "totalText"),
                 number(item, "totalAmount"),

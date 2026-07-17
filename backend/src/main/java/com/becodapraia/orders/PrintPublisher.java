@@ -29,6 +29,8 @@ public class PrintPublisher {
                     "orderId", order.orderId(),
                     "customerName", order.customerName(),
                     "paymentMethod", order.paymentMethod(),
+                    "consumptionType", order.consumptionType(),
+                    "tableNumber", order.tableNumber(),
                     "items", order.items(),
                     "totalText", order.totalText(),
                     "createdAt", order.createdAt().toString()

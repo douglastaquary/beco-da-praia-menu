@@ -11,6 +11,8 @@ public final class OrderModels {
     public record CreateOrderRequest(
             String customerName,
             String paymentMethod,
+            String consumptionType,
+            String tableNumber,
             List<OrderItem> items,
             String totalText
     ) {
@@ -68,6 +70,8 @@ public final class OrderModels {
             String orderId,
             String customerName,
             String paymentMethod,
+            String consumptionType,
+            String tableNumber,
             List<OrderItem> items,
             String totalText,
             BigDecimal totalAmount,

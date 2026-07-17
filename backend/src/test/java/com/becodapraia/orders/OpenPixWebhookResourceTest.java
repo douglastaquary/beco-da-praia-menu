@@ -66,6 +66,8 @@ class OpenPixWebhookResourceTest {
                     orderId,
                     "Douglas",
                     "Pix",
+                    "TAKEAWAY",
+                    "",
                     List.of(new OrderItem("Baiao de Dois", "R$ 87,00", 1, "R$ 87,00", List.of(), "")),
                     "R$ 87,00",
                     BigDecimal.valueOf(87),

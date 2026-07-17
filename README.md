@@ -47,11 +47,12 @@ Cliente no celular
 3. A aplicacao abre a tela de detalhe do item.
 4. O cliente informa quantidade, variacoes obrigatorias e observacoes.
 5. O item e adicionado ao carrinho.
-6. O cliente informa nome, mesa e forma de pagamento.
-7. O frontend envia o pedido para `POST /orders`.
-8. Para Pix, o backend cria uma cobranca dinamica na OpenPix/Woovi e retorna QR Code/copia-e-cola.
-9. O webhook da OpenPix/Woovi confirma o pagamento e libera a impressao.
-10. O Raspberry Pi recebe a mensagem e imprime na cozinha.
+6. O cliente escolhe se vai comer no local ou levar para viagem.
+7. Para comer no local, informa a mesa. Para viagem, informa o nome para retirada.
+8. O frontend envia o pedido para `POST /orders` com pagamento Pix.
+9. O backend cria uma cobranca dinamica na OpenPix/Woovi e retorna QR Code/copia-e-cola.
+10. O webhook da OpenPix/Woovi confirma o pagamento e libera a impressao.
+11. O Raspberry Pi recebe a mensagem e imprime na cozinha.
 
 ### Fluxo visual do pedido
 
@@ -73,6 +74,9 @@ O fluxo de pedido respeita regras especificas para evitar pedidos incompletos:
 - Alguns itens temporariamente removidos do cardapio online nao aparecem para pedido.
 - Nas entradinhas, apenas Dadinho de tapioca, Batata frita e Caldinho de feijao estao disponiveis para pedido direto da mesa.
 - Itens indisponiveis aparecem sem botao de adicionar ao pedido.
+- Itens disponiveis para compra exibem a tag visual `Pedido online`.
+- Pedidos online e direto da mesa aceitam somente pagamento via Pix.
+- Pedido para comer no local exige mesa; pedido para viagem exige nome para retirada.
 - Pratos com carne exigem escolha do ponto quando necessario: ao ponto, bem passado ou mal passado.
 - Arrumadinho e Panelinha de Lingua nao exigem ponto da carne.
 - Porcoes com preco meia/inteira exigem escolha do tamanho antes de adicionar ao carrinho.
@@ -121,6 +125,8 @@ Responsabilidades:
 
 - Receber pedidos.
 - Validar campos obrigatorios.
+- Rejeitar pedidos online com forma de pagamento diferente de Pix.
+- Validar se o pedido e para comer no local ou viagem.
 - Validar itens e opcoes do pedido.
 - Persistir pedido no DynamoDB.
 - Publicar evento de impressao no AWS IoT Core.

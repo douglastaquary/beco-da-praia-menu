@@ -23,6 +23,8 @@ class EscPosPrinterTest {
                     "B123",
                     "Douglas",
                     "Pix",
+                    "LOCAL",
+                    "04",
                     List.of(new PrintOrderItem("Trio Nordestino", "R$ 99,90", 1, "R$ 99,90",
                             List.of(
                                     new PrintOrderOption("Ponto da carne", "Ao ponto"),
@@ -36,7 +38,8 @@ class EscPosPrinterTest {
             String ticket = new String(received.get(5, TimeUnit.SECONDS), Charset.forName("CP850"));
             assertTrue(ticket.contains("BECO DA PRAIA"));
             assertTrue(ticket.contains("Pedido: B123"));
-            assertTrue(ticket.contains("Cliente: Douglas"));
+            assertTrue(ticket.contains("Consumo: Local"));
+            assertTrue(ticket.contains("Mesa: 04"));
             assertTrue(ticket.contains("Pagamento: Pix"));
             assertTrue(ticket.contains("1x Trio Nordestino"));
             assertTrue(ticket.contains("Ponto da carne: Ao ponto"));

@@ -16,11 +16,18 @@ public class OrderValidator {
             errors.add("Pedido vazio.");
             return errors;
         }
-        if (isBlank(request.customerName())) {
-            errors.add("Informe o nome do cliente.");
-        }
         if (isBlank(request.paymentMethod())) {
             errors.add("Informe a forma de pagamento.");
+        } else if (!"pix".equalsIgnoreCase(request.paymentMethod().trim())) {
+            errors.add("Pedidos online aceitam somente pagamento via Pix.");
+        }
+        String consumptionType = normalize(request.consumptionType());
+        if (!"LOCAL".equals(consumptionType) && !"TAKEAWAY".equals(consumptionType)) {
+            errors.add("Informe se o pedido e para comer no local ou viagem.");
+        } else if ("LOCAL".equals(consumptionType) && isBlank(request.tableNumber())) {
+            errors.add("Informe a mesa para comer no local.");
+        } else if ("TAKEAWAY".equals(consumptionType) && isBlank(request.customerName())) {
+            errors.add("Informe o nome para retirada.");
         }
         if (request.items() == null || request.items().isEmpty()) {
             errors.add("Inclua pelo menos um item no pedido.");
@@ -50,5 +57,9 @@ public class OrderValidator {
 
     private boolean isBlank(String value) {
         return value == null || value.trim().isEmpty();
+    }
+
+    private String normalize(String value) {
+        return value == null ? "" : value.trim().toUpperCase();
     }
 }

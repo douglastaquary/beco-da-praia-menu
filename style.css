@@ -324,6 +324,33 @@
       font-family: 'DM Sans', sans-serif;
     }
 
+    .pix-only-notice {
+      width: min(100% - 32px, 720px);
+      margin: 14px auto 4px;
+      padding: 12px 14px;
+      border: 1px solid #f0d6a7;
+      border-radius: 12px;
+      color: #7a4a10;
+      background: #fff7e8;
+      text-align: left;
+    }
+
+    .pix-only-notice strong,
+    .pix-only-notice span {
+      display: block;
+    }
+
+    .pix-only-notice strong {
+      font-size: 0.92rem;
+      font-weight: 900;
+    }
+
+    .pix-only-notice span {
+      margin-top: 2px;
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
     .header-voltar {
       margin-left: auto;
       padding: 8px 14px;
@@ -1608,6 +1635,25 @@
       letter-spacing: 0.02em;
     }
 
+    .pedido-online-tag {
+      display: inline-flex;
+      width: fit-content;
+      margin: 0 0 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #27613a;
+      background: #e9f7ed;
+      border: 1px solid #cbe9d3;
+      font-size: 0.7rem;
+      font-weight: 900;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .detalhe-tag-online {
+      margin-bottom: 10px;
+    }
+
     .produtoContainer .threeDots {
       width: 100%;
       max-width: 100%;
@@ -2079,6 +2125,26 @@
       font-weight: 800;
     }
 
+    .pix-status-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pix-status-shimmer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-120%);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+      animation: pix-status-shimmer 1.4s infinite;
+    }
+
+    @keyframes pix-status-shimmer {
+      to {
+        transform: translateX(120%);
+      }
+    }
+
     .pix-conteudo h2 {
       margin: 0 0 8px;
       color: #1f1f1f;
@@ -2091,6 +2157,51 @@
       color: #4d4d4d;
       font-size: 1rem;
       line-height: 1.48;
+    }
+
+    .pix-resumo {
+      margin: 18px 0;
+      padding: 14px;
+      border: 1px solid #ece5dc;
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .pix-resumo div {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      color: #4f1b14;
+    }
+
+    .pix-resumo span,
+    .pix-resumo small {
+      display: block;
+    }
+
+    .pix-resumo div span {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .pix-resumo strong {
+      color: #C5831A;
+      font-size: 1.45rem;
+      font-weight: 900;
+    }
+
+    .pix-resumo p {
+      margin: 10px 0 6px;
+      color: #1f1f1f;
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    .pix-resumo small {
+      color: #666;
+      font-size: 0.84rem;
     }
 
     .pix-qrcode {
@@ -2330,6 +2441,79 @@
 
     .pedido-campo-full {
       grid-column: 1 / -1;
+    }
+
+    .pedido-pix-aviso,
+    .pedido-pagamento-fixo {
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .pedido-pix-aviso {
+      color: #7a4a10;
+      background: #fff7e8;
+      border: 1px solid #f0d6a7;
+      font-size: 0.84rem;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .pedido-pagamento-fixo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #4f1b14;
+      background: #faf7f2;
+      border: 1px solid #ece5dc;
+      font-size: 0.88rem;
+    }
+
+    .pedido-pagamento-fixo span {
+      font-weight: 800;
+    }
+
+    .pedido-pagamento-fixo strong {
+      color: #27613a;
+      font-weight: 900;
+    }
+
+    .pedido-consumo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      text-align: left;
+    }
+
+    .pedido-consumo legend {
+      grid-column: 1 / -1;
+      margin-bottom: 6px;
+      color: #4f1b14;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .pedido-consumo label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      margin: 0;
+      padding: 9px 10px;
+      border: 1px solid #d9d1c6;
+      border-radius: 10px;
+      background: #fff;
+      color: #1f1f1f;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .pedido-consumo input {
+      accent-color: #C5831A;
     }
 
     .pedido-adicionar,
@@ -2644,6 +2828,17 @@
         white-space: nowrap;
       }
 
+      .pix-only-notice {
+        width: calc(100vw - 32px);
+        max-width: calc(100vw - 32px);
+      }
+
+      .pix-only-notice span {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        white-space: normal;
+      }
+
       .divCategorias {
         width: 100%;
         max-width: 100vw;
@@ -2883,6 +3078,13 @@
       body.screenshot-mode .mainCard {
         padding-right: 16px !important;
         padding-left: 16px !important;
+      }
+
+      body.screenshot-mode .pix-only-notice {
+        width: 358px !important;
+        max-width: 358px !important;
+        margin-right: 16px !important;
+        margin-left: 16px !important;
       }
 
       body.screenshot-mode .pedido-carrinho {

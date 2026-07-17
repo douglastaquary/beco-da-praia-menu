@@ -2,7 +2,7 @@
     const API_BASE_URL = (window.BECO_ORDERS_API_BASE_URL || '').replace(/\/$/, '');
     const ORDER_ENDPOINT = `${API_BASE_URL}/orders`;
     const PAYMENT_POLL_INTERVAL_MS = 4000;
-    const paymentMethods = ['Pix', 'Cartão de crédito', 'Cartão de débito', 'Dinheiro'];
+    const PIX_ONLY_MESSAGE = 'Pedidos online e direto da mesa são finalizados somente via Pix.';
     const productRules = {
         'entradinhas|Pastelzinhos do Beco': { orderable: false, message: 'Item disponível apenas com atendimento.' },
         'entradinhas|Torresmo': { orderable: false, message: 'Item disponível apenas com atendimento.' },
@@ -62,6 +62,8 @@
         createPixPaymentUi();
         createOrderSuccessUi();
         createCartUi();
+        setupPixOnlyNotice();
+        setupOrderableBadges();
         updateCartUi();
         setupScreenshotMode();
     });
@@ -117,6 +119,7 @@
                 </div>
                 <div class="detalhe-produto-body">
                     <h2 id="detalhe-titulo"></h2>
+                    <div id="detalhe-tag-online" class="pedido-online-tag detalhe-tag-online" hidden>Pedido online</div>
                     <p id="detalhe-descricao"></p>
                     <div id="detalhe-precos" class="detalhe-precos"></div>
                     <div id="detalhe-mensagem" class="detalhe-mensagem" aria-live="polite"></div>
@@ -149,6 +152,7 @@
                 <div class="pix-status" id="pix-status">Aguardando pagamento</div>
                 <h2>Finalize o Pix no app do banco</h2>
                 <p>Use o QR Code ou copie o código Pix. O pedido será enviado para a cozinha automaticamente após a confirmação.</p>
+                <div id="pix-resumo" class="pix-resumo"></div>
                 <div id="pix-qrcode" class="pix-qrcode"></div>
                 <label class="pix-codigo">
                     <span>Pix copia e cola</span>
@@ -217,6 +221,7 @@
         document.body.classList.remove('detalhe-produto-ativo');
         document.body.classList.remove('pagamento-pix-ativo');
         document.body.classList.remove('sucesso-pedido-ativo');
+        document.getElementById('pix-status')?.classList.remove('pix-status-shimmer');
         requestAnimationFrame(function () {
             window.scrollTo(0, state.cardapioScrollY || 0);
         });
@@ -228,6 +233,10 @@
         setText('detalhe-titulo', product.title);
         setText('detalhe-descricao', product.description || '');
         setText('detalhe-mensagem', '');
+        const detailTag = document.getElementById('detalhe-tag-online');
+        if (detailTag) {
+            detailTag.hidden = !isProductOrderable(product);
+        }
 
         const image = document.getElementById('detalhe-imagem');
         const imageWrap = document.getElementById('detalhe-imagem-wrap');
@@ -400,30 +409,42 @@
                     <span>Total</span>
                     <strong id="pedido-total">R$ 0,00</strong>
                 </div>
+                <div class="pedido-pix-aviso">${PIX_ONLY_MESSAGE}</div>
+                <fieldset class="pedido-consumo">
+                    <legend>Como deseja receber?</legend>
+                    <label>
+                        <input type="radio" name="pedido-consumo" value="LOCAL" checked>
+                        <span>Comer no local</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="pedido-consumo" value="TAKEAWAY">
+                        <span>Viagem</span>
+                    </label>
+                </fieldset>
+                <label class="pedido-campo pedido-campo-full" id="pedido-campo-mesa">
+                    <span>Mesa</span>
+                    <input id="pedido-mesa" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 04">
+                </label>
                 <label class="pedido-campo pedido-campo-full">
-                    <span>Nome do cliente</span>
+                    <span id="pedido-cliente-label">Nome para retirada</span>
                     <input id="pedido-cliente" type="text" autocomplete="name" placeholder="Seu nome">
                 </label>
-                <label class="pedido-campo pedido-campo-full">
-                    <span>Forma de pagamento</span>
-                    <select id="pedido-pagamento"></select>
-                </label>
+                <div class="pedido-pagamento-fixo">
+                    <span>Pagamento</span>
+                    <strong>Pix</strong>
+                </div>
                 <button type="button" id="pedido-enviar" class="pedido-enviar">Enviar pedido</button>
             </div>
         `;
 
-        const paymentSelect = cart.querySelector('#pedido-pagamento');
-        paymentMethods.forEach(function (method) {
-            const option = document.createElement('option');
-            option.value = method;
-            option.textContent = method;
-            paymentSelect.appendChild(option);
-        });
-
         cart.querySelector('.pedido-carrinho-toggle').addEventListener('click', toggleCart);
         cart.querySelector('.pedido-carrinho-fechar').addEventListener('click', closeCart);
         cart.querySelector('#pedido-enviar').addEventListener('click', submitOrder);
+        cart.querySelectorAll('input[name="pedido-consumo"]').forEach(function (input) {
+            input.addEventListener('change', updateConsumptionUi);
+        });
         document.body.appendChild(cart);
+        updateConsumptionUi();
     }
 
     function toggleCart() {
@@ -446,6 +467,26 @@
         const button = document.querySelector('.pedido-carrinho-toggle');
         panel.hidden = true;
         button.setAttribute('aria-expanded', 'false');
+    }
+
+    function updateConsumptionUi() {
+        const consumptionType = getConsumptionType();
+        const tableField = document.getElementById('pedido-campo-mesa');
+        const customerLabel = document.getElementById('pedido-cliente-label');
+        const customerInput = document.getElementById('pedido-cliente');
+        if (tableField) {
+            tableField.hidden = consumptionType !== 'LOCAL';
+        }
+        if (customerLabel) {
+            customerLabel.textContent = consumptionType === 'LOCAL' ? 'Nome do cliente (opcional)' : 'Nome para retirada';
+        }
+        if (customerInput) {
+            customerInput.placeholder = consumptionType === 'LOCAL' ? 'Opcional' : 'Seu nome';
+        }
+    }
+
+    function getConsumptionType() {
+        return document.querySelector('input[name="pedido-consumo"]:checked')?.value || 'LOCAL';
     }
 
     function updateCartUi() {
@@ -491,10 +532,17 @@
             return;
         }
 
+        const consumptionType = getConsumptionType();
+        const tableNumber = document.querySelector('#pedido-mesa')?.value.trim() || '';
         const customerName = document.querySelector('#pedido-cliente').value.trim();
-        const paymentMethod = document.querySelector('#pedido-pagamento').value;
-        if (!customerName) {
-            showCartMessage('Informe o nome do cliente.', true);
+        const paymentMethod = 'Pix';
+        if (consumptionType === 'LOCAL' && !tableNumber) {
+            showCartMessage('Informe a mesa para comer no local.', true);
+            openCart();
+            return;
+        }
+        if (consumptionType === 'TAKEAWAY' && !customerName) {
+            showCartMessage('Informe o nome para retirada.', true);
             openCart();
             return;
         }
@@ -502,6 +550,13 @@
         const button = document.querySelector('#pedido-enviar');
         button.disabled = true;
         button.textContent = 'Enviando...';
+        const orderSnapshot = {
+            items: state.items.map(item => ({ ...item, options: Array.isArray(item.options) ? [...item.options] : [] })),
+            totalText: formatCurrency(calculateTotal()),
+            consumptionType,
+            tableNumber,
+            customerName
+        };
 
         try {
             const response = await fetch(ORDER_ENDPOINT, {
@@ -510,14 +565,17 @@
                 body: JSON.stringify({
                     customerName,
                     paymentMethod,
+                    consumptionType,
+                    tableNumber,
                     items: state.items,
-                    totalText: formatCurrency(calculateTotal())
+                    totalText: orderSnapshot.totalText
                 })
             });
             const body = await response.json().catch(() => ({}));
             if (!response.ok || body.ok === false) {
                 throw new Error(body.error || 'Não foi possível enviar o pedido.');
             }
+            Object.assign(body, orderSnapshot);
             state.items = [];
             updateCartUi();
             closeCart();
@@ -549,8 +607,10 @@
         document.body.classList.add('pagamento-pix-ativo');
         document.body.classList.remove('detalhe-produto-ativo');
         setText('pix-status', 'Aguardando pagamento');
+        document.getElementById('pix-status')?.classList.add('pix-status-shimmer');
         setText('pix-mensagem', `Pedido ${order.orderId}. Assim que o Pix for confirmado, a cozinha receberá seu pedido.`);
         setText('pix-expira', pix.expiresAt ? `Este Pix expira em ${formatDateTime(pix.expiresAt)}.` : '');
+        renderPixSummary(order);
 
         const codeInput = document.getElementById('pix-brcode');
         if (codeInput) codeInput.value = pix.brCode || '';
@@ -616,6 +676,7 @@
             } else if (order.status === 'PAYMENT_EXPIRED') {
                 stopPaymentPolling();
                 setText('pix-status', 'Pix expirado');
+                document.getElementById('pix-status')?.classList.remove('pix-status-shimmer');
                 setText('pix-mensagem', 'Este Pix expirou. Refaca o pedido ou chame o atendimento.');
             }
         } catch (error) {
@@ -634,11 +695,55 @@
         if (detail) detail.style.display = 'none';
         if (paginaCardapio) paginaCardapio.style.display = 'none';
         setText('sucesso-order-id', orderId || '');
+        document.getElementById('pix-status')?.classList.remove('pix-status-shimmer');
         success.style.display = 'block';
         document.body.classList.remove('pagamento-pix-ativo');
         document.body.classList.remove('detalhe-produto-ativo');
         document.body.classList.add('sucesso-pedido-ativo');
         window.scrollTo(0, 0);
+    }
+
+    function setupPixOnlyNotice() {
+        const page = document.getElementById('pagina-cardapio');
+        const header = page?.querySelector('.header-cardapio, .header-beco');
+        if (!page || !header || page.querySelector('.pix-only-notice')) return;
+        const notice = document.createElement('div');
+        notice.className = 'pix-only-notice';
+        notice.innerHTML = `<strong>Pedido online somente via Pix</strong><span>${PIX_ONLY_MESSAGE}</span>`;
+        header.insertAdjacentElement('afterend', notice);
+    }
+
+    function setupOrderableBadges() {
+        document.querySelectorAll('.produtoContainer').forEach(function (productElement) {
+            const product = readProduct(productElement);
+            const title = productElement.querySelector('.listaProdutoTitulo');
+            if (!title || productElement.querySelector('.pedido-online-tag')) return;
+            if (!isProductOrderable(product)) return;
+            const tag = document.createElement('span');
+            tag.className = 'pedido-online-tag';
+            tag.textContent = 'Pedido online';
+            title.insertAdjacentElement('afterend', tag);
+        });
+    }
+
+    function renderPixSummary(order) {
+        const summary = document.getElementById('pix-resumo');
+        if (!summary) return;
+        const items = Array.isArray(order.items) ? order.items : [];
+        const itemNames = items.length
+            ? items.map(item => `${item.quantity || 1}x ${escapeHtml(item.name)}`).join('')
+            : 'Itens do pedido';
+        const location = order.consumptionType === 'LOCAL'
+            ? `Mesa ${escapeHtml(order.tableNumber || '')}`
+            : `Viagem${order.customerName ? ` - ${escapeHtml(order.customerName)}` : ''}`;
+        summary.innerHTML = `
+            <div>
+                <span>Valor do Pix</span>
+                <strong>${escapeHtml(order.totalText || formatCurrency(calculateTotal()))}</strong>
+            </div>
+            <p>${items.map(item => `<span>${escapeHtml(item.quantity || 1)}x ${escapeHtml(item.name)}</span>`).join('') || escapeHtml(itemNames)}</p>
+            <small>${location}</small>
+        `;
     }
 
     function calculateTotal() {
@@ -691,6 +796,10 @@
             return { orderable: false, message: 'Item informativo. Chame o atendimento para mais detalhes.' };
         }
         return productRules[`${categoryId}|${title}`] || productRules[title] || {};
+    }
+
+    function isProductOrderable(product) {
+        return Boolean(product.prices.length) && product.rule.orderable !== false;
     }
 
     function meatDoneness() {
@@ -830,15 +939,27 @@
         }];
         updateCartUi();
         const customer = document.getElementById('pedido-cliente');
-        const payment = document.getElementById('pedido-pagamento');
-        if (customer) customer.value = 'Mesa 04';
-        if (payment) payment.value = 'Pix';
+        const table = document.getElementById('pedido-mesa');
+        const local = document.querySelector('input[name="pedido-consumo"][value="LOCAL"]');
+        if (local) local.checked = true;
+        if (table) table.value = '04';
+        if (customer) customer.value = '';
+        updateConsumptionUi();
     }
 
     function screenshotOrder() {
         return {
             orderId: 'B1752607100000-DEMO01',
             status: 'PAYMENT_PENDING',
+            consumptionType: 'LOCAL',
+            tableNumber: '04',
+            customerName: '',
+            totalText: 'R$ 95,00',
+            items: [{
+                name: 'Mix de churrasco',
+                quantity: 1,
+                unitPriceText: 'INTEIRA: R$ 95,00'
+            }],
             payment: {
                 brCode: '00020101021226870014br.gov.bcb.pix2565pix.openpix.com.br/qr/v2/demo-beco-da-praia520400005303986540595.005802BR5925BECO DA PRAIA RESTAURANTE6009FORTALEZA62070503***6304ABCD',
                 qrCodeImage: screenshotQrCode(),

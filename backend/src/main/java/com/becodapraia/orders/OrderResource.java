@@ -56,13 +56,17 @@ public class OrderResource {
                 .map(this::lineTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         boolean pixPayment = isPix(request.paymentMethod());
+        String customerName = clean(request.customerName());
+        String payerName = customerName.isBlank() ? "Mesa " + clean(request.tableNumber()) : customerName;
         PaymentDetails payment = pixPayment
-                ? openPixClient.createCharge(orderId, total, request.customerName().trim())
+                ? openPixClient.createCharge(orderId, total, payerName)
                 : null;
         OrderRecord order = new OrderRecord(
                 orderId,
-                request.customerName().trim(),
+                customerName,
                 request.paymentMethod().trim(),
+                clean(request.consumptionType()).toUpperCase(),
+                clean(request.tableNumber()),
                 request.items(),
                 request.totalText(),
                 total,
@@ -129,6 +133,10 @@ public class OrderResource {
 
     private boolean isPix(String paymentMethod) {
         return paymentMethod != null && "pix".equalsIgnoreCase(paymentMethod.trim());
+    }
+
+    private String clean(String value) {
+        return value == null ? "" : value.trim();
     }
 
 }
