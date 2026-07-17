@@ -54,7 +54,8 @@
         currentProduct: null,
         items: [],
         cardapioScrollY: 0,
-        paymentPollId: null
+        paymentPollId: null,
+        lastPixOrder: null
     };
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -185,6 +186,7 @@
                     <span>Número do pedido</span>
                     <strong id="sucesso-order-id"></strong>
                 </div>
+                <div class="sucesso-orientacao" id="sucesso-orientacao"></div>
                 <button type="button" id="sucesso-voltar" class="sucesso-voltar">Voltar ao cardápio</button>
             </div>
         `;
@@ -601,6 +603,7 @@
         const pix = order.payment || {};
         if (!payment) return;
 
+        state.lastPixOrder = order;
         if (paginaInicial) paginaInicial.style.display = 'none';
         if (paginaCardapio) paginaCardapio.style.display = 'none';
         payment.style.display = 'block';
@@ -672,7 +675,7 @@
             const order = await response.json();
             if (['PAID', 'PRINT_REQUESTED', 'PRINTED'].includes(order.status)) {
                 stopPaymentPolling();
-                showOrderSuccess(orderId);
+                showOrderSuccess(Object.assign({}, state.lastPixOrder || {}, order));
             } else if (order.status === 'PAYMENT_EXPIRED') {
                 stopPaymentPolling();
                 setText('pix-status', 'Pix expirado');
@@ -684,23 +687,44 @@
         }
     }
 
-    function showOrderSuccess(orderId) {
+    function showOrderSuccess(order) {
         const success = document.getElementById('pagina-sucesso-pedido');
         const payment = document.getElementById('pagina-pagamento-pix');
         const detail = document.getElementById('pagina-detalhe-produto');
         const paginaCardapio = document.getElementById('pagina-cardapio');
         if (!success) return;
+        const orderData = typeof order === 'string'
+            ? Object.assign({}, state.lastPixOrder || {}, { orderId: order })
+            : Object.assign({}, state.lastPixOrder || {}, order || {});
 
         if (payment) payment.style.display = 'none';
         if (detail) detail.style.display = 'none';
         if (paginaCardapio) paginaCardapio.style.display = 'none';
-        setText('sucesso-order-id', orderId || '');
+        setText('sucesso-order-id', orderData.orderId || '');
+        renderSuccessGuidance(orderData);
         document.getElementById('pix-status')?.classList.remove('pix-status-shimmer');
         success.style.display = 'block';
         document.body.classList.remove('pagamento-pix-ativo');
         document.body.classList.remove('detalhe-produto-ativo');
         document.body.classList.add('sucesso-pedido-ativo');
         window.scrollTo(0, 0);
+    }
+
+    function renderSuccessGuidance(order) {
+        const element = document.getElementById('sucesso-orientacao');
+        if (!element) return;
+        const isTakeaway = order.consumptionType === 'TAKEAWAY';
+        const identity = isTakeaway
+            ? (order.customerName ? ` pelo nome ${escapeHtml(order.customerName)}` : ' pelo nome informado')
+            : (order.tableNumber ? ` na mesa ${escapeHtml(order.tableNumber)}` : ' na sua mesa');
+        const mainMessage = isTakeaway
+            ? `Enquanto seu pedido é preparado, nossa equipe chamará${identity} assim que estiver pronto.`
+            : `Enquanto seu pedido é preparado, nossa equipe irá se apresentar${identity} e preparar a sua mesa.`;
+        element.innerHTML = `
+            <strong>Enquanto aguarda</strong>
+            <p>${mainMessage}</p>
+            <p>Bom apetite! A qualquer momento você pode chamar nossos atendentes.</p>
+        `;
     }
 
     function setupPixOnlyNotice() {
@@ -908,7 +932,7 @@
             return;
         }
         if (step === 'sucesso') {
-            showOrderSuccess(screenshotOrder().orderId);
+            showOrderSuccess(screenshotOrder());
         }
     }
 

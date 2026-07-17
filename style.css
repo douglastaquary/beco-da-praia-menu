@@ -2366,6 +2366,38 @@
       word-break: break-word;
     }
 
+    .sucesso-orientacao {
+      width: 100%;
+      margin: 0 0 28px;
+      padding: 16px;
+      border: 1px solid #f0d6a7;
+      border-radius: 14px;
+      color: #4f1b14;
+      background: #fff7e8;
+      text-align: left;
+    }
+
+    .sucesso-orientacao strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #7a4a10;
+      font-size: 0.9rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .sucesso-orientacao p {
+      margin: 0;
+      color: #4d332b;
+      font-size: 0.94rem;
+      line-height: 1.42;
+    }
+
+    .sucesso-orientacao p + p {
+      margin-top: 8px;
+      font-weight: 800;
+    }
+
     .sucesso-voltar {
       width: 100%;
       min-height: 54px;
