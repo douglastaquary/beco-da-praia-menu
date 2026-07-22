@@ -18,7 +18,7 @@ O foco inicial da experiencia e mobile. A tela de detalhe do item abre como uma 
 - API publica: Amazon API Gateway HTTP API.
 - Banco de dados: Amazon DynamoDB.
 - Fila/evento de impressao: AWS IoT Core.
-- Agente local: Java 17 em Raspberry Pi.
+- Agente local: Java 17 em Raspberry Pi, com suporte documentado para Raspberry Pi 2 ARMv7 32-bit.
 - Impressora: ESC/POS via TCP/IP na rede Wi-Fi do restaurante.
 
 Nao fazem parte da arquitetura atual:
@@ -173,6 +173,14 @@ Responsabilidades:
 - Converter o pedido em texto ESC/POS.
 - Imprimir item, quantidade, variacoes e observacoes na impressora da cozinha.
 
+Hardware local:
+
+- Recomendado: Raspberry Pi 3, Raspberry Pi 4 ou Raspberry Pi Zero 2 W.
+- Suportado com limitacoes: Raspberry Pi 2 ARMv7 32-bit com Raspberry Pi OS Lite 32-bit e Java 17 32-bit.
+- Nao recomendado: Raspberry Pi Zero ou Zero W original, pois usam ARMv6 e tem baixa compatibilidade pratica com Java 17.
+
+O Raspberry Pi executa somente o `printer-agent`. O backend Quarkus continua no fluxo serverless da AWS via Lambda, DynamoDB e API Gateway.
+
 Topico padrao:
 
 ```text
@@ -185,11 +193,12 @@ Configuracoes principais:
 - `AWS_IOT_CLIENT_ID`
 - `AWS_IOT_CERT_PATH`
 - `AWS_IOT_PRIVATE_KEY_PATH`
-- `AWS_IOT_TOPIC`
+- `AWS_IOT_TOPIC_ORDERS`
+- `AWS_IOT_TOPIC_STATUS`
 - `PRINTER_HOST`
 - `PRINTER_PORT`
 
-O passo a passo do Raspberry Pi esta em `RASPBERRY_PI_SETUP.md`.
+O passo a passo do Raspberry Pi 2 ARMv7 32-bit, instalacao do Java, instalacao do JAR e configuracao do servico `beco-printer` esta em `RASPBERRY_PI_SETUP.md`.
 
 ## AWS SAM
 
