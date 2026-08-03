@@ -36,7 +36,10 @@
             </header>
             <div class="pagina-inicial-conteudo">
                 <div class="pagina-inicial-botoes">
-                    <button type="button" id="btn-cardapio" class="btn-inicial btn-primario">Cardápio Online</button>
+                    <button type="button" id="btn-cardapio" class="btn-inicial btn-primario">
+                        <span>Ir para o cardápio</span>
+                        <span class="btn-primario-seta" aria-hidden="true">→</span>
+                    </button>
                     <a href="https://wa.me/5513981267849" target="_blank" class="btn-inicial btn-secundario">Reservar Mesa</a>
                     <a href="https://maps.google.com/?q=Av.+Siqueira+Campos,+606+-+Boqueirão,+Santos+-+SP" target="_blank" class="btn-inicial btn-secundario">Localização</a>
                 </div>
@@ -46,10 +49,9 @@
                 </div>
                 <div class="pagina-inicial-secao">
                     <h3>Horário de Funcionamento</h3>
-                    <p class="horario-item">Terça-feira do Forró: cozinha das 18:00 às 23:00, forró até as 00:00</p>
-                    <p class="horario-item">Sexta-feira: cozinha das 18:00 às 23:00</p>
-                    <p class="horario-item">Sábado: cozinha das 12:00 às 22:00</p>
-                    <p class="horario-item">Domingo: cozinha das 12:00 às 22:00</p>
+                    <p class="horario-item"><strong>Terça do Forró</strong><span>18h às 00h</span></p>
+                    <p class="horario-item"><strong>Sexta-feira</strong><span>18h às 00h</span></p>
+                    <p class="horario-item"><strong>Sábado e domingo</strong><span>12h às 23h</span></p>
                 </div>
                 <div class="pagina-inicial-secao">
                     <h3>Formas de Pagamento</h3>
@@ -75,6 +77,27 @@
                     </div>
                 </div>
             </header>
+            <div id="banner-promocional" class="banner-promocional" role="dialog" aria-modal="true"
+                aria-labelledby="banner-promocional-titulo" aria-describedby="banner-promocional-descricao"
+                aria-hidden="true">
+                <div class="banner-promocional-card">
+                    <button type="button" id="btn-fechar-banner" class="banner-promocional-fechar"
+                        aria-label="Fechar promoção">×</button>
+                    <div class="banner-promocional-imagem-wrap">
+                        <img src="images/trio-nordestino-gpt.png"
+                            alt="Trio Nordestino com carne de sol, baião de dois e mandioca"
+                            class="banner-promocional-imagem">
+                        <span class="banner-promocional-selo">Queridinho da casa</span>
+                    </div>
+                    <div class="banner-promocional-conteudo">
+                        <p class="banner-promocional-chamada">Sabor que abraça</p>
+                        <h2 id="banner-promocional-titulo">Experimente o Trio Nordestino</h2>
+                        <p id="banner-promocional-descricao">Carne de sol artesanal, baião de dois e mandioca na
+                            manteiga de garrafa. Serve 2 pessoas.</p>
+                        <button type="button" id="btn-ver-destaque" class="banner-promocional-cta">Ver no cardápio</button>
+                    </div>
+                </div>
+            </div>
         <div class="card">
             <div class="mainCard">
                 <div class="menuMobile">
@@ -1411,7 +1434,8 @@
                         document.getElementById('pagina-cardapio').style.display = 'block';
                         document.body.scrollTop = 0;
                         document.documentElement.scrollTop = 0;
-                        selecionarCategoria('entradinhas', true);
+                        selecionarCategoria('entradinhas', false);
+                        abrirBannerPromocional();
                         setTimeout(atualizarCategoriaPorScroll, 120);
                     });
                     document.getElementById('btn-voltar').addEventListener('click', function() {
@@ -1419,6 +1443,32 @@
                         document.getElementById('pagina-inicial').style.display = 'block';
                         document.body.scrollTop = 0;
                         document.documentElement.scrollTop = 0;
+                        fecharBannerPromocional();
+                    });
+
+                    const bannerPromocional = document.getElementById('banner-promocional');
+                    const botaoFecharBanner = document.getElementById('btn-fechar-banner');
+
+                    function abrirBannerPromocional() {
+                        bannerPromocional.classList.add('ativo');
+                        bannerPromocional.setAttribute('aria-hidden', 'false');
+                        document.body.style.overflow = 'hidden';
+                        setTimeout(() => botaoFecharBanner.focus(), 50);
+                    }
+
+                    function fecharBannerPromocional() {
+                        bannerPromocional.classList.remove('ativo');
+                        bannerPromocional.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    }
+
+                    botaoFecharBanner.addEventListener('click', fecharBannerPromocional);
+                    bannerPromocional.addEventListener('click', function(e) {
+                        if (e.target === this) fecharBannerPromocional();
+                    });
+                    document.getElementById('btn-ver-destaque').addEventListener('click', function() {
+                        fecharBannerPromocional();
+                        selecionarCategoria('mais-pedidos', true);
                     });
 
                     // Clique em categoria (delegação)
@@ -1491,7 +1541,14 @@
                         if (e.target === this) fecharModalPrato();
                     });
                     document.addEventListener('keydown', function(e) {
-                        if (e.key === 'Escape') fecharModalPrato();
+                        if (e.key === 'Escape') {
+                            if (bannerPromocional.classList.contains('ativo')) {
+                                fecharBannerPromocional();
+                                document.getElementById('btn-cardapio').focus();
+                            } else {
+                                fecharModalPrato();
+                            }
+                        }
                     });
                 </script>
     </div>
