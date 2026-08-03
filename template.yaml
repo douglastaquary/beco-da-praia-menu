@@ -1,0 +1,138 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Beco da Praia menu orders backend with Quarkus, Lambda, DynamoDB, and AWS IoT Core.
+
+Parameters:
+  PrinterOrdersTopic:
+    Type: String
+    Default: beco/printer/kitchen/orders
+  OrdersTableName:
+    Type: String
+    Default: BecoOrders
+  IotDataEndpoint:
+    Type: String
+    Default: ''
+    Description: Optional AWS IoT data endpoint URL, for example https://xxxxxxxxxxxxxx-ats.iot.us-east-1.amazonaws.com.
+  OpenPixBaseUrl:
+    Type: String
+    Default: https://api.openpix.com.br
+    Description: Use https://api.openpix.com.br for production or https://api.woovi-sandbox.com for sandbox.
+  OpenPixAppId:
+    Type: String
+    NoEcho: true
+    Default: ''
+    Description: OpenPix/Woovi AppID used as Authorization when creating Pix charges.
+  OpenPixWebhookToken:
+    Type: String
+    NoEcho: true
+    Default: ''
+    Description: Shared secret configured as Authorization header on the OpenPix webhook.
+  PixChargeExpiresInSeconds:
+    Type: Number
+    Default: 900
+
+Globals:
+  Function:
+    Runtime: java17
+    MemorySize: 1024
+    Timeout: 20
+    Architectures:
+      - arm64
+    Environment:
+      Variables:
+        ORDERS_TABLE: !Ref OrdersTable
+        PRINTER_ORDERS_TOPIC: !Ref PrinterOrdersTopic
+        IOT_DATA_ENDPOINT: !Ref IotDataEndpoint
+        OPENPIX_BASE_URL: !Ref OpenPixBaseUrl
+        OPENPIX_APP_ID: !Ref OpenPixAppId
+        OPENPIX_WEBHOOK_TOKEN: !Ref OpenPixWebhookToken
+        PIX_CHARGE_EXPIRES_IN_SECONDS: !Ref PixChargeExpiresInSeconds
+
+Resources:
+  OrdersApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowHeaders:
+          - Content-Type
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+
+  OrdersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/target/function.zip
+      Handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref OrdersTable
+        - Statement:
+            Effect: Allow
+            Action:
+              - iot:Publish
+            Resource: !Sub arn:${AWS::Partition}:iot:${AWS::Region}:${AWS::AccountId}:topic/${PrinterOrdersTopic}
+      Events:
+        CreateOrder:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref OrdersApi
+            Path: /orders
+            Method: POST
+        GetOrder:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref OrdersApi
+            Path: /orders/{orderId}
+            Method: GET
+        ReprintOrder:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref OrdersApi
+            Path: /orders/{orderId}/reprint
+            Method: POST
+        PrintStatus:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref OrdersApi
+            Path: /orders/{orderId}/print-status
+            Method: POST
+        OpenPixWebhook:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref OrdersApi
+            Path: /payments/openpix/webhook
+            Method: POST
+
+  OrdersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref OrdersTableName
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+
+Outputs:
+  OrdersApiUrl:
+    Description: Public URL for the orders API.
+    Value: !Sub https://${OrdersApi}.execute-api.${AWS::Region}.amazonaws.com
+  OrdersTableName:
+    Description: DynamoDB table used by the orders backend.
+    Value: !Ref OrdersTable
+  PrinterOrdersTopic:
+    Description: AWS IoT Core topic consumed by the Raspberry Pi printer agent.
+    Value: !Ref PrinterOrdersTopic
+  OpenPixWebhookUrl:
+    Description: Webhook URL to configure in OpenPix/Woovi. Protect it with the same Authorization value as OpenPixWebhookToken.
+    Value: !Sub https://${OrdersApi}.execute-api.${AWS::Region}.amazonaws.com/payments/openpix/webhook

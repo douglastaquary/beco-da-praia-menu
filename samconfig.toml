@@ -1,0 +1,21 @@
+# samconfig.toml
+# Secrets (OpenPixAppId / OpenPixWebhookToken) must be passed via --parameter-overrides
+# or environment at deploy time. Do not commit real secrets here.
+
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "beco-orders"
+resolve_s3 = true
+s3_prefix = "beco-orders"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = [
+  "PrinterOrdersTopic=beco/printer/kitchen/orders",
+  "OrdersTableName=BecoOrders",
+  "IotDataEndpoint=",
+  "OpenPixBaseUrl=https://api.openpix.com.br",
+  "PixChargeExpiresInSeconds=900"
+]
+image_repositories = []

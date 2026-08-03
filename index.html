@@ -79,7 +79,7 @@
             </header>
             <div id="banner-promocional" class="banner-promocional" role="dialog" aria-modal="true"
                 aria-labelledby="banner-promocional-titulo" aria-describedby="banner-promocional-descricao"
-                aria-hidden="true">
+                aria-hidden="true" hidden>
                 <div class="banner-promocional-card">
                     <button type="button" id="btn-fechar-banner" class="banner-promocional-fechar"
                         aria-label="Fechar promoção">×</button>
@@ -117,6 +117,7 @@
                             <a href="#coqueteis" class="cardCategoria">Coquetéis</a>
                             <a href="#agua-e-refrigerantes" class="cardCategoria">Água e refrigerantes</a>
                             <a href="#soda-italiana-e-sucos" class="cardCategoria">Soda italiana e sucos</a>
+                            <a href="#testes-online" class="cardCategoria">Testes online</a>
                         </div>
                     </div>
                 </div>
@@ -298,36 +299,6 @@
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Feijão-fradinho temperado, vinagrete fresquinho, farofa crocante e carne seca desfiada refogada na cebola com manteiga de garrafa.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
                                     <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 62,00</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
-                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
-                            <div class="container_foto">
-                                <picture>
-                                    <img loading="lazy" alt="" src="images/logo-beco-bg-claro.jpg" class="imagemProduto">
-                                </picture>
-                            </div>
-                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
-                                <p class="listaProdutoTitulo">Carne de Sol na Telha (Serve 3 pessoas)</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Suculenta carne de sol refogada na cebola, servida na telha acompanhada de arroz Maria Isabel e batata frita crocante.</p>
-                                <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 109,90</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
-                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
-                            <div class="container_foto">
-                                <picture>
-                                    <img loading="lazy" alt="" src="images/logo-beco-bg-claro.jpg" class="imagemProduto">
-                                </picture>
-                            </div>
-                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
-                                <p class="listaProdutoTitulo">Linguiça na Cachaça (Serve 2 pessoas)</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Linguiça suculenta preparada na cachaça, realçando um sabor marcante. Servida com molho de pimenta artesanal para dar aquele toque especial.</p>
-                                <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 56,90</p>
                                 </div>
                             </div>
                         </div>
@@ -1333,21 +1304,29 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        </section>
-                <!-- Modal de detalhe do prato -->
-                <div id="modalPrato" class="modal-prato" aria-hidden="true">
-                    <div class="modal-prato-conteudo modal-prato-wrap">
-                        <button class="modal-prato-fechar" onclick="fecharModalPrato()" aria-label="Fechar">&times;</button>
-                        <img id="modalPratoImg" class="modal-prato-imagem" src="" alt="">
-                        <div class="modal-prato-body">
-                            <h2 id="modalPratoTitulo" class="modal-prato-titulo"></h2>
-                            <p id="modalPratoDescricao" class="modal-prato-descricao"></p>
-                            <div id="modalPratoPrecos" class="modal-prato-precos"></div>
+                <div id="testes-online" class="cardapioCategoria">
+                    <p class="cardapioCategoriaTitulo">Testes online</p>
+                    <div class="produtos text-center">
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Logo Beco da Praia" src="images/logo-beco-bg-claro.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Trio Teste</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Produto para testes online do fluxo de pedido e pagamento Pix. Sem validade.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 0,01</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        </section>
 
                 <script>
                     let categoriaAtivaAtual = null;
@@ -1449,27 +1428,34 @@
                     const bannerPromocional = document.getElementById('banner-promocional');
                     const botaoFecharBanner = document.getElementById('btn-fechar-banner');
 
+                    // Banner promocional desabilitado: quebra layout no Safari / iPhone 16.
+                    const BANNER_PROMOCIONAL_HABILITADO = false;
+
                     function abrirBannerPromocional() {
+                        if (!BANNER_PROMOCIONAL_HABILITADO || !bannerPromocional) return;
                         bannerPromocional.classList.add('ativo');
                         bannerPromocional.setAttribute('aria-hidden', 'false');
                         document.body.style.overflow = 'hidden';
-                        setTimeout(() => botaoFecharBanner.focus(), 50);
+                        setTimeout(() => botaoFecharBanner && botaoFecharBanner.focus(), 50);
                     }
 
                     function fecharBannerPromocional() {
+                        if (!bannerPromocional) return;
                         bannerPromocional.classList.remove('ativo');
                         bannerPromocional.setAttribute('aria-hidden', 'true');
                         document.body.style.overflow = '';
                     }
 
-                    botaoFecharBanner.addEventListener('click', fecharBannerPromocional);
-                    bannerPromocional.addEventListener('click', function(e) {
-                        if (e.target === this) fecharBannerPromocional();
-                    });
-                    document.getElementById('btn-ver-destaque').addEventListener('click', function() {
-                        fecharBannerPromocional();
-                        selecionarCategoria('mais-pedidos', true);
-                    });
+                    if (BANNER_PROMOCIONAL_HABILITADO && botaoFecharBanner && bannerPromocional) {
+                        botaoFecharBanner.addEventListener('click', fecharBannerPromocional);
+                        bannerPromocional.addEventListener('click', function(e) {
+                            if (e.target === this) fecharBannerPromocional();
+                        });
+                        document.getElementById('btn-ver-destaque')?.addEventListener('click', function() {
+                            fecharBannerPromocional();
+                            selecionarCategoria('mais-pedidos', true);
+                        });
+                    }
 
                     // Clique em categoria (delegação)
                     document.addEventListener('click', function(e) {
@@ -1484,73 +1470,15 @@
                     window.addEventListener('scroll', atualizarCategoriaPorScroll, { passive: true });
                     window.addEventListener('resize', atualizarCategoriaPorScroll);
 
-                    // Modal de detalhe - delegação
-                    document.addEventListener('click', function(e) {
-                        const container = e.target.closest('.produtoContainer');
-                        if (!container) return;
-                        if (e.target.closest('a')) return;
-
-                        const imgEl = container.querySelector('.container_foto img, picture img');
-                        const titulo = container.querySelector('.listaProdutoTitulo');
-                        const descricao = container.querySelector('.threeDots');
-
-                        const modal = document.getElementById('modalPrato');
-                        const modalImg = document.getElementById('modalPratoImg');
-                        const modalTitulo = document.getElementById('modalPratoTitulo');
-                        const modalDescricao = document.getElementById('modalPratoDescricao');
-                        const modalPrecos = document.getElementById('modalPratoPrecos');
-
-                        if (imgEl && imgEl.tagName === 'IMG') {
-                            const imgSrc = imgEl.currentSrc || imgEl.getAttribute('src') || imgEl.src;
-                            modalImg.src = imgSrc || '';
-                            modalImg.style.display = imgSrc ? 'block' : 'none';
-                        } else {
-                            modalImg.src = '';
-                            modalImg.style.display = 'none';
-                        }
-
-                        modalTitulo.textContent = titulo ? titulo.textContent.trim() : '';
-                        modalDescricao.textContent = descricao ? descricao.textContent.trim() : '';
-
-                        modalPrecos.innerHTML = '';
-                        const precosUnicos = new Set();
-                        const divCard = container.querySelector('.divCardProduto');
-                        if (divCard) {
-                            divCard.querySelectorAll('p, span').forEach(el => {
-                                const texto = el.textContent.trim();
-                                if (texto && texto.includes('R$') && !precosUnicos.has(texto) && !el.classList.contains('listaProdutoTitulo')) {
-                                    precosUnicos.add(texto);
-                                    const span = document.createElement('div');
-                                    span.className = 'modal-prato-preco';
-                                    span.textContent = texto;
-                                    modalPrecos.appendChild(span);
-                                }
-                            });
-                        }
-
-                        modal.classList.add('ativo');
-                        document.body.style.overflow = 'hidden';
-                    });
-
-                    function fecharModalPrato() {
-                        document.getElementById('modalPrato').classList.remove('ativo');
-                        document.body.style.overflow = '';
-                    }
-
-                    document.getElementById('modalPrato').addEventListener('click', function(e) {
-                        if (e.target === this) fecharModalPrato();
-                    });
                     document.addEventListener('keydown', function(e) {
-                        if (e.key === 'Escape') {
-                            if (bannerPromocional.classList.contains('ativo')) {
-                                fecharBannerPromocional();
-                                document.getElementById('btn-cardapio').focus();
-                            } else {
-                                fecharModalPrato();
-                            }
+                        if (e.key === 'Escape' && bannerPromocional && bannerPromocional.classList.contains('ativo')) {
+                            fecharBannerPromocional();
+                            document.getElementById('btn-cardapio')?.focus();
                         }
                     });
                 </script>
+                <script src="config.js"></script>
+                <script src="orders.js"></script>
     </div>
 </body>
 

@@ -1,0 +1,4 @@
+.mvn/apache-maven-*/
+.mvn/*.tar.gz
+backend/target/
+printer-agent/target/
