@@ -27,13 +27,44 @@ Eventos tratados:
 
 ## 1. Gerar o AppID
 
-1. Acesse a conta OpenPix/Woovi.
-2. Abra **API/Plugins** (menu Administrador).
-3. Crie ou abra uma aplicacao de API.
-4. Copie o **AppID**.
-5. Guarde esse valor: sera o parametro `OpenPixAppId` no `sam deploy`.
+Precisa estar logado como **ADMIN**.
 
-Nao versionar o AppID no Git.
+1. Acesse a conta OpenPix/Woovi.
+2. No menu lateral, abra **API/Plugins**.
+3. Clique em **Nova API/Plugin**.
+4. Preencha assim:
+
+| Campo | O que escolher | Por que |
+| --- | --- | --- |
+| Nome | `Beco da Praia Backend` | So para identificar no painel |
+| Tipo | **API** | Backend/servidor (Lambda). **Nao** use Plugin nem Oracle |
+| Escopo da aplicacao | Marque pelo menos cobrancas: `CHARGE_POST` e `CHARGE_GET` | O backend cria e consulta cobrancas Pix |
+
+### O que cada tipo significa
+
+- **API** (escolha esta): integracao server-to-server. E o caso do nosso backend Quarkus/Lambda.
+- **Plugin**: so para Plugin JS / ecommerce no frontend. Nao serve para o backend.
+- **Oracle**: so para Oracle Commerce Cloud. Ignore.
+
+### Sobre o escopo da aplicacao
+
+Sim, esse campo existe e importa. Ele limita o que o AppID pode fazer.
+
+Para o Beco da Praia, marque no minimo:
+
+- `CHARGE_POST` — criar cobranca Pix (`POST /api/v1/charge`)
+- `CHARGE_GET` — consultar cobranca
+
+Se aparecerem escopos de webhook (ex.: `WEBHOOK_*`), marque tambem se quiser cadastrar webhook via API. Webhook pela tela da OpenPix nao depende disso.
+
+Se a tela oferecer algo como "acesso completo" / todos os escopos e voce estiver so testando, pode marcar tudo. Em producao, prefira so cobranca.
+
+5. Clique em **Salvar**.
+6. Confirme o fator de autenticacao (2FA), se a OpenPix pedir.
+7. Na tela da aplicacao criada, copie o **AppID**.
+8. Guarde esse valor: sera o parametro `OpenPixAppId` no `sam deploy`.
+
+Nao versionar o AppID no Git. Nao use prefixo `Bearer` — o backend envia o AppID puro no header `Authorization`.
 
 ## 2. Definir o token do webhook
 
