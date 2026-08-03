@@ -45,12 +45,15 @@ public class OpenPixClient {
         long amountInCents = amount.movePointRight(2).setScale(0, RoundingMode.HALF_UP).longValueExact();
         Instant expiresAt = Instant.now().plusSeconds(chargeExpiresInSeconds);
 
+        // OpenPix so exige customer com name+(taxID|email|phone). No cardapio so temos nome/mesa,
+        // entao nao enviamos customer e colocamos a referencia no comment.
+        String comment = "Pedido Beco da Praia " + orderId
+                + (customerName == null || customerName.isBlank() ? "" : " - " + customerName.trim());
         Map<String, Object> payload = Map.of(
                 "correlationID", orderId,
                 "value", amountInCents,
-                "comment", "Pedido Beco da Praia " + orderId,
-                "expiresIn", chargeExpiresInSeconds,
-                "customer", Map.of("name", customerName)
+                "comment", comment,
+                "expiresIn", chargeExpiresInSeconds
         );
 
         try {
