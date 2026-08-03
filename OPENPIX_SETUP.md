@@ -181,7 +181,7 @@ URLs do ambiente atual (stack `beco-orders`, `us-east-1`):
 | Uso | URL |
 | --- | --- |
 | API de pedidos | `https://82x7kkich5.execute-api.us-east-1.amazonaws.com` |
-| Webhook Pix | `https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook` |
+| Webhook Pix | `https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook?token=SEU_OPENPIX_WEBHOOK_TOKEN` |
 
 ### 4.1 Webhook de cobranca paga
 
@@ -191,14 +191,45 @@ URLs do ambiente atual (stack `beco-orders`, `us-east-1`):
    - **Nome**: `Beco da Praia - Cobranca paga`
    - **Ativo**: sim
    - **Evento**: `Cobrança paga` / `OPENPIX:CHARGE_COMPLETED`
-   - **URL**: `https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook`
    - **Ação**: chamar API
-4. Em **Cabeçalhos HTTP** (ou campo `authorization` / Authorization):
-   - Nome do header: `Authorization`
-   - Valor: o **mesmo** `OPENPIX_WEBHOOK_TOKEN` usado no `sam deploy`
-   - Nao use prefixo `Bearer`
-5. Salve.
-6. A OpenPix envia um POST de teste (`teste_webhook`). Se o token estiver certo, o backend responde `200` e o webhook fica ativo.
+4. **URL (recomendado, evita 401 por header):**
+   ```text
+   https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook?token=SEU_OPENPIX_WEBHOOK_TOKEN
+   ```
+   Troque `SEU_OPENPIX_WEBHOOK_TOKEN` pelo **mesmo** valor passado no `sam deploy` como `OpenPixWebhookToken`.
+5. Se preferir autenticar por header em vez da query:
+   - URL sem `?token=...`
+   - No campo **authorization** da acao API **e/ou** em **Cabeçalhos HTTP**, adicione:
+     - Nome: `Authorization`
+     - Valor: o token do deploy (sem `Bearer`, sem AppID)
+6. Salve.
+7. A OpenPix envia um POST de teste (`evento=teste_webhook`). Com token certo, o backend responde `200`.
+
+#### Se o teste voltar 401
+
+Significa que a URL chegou na Lambda, mas o token nao bateu.
+
+Checklist:
+
+1. O valor no webhook **nao** e o AppID — e o `OPENPIX_WEBHOOK_TOKEN`.
+2. Sem espacos no inicio/fim do token.
+3. Sem prefixo `Bearer `.
+4. Preferira a URL com `?token=...` (passo 4 acima).
+5. Valide no terminal (troque `SEU_TOKEN`):
+
+```bash
+# Deve retornar 200
+curl -sS -w "\nHTTP:%{http_code}\n" \
+  -X POST 'https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook?token=SEU_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{"data_criacao":"2026-08-03T19:55:34.090Z","evento":"teste_webhook","event":"OPENPIX:CHARGE_COMPLETED"}'
+
+# Sem token deve retornar 401
+curl -sS -w "\nHTTP:%{http_code}\n" \
+  -X POST 'https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook' \
+  -H 'Content-Type: application/json' \
+  -d '{"evento":"teste_webhook","event":"OPENPIX:CHARGE_COMPLETED"}'
+```
 
 ### 4.2 Webhook de cobranca expirada
 
@@ -206,7 +237,10 @@ Repita o passo 4.1 com:
 
 - **Nome**: `Beco da Praia - Cobranca expirada`
 - **Evento**: `Cobrança expirada` / `OPENPIX:CHARGE_EXPIRED`
-- **URL** e **Authorization**: iguais aos do passo 4.1
+- **URL** (com o mesmo token):
+  ```text
+  https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook?token=SEU_OPENPIX_WEBHOOK_TOKEN
+  ```
 
 ### 4.3 Teste rapido do token (opcional)
 
@@ -214,14 +248,13 @@ No terminal, troque `SEU_TOKEN` pelo valor real:
 
 ```bash
 curl -sS -w "\nHTTP:%{http_code}\n" \
-  -X POST 'https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook' \
+  -X POST 'https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook?token=SEU_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: SEU_TOKEN' \
-  -d '{"evento":"teste_webhook"}'
+  -d '{"evento":"teste_webhook","event":"OPENPIX:CHARGE_COMPLETED"}'
 ```
 
 Esperado: HTTP `200` e `"status":"WEBHOOK_TEST_OK"`.  
-Sem o header correto, a API responde `401`.
+Sem o token correto, a API responde `401`.
 
 ### Alternativa via API
 

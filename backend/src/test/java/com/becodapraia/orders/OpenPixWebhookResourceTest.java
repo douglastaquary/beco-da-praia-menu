@@ -91,6 +91,21 @@ class OpenPixWebhookResourceTest {
         assertEquals(200, response.getStatus());
     }
 
+    @Test
+    void openPixPlatformTestPayloadIsAcceptedEvenWithChargeCompletedEvent() throws Exception {
+        OpenPixWebhookResource resource = new OpenPixWebhookResource();
+        resource.repository = new FakeOrderRepository();
+        resource.printPublisher = new FakePrintPublisher();
+        resource.webhookToken = Optional.of("beco-webhook-secret");
+
+        Response response = resource.receive(objectMapper.readTree("""
+                {"data_criacao":"2026-08-03T19:55:34.090Z","evento":"teste_webhook","event":"OPENPIX:CHARGE_COMPLETED"}
+                """), "beco-webhook-secret", null, null);
+
+        assertEquals(200, response.getStatus());
+        assertEquals("WEBHOOK_TEST_OK", ((com.becodapraia.orders.OrderModels.OrderResponse) response.getEntity()).status());
+    }
+
     static class FakeOrderRepository extends OrderRepository {
         String status = "PAYMENT_PENDING";
         int printRequestedCount;

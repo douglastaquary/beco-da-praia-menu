@@ -42,9 +42,14 @@ public class OpenPixWebhookResource {
                     .build();
         }
 
-        String event = firstText(payload, "event", "type", "evento");
-        if (isOpenPixTestEvent(event)) {
+        String evento = firstText(payload, "evento");
+        String event = firstText(payload, "event", "type");
+        // OpenPix envia teste com evento=teste_webhook e tambem event=OPENPIX:CHARGE_COMPLETED.
+        if (isOpenPixTestEvent(evento) || isOpenPixTestEvent(event)) {
             return Response.ok(OrderResponse.success(null, "WEBHOOK_TEST_OK")).build();
+        }
+        if (event.isBlank()) {
+            event = evento;
         }
 
         String orderId = firstText(payload,
