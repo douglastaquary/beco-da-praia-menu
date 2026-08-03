@@ -254,13 +254,35 @@
     }
 
     .btn-primario {
-      background: #C5831A;
+      width: 100%;
+      min-height: 62px;
+      background: linear-gradient(135deg, #d69222 0%, #b66f0e 100%);
       color: #fff;
-      box-shadow: 0 4px 14px rgba(197, 131, 26, 0.4);
+      box-shadow: 0 8px 22px rgba(197, 131, 26, 0.42);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      border: 2px solid rgba(255, 255, 255, 0.35);
     }
 
     .btn-primario:hover {
-      box-shadow: 0 6px 20px rgba(197, 131, 26, 0.5);
+      color: #fff;
+      box-shadow: 0 10px 26px rgba(197, 131, 26, 0.55);
+    }
+
+    .btn-primario-seta {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 1.35rem;
+      line-height: 1;
     }
 
     .btn-secundario {
@@ -298,7 +320,24 @@
     }
 
     .horario-item {
-      margin-bottom: 4px !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid #ece4dc;
+      margin-bottom: 0 !important;
+    }
+
+    .horario-item strong {
+      color: #3d231e;
+      font-weight: 700;
+    }
+
+    .horario-item span {
+      color: #7d5315;
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     .link-mapa {
@@ -349,6 +388,157 @@
       margin-top: 2px;
       font-size: 0.82rem;
       line-height: 1.35;
+    }
+
+    .banner-promocional {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(20, 12, 9, 0.78);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .banner-promocional.ativo {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .banner-promocional-card {
+      position: relative;
+      width: min(100%, 470px);
+      max-height: calc(100vh - 44px);
+      overflow-y: auto;
+      background: #fffaf2;
+      border: 3px solid #d99527;
+      border-radius: 22px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+      transform: translateY(14px) scale(0.98);
+      transition: transform 0.25s ease;
+    }
+
+    .banner-promocional.ativo .banner-promocional-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .banner-promocional-fechar {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.94);
+      color: #4f1b14;
+      font-size: 1.8rem;
+      line-height: 1;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.22);
+    }
+
+    .banner-promocional-imagem-wrap {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 18px 18px 0 0;
+    }
+
+    .banner-promocional-imagem {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .banner-promocional-imagem-wrap::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 42%;
+      background: linear-gradient(transparent, rgba(40, 17, 10, 0.74));
+    }
+
+    .banner-promocional-selo {
+      position: absolute;
+      z-index: 1;
+      left: 18px;
+      bottom: 16px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #d99527;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .banner-promocional-conteudo {
+      padding: 20px 22px 22px;
+      text-align: center;
+    }
+
+    .banner-promocional-chamada {
+      margin: 0 0 4px;
+      color: #c17b14;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .banner-promocional-conteudo h2 {
+      margin: 0 0 8px;
+      color: #4f1b14;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.72rem;
+      font-weight: 700;
+      line-height: 1.08;
+    }
+
+    .banner-promocional-conteudo p:not(.banner-promocional-chamada) {
+      margin: 0 auto 18px;
+      max-width: 390px;
+      color: #5f514b;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .banner-promocional-cta {
+      width: 100%;
+      padding: 13px 20px;
+      border: 0;
+      border-radius: 12px;
+      background: #4f1b14;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      box-shadow: 0 6px 16px rgba(79, 27, 20, 0.25);
+    }
+
+    @media (max-width: 430px) {
+      .banner-promocional {
+        padding: 14px;
+      }
+
+      .banner-promocional-card {
+        max-height: calc(100vh - 28px);
+      }
+
+      .banner-promocional-conteudo {
+        padding: 16px 18px 18px;
+      }
+
+      .banner-promocional-conteudo h2 {
+        font-size: 1.5rem;
+      }
     }
 
     .header-voltar {
