@@ -176,19 +176,52 @@ Nao versionar AppID nem token no Git.
 
 ## 4. Criar o webhook na plataforma OpenPix
 
-1. Em **API/Plugins**, clique em **Novo Webhook**.
-2. Preencha:
-   - **Nome**: `Beco da Praia - Pedidos`
-   - **Ativo**: sim
-   - **Evento**: comece com `Cobrança paga` / `OPENPIX:CHARGE_COMPLETED`
-   - **URL**: a `OpenPixWebhookUrl` do deploy
-   - **Ação**: chamar API
-3. Em **Cabeçalhos HTTP** (ou campo `authorization`), adicione:
-   - Nome: `Authorization`
-   - Valor: o mesmo `OPENPIX_WEBHOOK_TOKEN` do deploy
-4. Salve. A OpenPix envia um POST de teste (`teste_webhook`). O backend responde `200` e libera o cadastro.
+URLs do ambiente atual (stack `beco-orders`, `us-east-1`):
 
-Repita a criacao (ou cadastre outro webhook) para o evento `OPENPIX:CHARGE_EXPIRED` (`Cobrança expirada`), usando a mesma URL e o mesmo header `Authorization`.
+| Uso | URL |
+| --- | --- |
+| API de pedidos | `https://82x7kkich5.execute-api.us-east-1.amazonaws.com` |
+| Webhook Pix | `https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook` |
+
+### 4.1 Webhook de cobranca paga
+
+1. Na OpenPix/Woovi, abra **API/Plugins**.
+2. Clique em **Novo Webhook** (ou **Criar Webhook**).
+3. Preencha:
+   - **Nome**: `Beco da Praia - Cobranca paga`
+   - **Ativo**: sim
+   - **Evento**: `Cobrança paga` / `OPENPIX:CHARGE_COMPLETED`
+   - **URL**: `https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook`
+   - **Ação**: chamar API
+4. Em **Cabeçalhos HTTP** (ou campo `authorization` / Authorization):
+   - Nome do header: `Authorization`
+   - Valor: o **mesmo** `OPENPIX_WEBHOOK_TOKEN` usado no `sam deploy`
+   - Nao use prefixo `Bearer`
+5. Salve.
+6. A OpenPix envia um POST de teste (`teste_webhook`). Se o token estiver certo, o backend responde `200` e o webhook fica ativo.
+
+### 4.2 Webhook de cobranca expirada
+
+Repita o passo 4.1 com:
+
+- **Nome**: `Beco da Praia - Cobranca expirada`
+- **Evento**: `Cobrança expirada` / `OPENPIX:CHARGE_EXPIRED`
+- **URL** e **Authorization**: iguais aos do passo 4.1
+
+### 4.3 Teste rapido do token (opcional)
+
+No terminal, troque `SEU_TOKEN` pelo valor real:
+
+```bash
+curl -sS -w "\nHTTP:%{http_code}\n" \
+  -X POST 'https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: SEU_TOKEN' \
+  -d '{"evento":"teste_webhook"}'
+```
+
+Esperado: HTTP `200` e `"status":"WEBHOOK_TEST_OK"`.  
+Sem o header correto, a API responde `401`.
 
 ### Alternativa via API
 
@@ -198,9 +231,9 @@ curl --request POST 'https://api.openpix.com.br/api/openpix/v1/webhook' \
   --header 'Authorization: <SEU_APP_ID>' \
   --data-raw '{
     "webhook": {
-      "name": "Beco da Praia - Cobrança paga",
+      "name": "Beco da Praia - Cobranca paga",
       "event": "OPENPIX:CHARGE_COMPLETED",
-      "url": "https://<api-id>.execute-api.<regiao>.amazonaws.com/payments/openpix/webhook",
+      "url": "https://82x7kkich5.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook",
       "authorization": "<MESMO_OPENPIX_WEBHOOK_TOKEN>",
       "isActive": true
     }
@@ -209,24 +242,75 @@ curl --request POST 'https://api.openpix.com.br/api/openpix/v1/webhook' \
 
 Repita com `"event": "OPENPIX:CHARGE_EXPIRED"` para expiracao.
 
-No sandbox, troque a base para `https://api.woovi-sandbox.com`.
-
 ## 5. Conferir o frontend
 
-Em `config.js`, aponte a API publica:
+O arquivo `config.js` do repositorio ja aponta para a API deployada:
 
 ```js
-window.BECO_ORDERS_API_BASE_URL = 'https://<api-id>.execute-api.<regiao>.amazonaws.com';
+window.BECO_ORDERS_API_BASE_URL = window.BECO_ORDERS_API_BASE_URL || 'https://82x7kkich5.execute-api.us-east-1.amazonaws.com';
 ```
+
+### 5.1 Publicar o frontend
+
+1. Confirme que esta branch (ou `main`, se ja mergeada) tem esse `config.js`.
+2. Se o cardapio usa GitHub Pages, faca merge/push e aguarde o workflow `Deploy static content to Pages`.
+3. Abra o cardapio no celular/navegador e limpe cache se ainda apontar para URL antiga (`Cmd+Shift+R` no Mac).
+
+### 5.2 Conferencia no navegador
+
+1. Abra o cardapio publicado.
+2. Abra o DevTools → Console / Network.
+3. Monte um pedido e envie.
+4. A chamada deve ir para:
+   `https://82x7kkich5.execute-api.us-east-1.amazonaws.com/orders`
+5. A tela de Pix deve mostrar QR Code / copia-e-cola reais (nao mock).
 
 ## 6. Teste ponta a ponta
 
-1. Abra o cardapio e monte um pedido com Pix.
-2. Confirme que a tela mostra QR Code / copia-e-cola reais (nao mock).
-3. Pague o Pix (sandbox ou valor baixo em producao).
-4. Confirme na OpenPix que o webhook `OPENPIX:CHARGE_COMPLETED` retornou sucesso.
-5. Confirme no backend que o pedido passou de `PAYMENT_PENDING` para `PAID` / `PRINT_REQUESTED`.
-6. Se o Raspberry Pi estiver online, a impressao na cozinha deve sair.
+### 6.1 Criar pedido pelo cardapio
+
+1. Abra o cardapio.
+2. Adicione um item barato (ex.: Dadinho).
+3. Escolha viagem + nome, ou local + mesa.
+4. Finalize com Pix.
+5. Anote a **senha/orderId** exibida (ex.: `B1785786507899-225`).
+
+### 6.2 Conferir pedido na API
+
+```bash
+curl -sS 'https://82x7kkich5.execute-api.us-east-1.amazonaws.com/orders/SEU_ORDER_ID'
+```
+
+Esperado antes do pagamento: `"status":"PAYMENT_PENDING"`.
+
+### 6.3 Pagar o Pix
+
+1. Pague com o app do banco (valor baixo em producao).
+2. Na OpenPix, em Webhooks / entregas, confira se `OPENPIX:CHARGE_COMPLETED` foi enviado com sucesso (`200`).
+
+### 6.4 Confirmar status apos pagamento
+
+```bash
+curl -sS 'https://82x7kkich5.execute-api.us-east-1.amazonaws.com/orders/SEU_ORDER_ID'
+```
+
+Esperado apos webhook: `"status":"PAID"` ou `"PRINT_REQUESTED"`.
+
+### 6.5 Impressao (se Raspberry Pi estiver configurado)
+
+1. Confirme que o agente esta online e assinado em `beco/printer/kitchen/orders`.
+2. A impressora da cozinha deve sair com o pedido.
+3. Se nao imprimir, veja `RASPBERRY_PI_SETUP.md` e o `IOT_DATA_ENDPOINT` no deploy.
+
+## Checklist pos-deploy (agora)
+
+- [x] Backend deployado na AWS
+- [x] `POST /orders` cria cobranca Pix real
+- [ ] Webhook `OPENPIX:CHARGE_COMPLETED` cadastrado com `Authorization`
+- [ ] Webhook `OPENPIX:CHARGE_EXPIRED` cadastrado com `Authorization`
+- [ ] Frontend publicado com `config.js` apontando para a API
+- [ ] Pix de teste pago e pedido mudou para `PAID` / `PRINT_REQUESTED`
+- [ ] (Opcional) Raspberry Pi imprimindo
 
 ## Checklist rapido antes do deploy
 
@@ -245,15 +329,18 @@ window.BECO_ORDERS_API_BASE_URL = 'https://<api-id>.execute-api.<regiao>.amazona
 - Confirme que a URL ja esta publicada (deploy feito).
 - Confirme que o header `Authorization` bate com `OPENPIX_WEBHOOK_TOKEN`.
 - O backend aceita o evento de teste `teste_webhook` sem `correlationID`.
+- Teste com o `curl` do passo 4.3.
 
 ### Pedido fica em `PAYMENT_PENDING`
 
-- Verifique logs da Lambda e entregas do webhook na OpenPix.
+- Verifique entregas do webhook na OpenPix (status HTTP).
 - Confirme o evento `OPENPIX:CHARGE_COMPLETED`.
 - Confirme que `charge.correlationID` e o `orderId` do pedido.
+- Confirme que o header `Authorization` esta igual ao token do deploy.
 
 ### Erro ao criar cobranca
 
 - Confirme `OPENPIX_APP_ID`.
 - Confirme `OPENPIX_BASE_URL` (producao vs sandbox).
 - AppID de sandbox nao funciona na API de producao e vice-versa.
+- Nao envie `customer` so com nome; a OpenPix exige name+(cpf/email/telefone). O backend atual omite `customer` e coloca nome/mesa no `comment`.
