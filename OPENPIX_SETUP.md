@@ -68,13 +68,33 @@ Nao versionar o AppID no Git. Nao use prefixo `Bearer` — o backend envia o App
 
 ## 2. Definir o token do webhook
 
-Escolha um segredo forte, por exemplo:
+Gere um segredo forte. O comando **cria** o token; copie a saida do terminal. Nao precisa colocar nada na frente do comando.
+
+Preferido no Mac (funciona com Python padrao):
 
 ```bash
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Alternativas:
+
+```bash
+# OpenSSL / LibreSSL (precisa de espaco entre -hex e 32)
 openssl rand -hex 32
+
+# Sem OpenSSL
+uuidgen | tr -d '-' | tr '[:upper:]' '[:lower:]'
+```
+
+Exemplo de saida:
+
+```text
+a7c3e91f2b4d6a8c0e1f3b5d7a9c2e4f6b8d0a1c3e5f7a9b1d3e5f7a9b1c3d5
 ```
 
 Guarde esse valor: sera o parametro `OpenPixWebhookToken` no deploy e o header `Authorization` no webhook da OpenPix.
+
+Se `openssl rand -hex 32` falhar com `Extra option: "32"`, use a opcao com `python3` acima. Confira tambem se o comando foi copiado com espaco entre `-hex` e `32`.
 
 ## 3. Fazer o deploy do backend primeiro
 
