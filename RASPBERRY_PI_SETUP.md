@@ -273,8 +273,10 @@ Testar manualmente:
 set -a
 . /etc/beco-printer/beco-printer.env
 set +a
-java -Xms32m -Xmx128m -jar /opt/beco-printer/beco-printer-agent.jar
+java --add-opens java.base/java.net=ALL-UNNAMED -Xms32m -Xmx128m -jar /opt/beco-printer/beco-printer-agent.jar
 ```
+
+O `--add-opens java.base/java.net=ALL-UNNAMED` e obrigatorio no Java 17+: o cliente MQTT do SDK IoT (Paho) usa reflexao em `java.net.URI`.
 
 Se a conexao com o AWS IoT Core funcionar, encerrar com `Ctrl+C` e configurar o servico.
 
@@ -296,7 +298,7 @@ Wants=network-online.target
 
 [Service]
 EnvironmentFile=/etc/beco-printer/beco-printer.env
-ExecStart=/usr/bin/java -Xms32m -Xmx128m -jar /opt/beco-printer/beco-printer-agent.jar
+ExecStart=/usr/bin/java --add-opens java.base/java.net=ALL-UNNAMED -Xms32m -Xmx128m -jar /opt/beco-printer/beco-printer-agent.jar
 Restart=always
 RestartSec=5
 User=pi
@@ -346,6 +348,27 @@ ps -o pid,comm,rss,vsz,args -C java
 7. Confirmar atualizacao do status para `PRINTED`.
 
 ## Troubleshooting
+
+### Java 17: InaccessibleObjectException / java.net.URI
+
+Se aparecer:
+
+```text
+InaccessibleObjectException: Unable to make field ... java.net.URI.userInfo accessible
+```
+
+Inclua a flag JVM no comando e no systemd:
+
+```bash
+--add-opens java.base/java.net=ALL-UNNAMED
+```
+
+Depois de alterar o `.service`:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart beco-printer
+```
 
 ### Raspberry Pi nao conecta no AWS IoT Core
 
