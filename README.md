@@ -250,10 +250,23 @@ Artefatos esperados:
 Build:
 
 ```bash
-./mvnw -DskipTests package
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+./mvnw -pl backend -am -DskipTests package
 ```
 
-Deploy guiado:
+Deploy (veja detalhes e OpenPix em `OPENPIX_SETUP.md`):
+
+```bash
+export OPENPIX_APP_ID='...'
+export OPENPIX_WEBHOOK_TOKEN='...'
+sam deploy \
+  --parameter-overrides \
+    "OpenPixBaseUrl=https://api.openpix.com.br" \
+    "OpenPixAppId=${OPENPIX_APP_ID}" \
+    "OpenPixWebhookToken=${OPENPIX_WEBHOOK_TOKEN}"
+```
+
+Ou guiado:
 
 ```bash
 sam deploy --guided
@@ -261,8 +274,8 @@ sam deploy --guided
 
 Durante o deploy, informar:
 
-- Nome da stack.
-- Regiao AWS.
+- Nome da stack (`beco-orders`).
+- Regiao AWS (`us-east-1`).
 - Nome da tabela DynamoDB, se diferente do padrao.
 - Topico AWS IoT Core.
 - Endpoint data plane do AWS IoT Core, quando necessario.
