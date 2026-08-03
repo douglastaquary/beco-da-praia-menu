@@ -8,6 +8,10 @@
         'entradinhas|Torresmo': { orderable: false, message: 'Item disponível apenas com atendimento.' },
         'entradinhas|Queijo coalho com mel': { orderable: false, message: 'Item disponível apenas com atendimento.' },
         'entradinhas|Bolinhos da Casa Artesanal': { orderable: false, message: 'Item disponível apenas com atendimento.' },
+        'testes-online|Trio Teste': {
+            orderable: true,
+            message: 'Item permanente para testes online do Pix. Sem validade.'
+        },
         'mais-pedidos|Trio Nordestino (Serve 2 pessoas)': {
             requiredOptions: [meatDoneness()]
         },
