@@ -57,9 +57,16 @@ public class OrderResource {
         boolean pixPayment = isPix(request.paymentMethod());
         String customerName = clean(request.customerName());
         String payerName = customerName.isBlank() ? "Mesa " + clean(request.tableNumber()) : customerName;
-        PaymentDetails payment = pixPayment
-                ? openPixClient.createCharge(orderId, total, payerName)
-                : null;
+        PaymentDetails payment;
+        try {
+            payment = pixPayment
+                    ? openPixClient.createCharge(orderId, total, payerName)
+                    : null;
+        } catch (IllegalStateException e) {
+            return Response.status(Response.Status.BAD_GATEWAY)
+                    .entity(OrderResponse.error(e.getMessage()))
+                    .build();
+        }
         OrderRecord order = new OrderRecord(
                 orderId,
                 customerName,

@@ -63,7 +63,13 @@ public class OpenPixClient {
                     .build();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
-                throw new IllegalStateException("OpenPix retornou HTTP " + response.statusCode() + ".");
+                String body = response.body() == null ? "" : response.body().trim();
+                if (body.length() > 300) {
+                    body = body.substring(0, 300) + "...";
+                }
+                throw new IllegalStateException(
+                        "OpenPix retornou HTTP " + response.statusCode()
+                                + (body.isBlank() ? "." : ": " + body));
             }
 
             JsonNode root = objectMapper.readTree(response.body());
