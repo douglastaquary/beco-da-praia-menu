@@ -22,11 +22,20 @@ public class PrinterAgentApp {
         EscPosPrinter printer = new EscPosPrinter(config.printerHost(), config.printerPort());
         PrintStatusClient statusClient = new PrintStatusClient(config.ordersApiBaseUrl(), objectMapper);
 
-        AWSIotMqttClient client = new AWSIotMqttClient(
-                config.iotEndpoint(),
-                config.clientId(),
+        String endpoint = CertificateKeyStore.normalizeEndpoint(config.iotEndpoint());
+        if (endpoint.isBlank() || !endpoint.contains(".iot.") || !endpoint.contains("amazonaws.com")) {
+            throw new IllegalStateException(
+                    "AWS_IOT_ENDPOINT invalido. Use o host ATS sem https://, por exemplo: xxxxx-ats.iot.us-east-1.amazonaws.com");
+        }
+
+        CertificateKeyStore.KeyStorePasswordPair pair = CertificateKeyStore.fromPemFiles(
                 config.certPath(),
                 config.privateKeyPath());
+        AWSIotMqttClient client = new AWSIotMqttClient(
+                endpoint,
+                config.clientId(),
+                pair.keyStore(),
+                pair.keyPassword());
         client.setCleanSession(false);
         client.connect();
         System.out.println("Connected to AWS IoT Core as " + config.clientId());

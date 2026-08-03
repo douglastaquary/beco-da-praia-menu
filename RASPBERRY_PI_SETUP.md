@@ -205,7 +205,10 @@ ORDERS_API_BASE_URL=<URL_DA_API_ORDERS>
 
 Detalhe das variaveis:
 
-- `AWS_IOT_ENDPOINT`: endpoint data plane do AWS IoT Core, normalmente no formato `xxxxxxxxxxxxxx-ats.iot.<regiao>.amazonaws.com`.
+- `AWS_IOT_ENDPOINT`: endpoint data plane do AWS IoT Core, **sem** `https://`. Formato: `xxxxxxxxxxxxxx-ats.iot.us-east-1.amazonaws.com`.
+  - Obter com: `aws iot describe-endpoint --endpoint-type iot:Data-ATS --output text`
+  - Errado: `https://xxxx-ats.iot.us-east-1.amazonaws.com` ou placeholder `<ENDPOINT_AWS_IOT>`
+  - Certo: `xxxx-ats.iot.us-east-1.amazonaws.com`
 - `AWS_IOT_CLIENT_ID`: identificador unico do agente. Para o primeiro ponto de impressao, usar `beco-printer-01`.
 - `AWS_IOT_TOPIC_ORDERS`: topico onde a cozinha recebe pedidos pagos.
 - `AWS_IOT_TOPIC_STATUS`: topico usado para publicar status de impressao.
