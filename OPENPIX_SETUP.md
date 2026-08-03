@@ -100,13 +100,68 @@ Se `openssl rand -hex 32` falhar com `Extra option: "32"`, use a opcao com `pyth
 
 O cadastro do webhook na OpenPix exige uma URL publica que responda `200` no teste.
 
+### Pre-requisitos no Mac
+
 ```bash
-./mvnw -DskipTests package
+aws --version
+sam --version
+aws sts get-caller-identity
+```
+
+A conta precisa de permissao para criar Lambda, API Gateway HTTP API, DynamoDB e IAM roles. Regiao padrao do projeto: `us-east-1`.
+
+### Estimativa de custo (dev / baixo volume)
+
+Arquitetura: 1 Lambda Java 17 (1024 MB), HTTP API, DynamoDB on-demand, IoT publish.
+
+| Servico | Uso estimado | Custo mensal aproximado |
+| --- | --- | --- |
+| Lambda | ~3k pedidos, ~1–2 s cada | perto de zero (dentro do free tier) |
+| API Gateway HTTP | ~10k requests | < US$ 1 |
+| DynamoDB on-demand | poucos milhares de writes/reads | < US$ 1 |
+| IoT Core | mensagens de impressao | < US$ 1 |
+| **Total** | restaurante pequeno | **~US$ 0–3 / mes** |
+
+### Build
+
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+./mvnw -pl backend -am -DskipTests package
+ls -lh backend/target/function.zip
+```
+
+### Deploy
+
+Com `samconfig.toml` (stack `beco-orders`, regiao `us-east-1`):
+
+```bash
+export OPENPIX_APP_ID='cole_o_appid_aqui'
+export OPENPIX_WEBHOOK_TOKEN='cole_o_token_do_passo_2_aqui'
+
+# Opcional: endpoint IoT (depois de criar a Thing)
+# export IOT_DATA_ENDPOINT='https://xxxxxxxxxxxxxx-ats.iot.us-east-1.amazonaws.com'
+
+sam deploy \
+  --parameter-overrides \
+    "PrinterOrdersTopic=beco/printer/kitchen/orders" \
+    "OrdersTableName=BecoOrders" \
+    "IotDataEndpoint=${IOT_DATA_ENDPOINT:-}" \
+    "OpenPixBaseUrl=https://api.openpix.com.br" \
+    "OpenPixAppId=${OPENPIX_APP_ID}" \
+    "OpenPixWebhookToken=${OPENPIX_WEBHOOK_TOKEN}" \
+    "PixChargeExpiresInSeconds=900"
+```
+
+Ou guiado:
+
+```bash
 sam deploy --guided
 ```
 
-Durante o deploy, informe:
+Durante o deploy guiado, informe:
 
+- Stack: `beco-orders`
+- Regiao: `us-east-1`
 - `OpenPixBaseUrl`: `https://api.openpix.com.br` (producao) ou `https://api.woovi-sandbox.com` (sandbox)
 - `OpenPixAppId`: AppID do passo 1
 - `OpenPixWebhookToken`: token do passo 2
@@ -114,8 +169,10 @@ Durante o deploy, informe:
 Ao final, anote o output `OrdersApiUrl` / `OpenPixWebhookUrl`, no formato:
 
 ```text
-https://<api-id>.execute-api.<regiao>.amazonaws.com/payments/openpix/webhook
+https://<api-id>.execute-api.us-east-1.amazonaws.com/payments/openpix/webhook
 ```
+
+Nao versionar AppID nem token no Git.
 
 ## 4. Criar o webhook na plataforma OpenPix
 
