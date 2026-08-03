@@ -23,7 +23,7 @@ import java.util.Optional;
 public class OpenPixClient {
     private static final String PROVIDER = "OPENPIX";
 
-    @ConfigProperty(name = "OPENPIX_BASE_URL", defaultValue = "https://api.woovi-sandbox.com")
+    @ConfigProperty(name = "OPENPIX_BASE_URL", defaultValue = "https://api.openpix.com.br")
     String baseUrl;
 
     @ConfigProperty(name = "OPENPIX_APP_ID")

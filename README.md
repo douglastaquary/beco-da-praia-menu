@@ -147,10 +147,12 @@ Variaveis de ambiente:
 - `ORDERS_TABLE`: tabela DynamoDB de pedidos.
 - `PRINTER_ORDERS_TOPIC`: topico IoT usado pela cozinha.
 - `IOT_DATA_ENDPOINT`: endpoint data plane do AWS IoT Core.
-- `OPENPIX_BASE_URL`: URL da OpenPix/Woovi.
-- `OPENPIX_APP_ID`: credencial da aplicacao OpenPix/Woovi.
-- `OPENPIX_WEBHOOK_TOKEN`: token compartilhado para proteger o webhook Pix.
+- `OPENPIX_BASE_URL`: URL da OpenPix/Woovi (`https://api.openpix.com.br` em producao).
+- `OPENPIX_APP_ID`: AppID da aplicacao OpenPix/Woovi.
+- `OPENPIX_WEBHOOK_TOKEN`: segredo compartilhado; a OpenPix deve enviar no header `Authorization` do webhook.
 - `PIX_CHARGE_EXPIRES_IN_SECONDS`: tempo de expiracao da cobranca Pix.
+
+O passo a passo para AppID, webhook e checklist de deploy esta em `OPENPIX_SETUP.md`.
 
 Status principais:
 
@@ -264,6 +266,13 @@ Durante o deploy, informar:
 - Nome da tabela DynamoDB, se diferente do padrao.
 - Topico AWS IoT Core.
 - Endpoint data plane do AWS IoT Core, quando necessario.
+- `OpenPixBaseUrl`, `OpenPixAppId` e `OpenPixWebhookToken` (ver `OPENPIX_SETUP.md`).
+
+Depois do deploy:
+
+1. Copiar o output `OpenPixWebhookUrl`.
+2. Cadastrar o webhook na OpenPix com header `Authorization` igual ao `OpenPixWebhookToken`.
+3. Atualizar `config.js` com a URL da API Gateway.
 
 ## Operacao local
 
@@ -287,5 +296,6 @@ Para rodar o backend Quarkus em modo desenvolvimento:
 
 ## Documentacao complementar
 
+- `OPENPIX_SETUP.md`: AppID, webhook Pix e checklist para o deploy.
 - `RASPBERRY_PI_SETUP.md`: configuracao do Raspberry Pi, AWS IoT Core, servico systemd e impressora.
 - `cardapio.md`: cardapio textual usado como referencia de produtos.

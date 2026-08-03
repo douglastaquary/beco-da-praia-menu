@@ -27,10 +27,10 @@ class OpenPixWebhookResourceTest {
 
         Response first = resource.receive(objectMapper.readTree("""
                 {"event":"OPENPIX:CHARGE_COMPLETED","charge":{"correlationID":"B123"}}
-                """), null, null);
+                """), null, null, null);
         Response duplicate = resource.receive(objectMapper.readTree("""
                 {"event":"OPENPIX:CHARGE_COMPLETED","charge":{"correlationID":"B123"}}
-                """), null, null);
+                """), null, null, null);
 
         assertEquals(200, first.getStatus());
         assertEquals(200, duplicate.getStatus());
@@ -49,11 +49,46 @@ class OpenPixWebhookResourceTest {
 
         Response response = resource.receive(objectMapper.readTree("""
                 {"event":"OPENPIX:CHARGE_EXPIRED","charge":{"correlationID":"B123"}}
-                """), null, null);
+                """), null, null, null);
 
         assertEquals(200, response.getStatus());
         assertEquals("PAYMENT_EXPIRED", repository.status);
         assertEquals(0, publisher.publishCount);
+    }
+
+    @Test
+    void authorizationHeaderIsAccepted() throws Exception {
+        FakeOrderRepository repository = new FakeOrderRepository();
+        FakePrintPublisher publisher = new FakePrintPublisher();
+        OpenPixWebhookResource resource = new OpenPixWebhookResource();
+        resource.repository = repository;
+        resource.printPublisher = publisher;
+        resource.webhookToken = Optional.of("beco-webhook-secret");
+
+        Response unauthorized = resource.receive(objectMapper.readTree("""
+                {"event":"OPENPIX:CHARGE_COMPLETED","charge":{"correlationID":"B123"}}
+                """), null, null, null);
+        Response authorized = resource.receive(objectMapper.readTree("""
+                {"event":"OPENPIX:CHARGE_COMPLETED","charge":{"correlationID":"B123"}}
+                """), "beco-webhook-secret", null, null);
+
+        assertEquals(401, unauthorized.getStatus());
+        assertEquals(200, authorized.getStatus());
+        assertEquals(1, publisher.publishCount);
+    }
+
+    @Test
+    void openPixTestEventDoesNotRequireCorrelationId() throws Exception {
+        OpenPixWebhookResource resource = new OpenPixWebhookResource();
+        resource.repository = new FakeOrderRepository();
+        resource.printPublisher = new FakePrintPublisher();
+        resource.webhookToken = Optional.of("beco-webhook-secret");
+
+        Response response = resource.receive(objectMapper.readTree("""
+                {"evento":"teste_webhook"}
+                """), "Bearer beco-webhook-secret", null, null);
+
+        assertEquals(200, response.getStatus());
     }
 
     static class FakeOrderRepository extends OrderRepository {

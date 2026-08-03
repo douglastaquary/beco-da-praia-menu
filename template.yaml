@@ -15,15 +15,18 @@ Parameters:
     Description: Optional AWS IoT data endpoint URL, for example https://xxxxxxxxxxxxxx-ats.iot.us-east-1.amazonaws.com.
   OpenPixBaseUrl:
     Type: String
-    Default: https://api.woovi-sandbox.com
+    Default: https://api.openpix.com.br
+    Description: Use https://api.openpix.com.br for production or https://api.woovi-sandbox.com for sandbox.
   OpenPixAppId:
     Type: String
     NoEcho: true
     Default: ''
+    Description: OpenPix/Woovi AppID used as Authorization when creating Pix charges.
   OpenPixWebhookToken:
     Type: String
     NoEcho: true
     Default: ''
+    Description: Shared secret configured as Authorization header on the OpenPix webhook.
   PixChargeExpiresInSeconds:
     Type: Number
     Default: 900
@@ -131,5 +134,5 @@ Outputs:
     Description: AWS IoT Core topic consumed by the Raspberry Pi printer agent.
     Value: !Ref PrinterOrdersTopic
   OpenPixWebhookUrl:
-    Description: Webhook URL to configure in OpenPix/Woovi.
-    Value: !Sub https://${OrdersApi}.execute-api.${AWS::Region}.amazonaws.com/payments/openpix/webhook?token=CONFIGURE_OPENPIX_WEBHOOK_TOKEN
+    Description: Webhook URL to configure in OpenPix/Woovi. Protect it with the same Authorization value as OpenPixWebhookToken.
+    Value: !Sub https://${OrdersApi}.execute-api.${AWS::Region}.amazonaws.com/payments/openpix/webhook

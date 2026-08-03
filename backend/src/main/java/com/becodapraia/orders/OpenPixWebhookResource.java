@@ -32,16 +32,21 @@ public class OpenPixWebhookResource {
     @POST
     public Response receive(
             JsonNode payload,
+            @HeaderParam("Authorization") String authorizationHeader,
             @HeaderParam("X-OpenPix-Webhook-Token") String headerToken,
             @QueryParam("token") String queryToken
     ) {
-        if (!isAuthorized(headerToken, queryToken)) {
+        if (!isAuthorized(authorizationHeader, headerToken, queryToken)) {
             return Response.status(Response.Status.UNAUTHORIZED)
                     .entity(OrderResponse.error("Webhook Pix nao autorizado."))
                     .build();
         }
 
-        String event = firstText(payload, "event", "type");
+        String event = firstText(payload, "event", "type", "evento");
+        if (isOpenPixTestEvent(event)) {
+            return Response.ok(OrderResponse.success(null, "WEBHOOK_TEST_OK")).build();
+        }
+
         String orderId = firstText(payload,
                 "charge.correlationID",
                 "charge.correlationId",
@@ -68,11 +73,28 @@ public class OpenPixWebhookResource {
         return Response.ok(OrderResponse.success(orderId, "IGNORED")).build();
     }
 
-    private boolean isAuthorized(String headerToken, String queryToken) {
+    private boolean isAuthorized(String authorizationHeader, String headerToken, String queryToken) {
         return webhookToken
                 .filter(value -> !value.isBlank())
-                .map(expected -> expected.equals(headerToken) || expected.equals(queryToken))
+                .map(expected -> expected.equals(normalizeAuth(authorizationHeader))
+                        || expected.equals(headerToken)
+                        || expected.equals(queryToken))
                 .orElse(true);
+    }
+
+    private boolean isOpenPixTestEvent(String event) {
+        return "teste_webhook".equalsIgnoreCase(event) || "OPENPIX:TEST".equalsIgnoreCase(event);
+    }
+
+    private String normalizeAuth(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        String trimmed = value.trim();
+        if (trimmed.regionMatches(true, 0, "Bearer ", 0, 7)) {
+            return trimmed.substring(7).trim();
+        }
+        return trimmed;
     }
 
     private String firstText(JsonNode node, String... paths) {
