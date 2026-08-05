@@ -1,6 +1,7 @@
 (function () {
     const API_BASE_URL = (window.BECO_ORDERS_API_BASE_URL || '').replace(/\/$/, '');
     const ORDER_ENDPOINT = `${API_BASE_URL}/orders`;
+    const ONLINE_ORDERS_ENABLED = window.BECO_ONLINE_ORDERS_ENABLED !== false;
     const PAYMENT_POLL_INTERVAL_MS = 4000;
     const PIX_ONLY_MESSAGE = 'Pedidos online e direto da mesa são finalizados somente via Pix.';
     const productRules = {
@@ -64,13 +65,15 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         createProductDetailUi();
-        createPixPaymentUi();
-        createOrderSuccessUi();
-        createCartUi();
-        setupPixOnlyNotice();
-        setupOrderableBadges();
-        updateCartUi();
-        setupScreenshotMode();
+        if (ONLINE_ORDERS_ENABLED) {
+            createPixPaymentUi();
+            createOrderSuccessUi();
+            createCartUi();
+            setupPixOnlyNotice();
+            setupOrderableBadges();
+            updateCartUi();
+            setupScreenshotMode();
+        }
     });
 
     document.addEventListener('click', function (event) {
@@ -114,7 +117,7 @@
                     <span aria-hidden="true">‹</span>
                 </button>
                 <div class="detalhe-header-textos">
-                    <p>Montar pedido</p>
+                    <p>${ONLINE_ORDERS_ENABLED ? 'Montar pedido' : 'Detalhes do item'}</p>
                     <h1 id="detalhe-header-titulo"></h1>
                 </div>
             </header>
@@ -244,7 +247,7 @@
         setText('detalhe-mensagem', '');
         const detailTag = document.getElementById('detalhe-tag-online');
         if (detailTag) {
-            detailTag.hidden = !isProductOrderable(product);
+            detailTag.hidden = !ONLINE_ORDERS_ENABLED || !isProductOrderable(product);
         }
 
         const image = document.getElementById('detalhe-imagem');
@@ -277,6 +280,11 @@
 
         if (!product.prices.length) {
             controls.innerHTML = '<p class="detalhe-info">Item informativo. Chame o atendimento para mais detalhes.</p>';
+            return;
+        }
+
+        if (!ONLINE_ORDERS_ENABLED) {
+            controls.innerHTML = '<div class="detalhe-indisponivel">Pedidos online temporariamente indisponíveis. Faça seu pedido com nossa equipe.</div>';
             return;
         }
 
