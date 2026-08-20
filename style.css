@@ -1744,6 +1744,44 @@
       text-transform: uppercase !important;
     }
 
+    .cardapioCategoriaDescricao {
+      max-width: 680px;
+      margin: -8px 0 12px;
+      color: #5f554d;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .cardapioSubcategoriaTitulo {
+      width: 100%;
+      margin: 18px 0 6px;
+      color: #8a570d;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .cervejasSubcategoria {
+      width: 100%;
+      box-sizing: border-box;
+      margin: 12px 0 2px;
+      padding: 0 16px 6px;
+      border-bottom: 1px solid rgba(197, 131, 26, 0.35);
+      color: #8a570d;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    #cervejas .produtos > .cervejasSubcategoria:first-child {
+      margin-top: 0;
+    }
+
     .mainCard {
       padding: 0 16px 40px;
     }
