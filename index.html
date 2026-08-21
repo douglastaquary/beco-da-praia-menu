@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio - Beco da Praia</title>
     <!-- css -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260820-app-menu-v5">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,89 +23,53 @@
 
 <body>
     <div id="app" class="mainContainer">
-        <!-- Página inicial -->
-        <section id="pagina-inicial" class="pagina-inicial">
-            <header class="header-beco">
-                <div class="header-beco-conteudo">
-                    <img src="images/logo-beco-bg-black.png" alt="Beco da Praia" class="header-beco-logo">
-                    <div class="header-beco-textos">
-                        <h1 class="header-beco-nome">BECO DA PRAIA</h1>
-                        <p class="header-beco-subtitulo">• culinária nordestina •</p>
-                    </div>
+        <div id="menu-lateral-backdrop" class="menu-lateral-backdrop" aria-hidden="true"></div>
+        <aside id="menu-lateral" class="menu-lateral" aria-hidden="true" aria-label="Menu principal">
+            <div class="menu-lateral-cabecalho">
+                <img src="images/logo-beco-bg-black.png" alt="" class="menu-lateral-logo">
+                <div>
+                    <strong>Beco da Praia</strong>
+                    <span>Culinária e cultura nordestina</span>
                 </div>
-            </header>
-            <div class="pagina-inicial-conteudo">
-                <div class="pagina-inicial-botoes">
-                    <button type="button" id="btn-cardapio" class="btn-inicial btn-primario">
-                        <span>Conhecer o cardápio</span>
-                        <span class="btn-primario-seta" aria-hidden="true">→</span>
-                    </button>
-                    <a href="https://wa.me/5513981267849" target="_blank" class="btn-inicial btn-secundario">Reservar Mesa</a>
-                    <a href="https://maps.google.com/?q=Av.+Siqueira+Campos,+606+-+Boqueirão,+Santos+-+SP" target="_blank" class="btn-inicial btn-secundario">Localização</a>
-                </div>
-                <div class="pagina-inicial-secao">
-                    <h3>Chegue mais</h3>
-                    <p>Fique à vontade! Preparamos sabores nordestinos, porções para compartilhar e aquela cerveja bem gelada. Se é sua primeira vez por aqui, comece pelos Favoritos do Beco.</p>
-                </div>
-                <div class="pagina-inicial-secao">
-                    <h3>Horário de Funcionamento</h3>
-                    <p class="horario-item"><strong>Terça do Forró</strong><span>18h às 23h</span></p>
-                    <p class="horario-item"><strong>Sexta-feira</strong><span>18h às 23h</span></p>
-                    <p class="horario-item"><strong>Sábado e domingo</strong><span>12h às 22h</span></p>
-                </div>
-                <div class="pagina-inicial-secao">
-                    <h3>Formas de Pagamento</h3>
-                    <p>Dinheiro • Cartão de crédito • Cartão de débito • Pix </p>
-                </div>
-                <div class="pagina-inicial-secao">
-                    <h3>Localização</h3>
-                    <p>Av. Vicente de Carvalho, 763 - Centro, Bertioga - SP</p>
-                    <a href="https://maps.google.com/?q=Av.+Vicente+de+Carvalho,+763+-+Centro,+Bertioga+-+SP" target="_blank" class="link-mapa">Mostrar no mapa</a>
-                </div>
+                <button type="button" id="menu-lateral-fechar" class="menu-lateral-fechar"
+                    aria-label="Fechar menu">×</button>
             </div>
-        </section>
+            <nav class="menu-lateral-links" aria-label="Navegação principal">
+                <button type="button" data-nav-page="pagina-cardapio"><span aria-hidden="true">⌂</span> Cardápio</button>
+                <button type="button" data-nav-page="pagina-forro"><span aria-hidden="true">♫</span> Forró das Terças</button>
+                <button type="button" data-nav-page="pagina-sobre"><span aria-hidden="true">✦</span> Sobre o Beco</button>
+                <button type="button" data-nav-page="pagina-horarios"><span aria-hidden="true">◷</span> Horários</button>
+                <button type="button" data-nav-page="pagina-reservas"><span aria-hidden="true">◉</span> Reservas e contato</button>
+                <button type="button" data-nav-page="pagina-localizacao"><span aria-hidden="true">⌖</span> Localização</button>
+                <button type="button" data-nav-page="pagina-pagamentos"><span aria-hidden="true">◇</span> Formas de pagamento</button>
+                <a href="https://www.instagram.com/becodapraiaoficial/" target="_blank" rel="noopener noreferrer">
+                    <span aria-hidden="true">◎</span> Instagram
+                </a>
+            </nav>
+            <p class="menu-lateral-rodape">Chegue mais. O Beco é seu também.</p>
+        </aside>
 
         <!-- Página do cardápio -->
-        <section id="pagina-cardapio" class="pagina-cardapio" style="display: none;">
-            <header class="header-beco header-cardapio">
-                <div class="header-beco-conteudo">
-                    <button type="button" id="btn-voltar" class="header-voltar" aria-label="Voltar">← Voltar</button>
-                    <img src="images/logo-beco-bg-black.png" alt="Beco da Praia" class="header-beco-logo">
-                    <div class="header-beco-textos">
-                        <h1 class="header-beco-nome">BECO DA PRAIA</h1>
-                        <p class="header-beco-subtitulo">• culinária nordestina •</p>
+        <section id="pagina-cardapio" class="pagina-cardapio" data-app-page>
+            <div class="cardapio-navegacao-sticky">
+                <header class="header-beco header-cardapio">
+                    <div class="header-beco-conteudo">
+                        <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu">
+                            <span></span><span></span><span></span>
+                        </button>
+                        <div class="header-beco-textos">
+                            <h1 class="header-beco-nome">BECO DA PRAIA</h1>
+                            <p class="header-beco-subtitulo">• boteco com alma nordestina •</p>
+                        </div>
                     </div>
-                </div>
-            </header>
-            <div id="banner-promocional" class="banner-promocional" role="dialog" aria-modal="true"
-                aria-labelledby="banner-promocional-titulo" aria-describedby="banner-promocional-descricao"
-                aria-hidden="true" hidden>
-                <div class="banner-promocional-card">
-                    <button type="button" id="btn-fechar-banner" class="banner-promocional-fechar"
-                        aria-label="Fechar promoção">×</button>
-                    <div class="banner-promocional-imagem-wrap">
-                        <img src="images/trio-nordestino-gpt.png"
-                            alt="Trio Nordestino com carne de sol, baião de dois e mandioca"
-                            class="banner-promocional-imagem">
-                        <span class="banner-promocional-selo">Queridinho da casa</span>
-                    </div>
-                    <div class="banner-promocional-conteudo">
-                        <p class="banner-promocional-chamada">Sabor que abraça</p>
-                        <h2 id="banner-promocional-titulo">Experimente o Trio Nordestino</h2>
-                        <p id="banner-promocional-descricao">Carne de sol artesanal, baião de dois e mandioca na
-                            manteiga de garrafa. Serve 2 pessoas.</p>
-                        <button type="button" id="btn-ver-destaque" class="banner-promocional-cta">Ver os favoritos</button>
-                    </div>
-                </div>
-            </div>
-        <div class="card">
-            <div class="mainCard">
-                <div class="menuMobile">
+                </header>
+                <nav class="menuMobile" aria-label="Categorias do cardápio">
                     <div data-offset-bottom="100"
                         style="display: flex; flex-direction: row; align-items: center; background-color: rgb(250, 250, 250);">
                         <div class="divCategorias">
                             <a href="#mais-pedidos" class="cardCategoria">Favoritos do Beco</a>
                             <a href="#combos" class="cardCategoria">Combos para compartilhar</a>
+                            <a href="#cachacas-do-beco" class="cardCategoria cardCategoriaCachacas">Cachaças do Piauí</a>
                             <a href="#entradinhas" class="cardCategoria">Para começar</a>
                             <a href="#porcoes-do-beco" class="cardCategoria">Porções para dividir</a>
                             <a href="#bem-nordestinos" class="cardCategoria">Sabores do Nordeste</a>
@@ -115,8 +79,79 @@
                             <a href="#cervejas" class="cardCategoria">Bebidas</a>
                         </div>
                     </div>
+                </nav>
+            </div>
+            <div id="banner-promocional" class="banner-promocional" role="dialog" aria-modal="true"
+                aria-labelledby="banner-promocional-titulo" aria-describedby="banner-promocional-descricao"
+                aria-hidden="true" hidden>
+                <div class="banner-promocional-card">
+                    <button type="button" id="btn-fechar-banner" class="banner-promocional-fechar"
+                        aria-label="Fechar promoção">×</button>
+                    <div class="banner-promocional-imagem-wrap">
+                        <img src="images/trio-nordestino-gpt.png"
+                            alt="Trio Nordestino com carne de sol, Baião à Moda do Cheff e mandioca"
+                            class="banner-promocional-imagem">
+                        <span class="banner-promocional-selo">Queridinho da casa</span>
+                    </div>
+                    <div class="banner-promocional-conteudo">
+                        <p class="banner-promocional-chamada">Sabor que abraça</p>
+                        <h2 id="banner-promocional-titulo">Experimente o Trio Nordestino</h2>
+                        <p id="banner-promocional-descricao">Carne de sol artesanal, Baião à Moda do Cheff e mandioca na
+                            manteiga de garrafa. Serve 2 pessoas.</p>
+                        <button type="button" id="btn-ver-destaque" class="banner-promocional-cta">Ver os favoritos</button>
+                    </div>
                 </div>
+            </div>
+            <button type="button" class="cachacas-vitrine" data-open-cachacas
+                aria-label="Conhecer as cachaças piauienses Lira e Mangueira">
+                <span class="cachacas-vitrine-slide cachacas-vitrine-lira">
+                    <span class="cachacas-vitrine-imagem">
+                        <img src="images/bebidas_beco/cachaca-lira-amburana.webp" alt="">
+                    </span>
+                    <span class="cachacas-vitrine-texto">
+                        <small>Destaque piauiense</small>
+                        <strong>Lira Amburana</strong>
+                        <span>Premiada, marcante e envelhecida em amburana.</span>
+                    </span>
+                    <span class="cachacas-vitrine-cta">Conhecer →</span>
+                </span>
+                <span class="cachacas-vitrine-slide cachacas-vitrine-mangueira">
+                    <span class="cachacas-vitrine-imagem">
+                        <img src="images/bebidas_beco/cachaca-mangueira.webp" alt="">
+                    </span>
+                    <span class="cachacas-vitrine-texto">
+                        <small>Direto de Castelo do Piauí</small>
+                        <strong>Cachaça Mangueira</strong>
+                        <span>Prove uma dose ou leve a tradição para casa.</span>
+                    </span>
+                    <span class="cachacas-vitrine-cta">Ver opções →</span>
+                </span>
+                <span class="cachacas-vitrine-indicadores" aria-hidden="true"><i></i><i></i></span>
+            </button>
+        <div class="card">
+            <div class="mainCard">
                 <!-- cardápio gerado -->
+                <div id="cachacas-do-beco" class="cardapioCategoria">
+                    <p class="cardapioCategoriaTitulo">Cachaças do Piauí</p>
+                    <p class="cardapioCategoriaDescricao">Dois rótulos que carregam história, identidade e o sabor da nossa terra.</p>
+                    <div class="produtos text-center">
+                        <div class="produtoContainer cachacas-chamada" data-open-cachacas role="button" tabindex="0"
+                            aria-label="Conhecer as Cachaças do Beco">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Seleção de cachaças Lira e Mangueira"
+                                        src="images/bebidas_beco/cachaca-mangueira.webp" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Lira & Mangueira — orgulho piauiense no Beco</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Experimente uma dose, descubra novos sabores ou leve uma lembrança especial para casa.</p>
+                                <span class="cachacas-chamada-link" aria-hidden="true">Ver doses, litros e embalagens →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="entradinhas" class="cardapioCategoria">
                     <p class="cardapioCategoriaTitulo">Para começar</p>
                     <p class="cardapioCategoriaDescricao">Petiscos para abrir o apetite e deixar a conversa ainda melhor.</p>
@@ -224,7 +259,7 @@
                             </div>
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
                                 <p class="listaProdutoTitulo">Trio Nordestino (Serve 2 pessoas)</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">O queridinho da casa. Baião de dois, carne de sol artesanal e mandioca cozida na manteiga de garrafa.</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">O queridinho da casa. Baião à Moda do Cheff, carne de sol artesanal e mandioca cozida na manteiga de garrafa.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
                                     <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 99,90</p>
                                 </div>
@@ -969,9 +1004,9 @@
                             </div>
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
                                 <p class="listaProdutoTitulo">Gin e tônica</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Gin, tônica e Monin de limão siciliano, morango ou maçã verde.</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Gin, tônica, finalizado com uma rodela de laranja.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 29,90</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 35,00</p>
                                 </div>
                             </div>
                         </div>
@@ -986,7 +1021,7 @@
                                 <p class="listaProdutoTitulo">Gin e Red Bull</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Gin e Red Bull tropical, melancia, zero açúcar ou tradicional.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 40,00</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 45,00</p>
                                 </div>
                             </div>
                         </div>
@@ -1003,28 +1038,6 @@
                                 <div style="display: flex; flex-direction: row; align-items: center;">
                                     <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
-                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
-                            <div class="container_foto">
-                                <picture>
-                                    <img loading="lazy" alt="" src="images/logo-beco-bg-black.png" class="imagemProduto">
-                                </picture>
-                            </div>
-                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
-                                <p class="listaProdutoTitulo">Conhaque com mel e limão</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Sugestão do conhaque: São João da Barra.</p>
-                                <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
-                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
-                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
-                                <p class="listaProdutoTitulo">Cachaças</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Consulte nosso atendimento para informações sobre disponibilidade e preço.</p>
                             </div>
                         </div>
                     </div>
@@ -1226,12 +1239,256 @@
                 </div>
             </div>
         </div>
+        <button type="button" id="cardapio-voltar-topo" class="back-to-top cardapio-voltar-topo"
+            aria-label="Voltar ao início do cardápio" aria-hidden="true" tabindex="-1"></button>
+        </section>
+
+        <section id="pagina-cachacas" class="pagina-cachacas" style="display: none;" aria-hidden="true">
+            <header class="detalhe-produto-header cachacas-header">
+                <button type="button" id="cachacas-voltar" class="detalhe-voltar" aria-label="Voltar ao cardápio">
+                    <svg class="cachacas-voltar-icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M14.5 5 7.5 12l7 7"></path>
+                    </svg>
+                </button>
+                <div class="detalhe-header-textos">
+                    <p>Sabores do Nordeste</p>
+                    <h1>Cachaças do Beco</h1>
+                </div>
+            </header>
+
+            <main class="cachacas-conteudo">
+                <section class="cachacas-hero" aria-labelledby="cachacas-titulo">
+                    <p class="cachacas-sobretitulo">Tradição brasileira em cada dose</p>
+                    <h2 id="cachacas-titulo">Um brinde à cultura nordestina</h2>
+                    <p>Nosso balcão reúne histórias, aromas e rótulos para descobrir sem pressa. Experimente uma dose
+                        diferente ou leve para casa uma lembrança cheia de afeto e sabor.</p>
+                </section>
+
+                <section class="cachacas-destaques" aria-labelledby="cachacas-destaques-titulo">
+                    <div class="cachacas-secao-cabecalho">
+                        <p>Do Piauí para o Beco</p>
+                        <h2 id="cachacas-destaques-titulo">Rótulos em destaque</h2>
+                    </div>
+
+                    <article class="cachaca-banner cachaca-banner-lira">
+                        <div class="cachaca-banner-imagem">
+                            <img src="images/bebidas_beco/cachaca-lira-amburana.webp"
+                                alt="Garrafa da cachaça piauiense Lira Amburana">
+                            <span>Piauí • edição especial</span>
+                        </div>
+                        <div class="cachaca-banner-conteudo">
+                            <p class="cachaca-banner-origem">Amarante, Piauí</p>
+                            <h3>Lira Amburana</h3>
+                            <p>Edição especial piauiense, envelhecida por 2 anos em barris de primeiro uso, com as notas
+                                acolhedoras da amburana.</p>
+                            <div class="cachaca-banner-precos" aria-label="Preços da Lira Amburana">
+                                <span><small>Dose</small> R$ 29,00</span>
+                                <span><small>Litro</small> R$ 110,00</span>
+                            </div>
+                            <strong>Experimente uma dose ou leve para casa</strong>
+                        </div>
+                    </article>
+
+                    <article class="cachaca-banner cachaca-banner-mangueira">
+                        <div class="cachaca-banner-imagem">
+                            <img src="images/bebidas_beco/cachaca-mangueira.webp"
+                                alt="Garrafas da cachaça Mangueira, produzida em Castelo do Piauí">
+                            <span>Tradição de Castelo do Piauí</span>
+                        </div>
+                        <div class="cachaca-banner-conteudo">
+                            <p class="cachaca-banner-origem">Castelo do Piauí</p>
+                            <h3>Mangueira</h3>
+                            <p>Um símbolo da tradição piauiense e um dos rótulos mais pedidos da casa, disponível em
+                                formatos para brindar aqui ou guardar a lembrança.</p>
+                            <div class="cachaca-banner-precos cachaca-banner-precos-grid" aria-label="Preços da Mangueira">
+                                <span><small>Dose</small> R$ 15,00</span>
+                                <span><small>Litro</small> R$ 70,00</span>
+                                <span><small>Long neck “Pé de Tonel”</small> R$ 45,00</span>
+                                <span><small>“Celular” — embalagem plástica</small> R$ 35,00</span>
+                            </div>
+                            <strong>Experimente uma dose ou leve para casa</strong>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="cachacas-catalogo" aria-labelledby="cachacas-catalogo-titulo">
+                    <div class="cachacas-secao-cabecalho">
+                        <p>Para provar e descobrir</p>
+                        <h2 id="cachacas-catalogo-titulo">Nosso catálogo de doses</h2>
+                    </div>
+                    <div class="cachacas-lista">
+                        <div class="cachaca-item"><span>Salinas</span><strong>R$ 15,00</strong></div>
+                        <div class="cachaca-item"><span>Seleta</span><strong>R$ 15,00</strong></div>
+                        <div class="cachaca-item"><span>Kariri</span><strong>R$ 8,00</strong></div>
+                        <div class="cachaca-item"><span>Pinga de Alambique Amburana</span><strong>R$ 7,00</strong></div>
+                        <div class="cachaca-item">
+                            <span>Lira Ouro <small>somente dose</small></span>
+                            <strong>R$ 25,00</strong>
+                        </div>
+                        <div class="cachaca-item"><span>Velho Barreiro</span><strong>R$ 5,00</strong></div>
+                        <div class="cachaca-item"><span>Campari</span><strong>R$ 25,00</strong></div>
+                        <div class="cachaca-item"><span>Cachaça Gabriela</span><strong>R$ 7,00</strong></div>
+                        <div class="cachaca-item cachaca-item-especial">
+                            <span>São João da Barra com mel e limão <small>“Receita do Médico”</small></span>
+                            <strong>R$ 15,00</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="cachacas-atendimento">
+                    <span aria-hidden="true">✦</span>
+                    <div>
+                        <h2>Escolheu seu próximo brinde?</h2>
+                        <p>Peça com nossa equipe. A disponibilidade das doses, garrafas e embalagens é confirmada pelo
+                            atendimento.</p>
+                    </div>
+                </aside>
+
+                <p class="cachacas-aviso">Venda e consumo somente para maiores de 18 anos. Beba com moderação.</p>
+            </main>
+        </section>
+
+        <section id="pagina-forro" class="pagina-info pagina-forro" data-app-page style="display: none;"
+            aria-hidden="true">
+            <header class="info-app-header">
+                <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu">
+                    <span></span><span></span><span></span>
+                </button>
+                <div><small>Terça é dia de dança</small><h1>Forró no Beco</h1></div>
+            </header>
+            <main class="info-conteudo forro-conteudo">
+                <section class="forro-hero">
+                    <img src="images/forro-beco-hero.webp"
+                        alt="Ambiente nordestino do Beco da Praia decorado com bandeirinhas e balão de São João">
+                    <div class="forro-hero-overlay">
+                        <p>Em Bertioga, com alma nordestina</p>
+                        <h2>Toda terça tem forró no Beco</h2>
+                        <span>A partir das 18h</span>
+                    </div>
+                </section>
+                <section class="forro-chamada">
+                    <p class="info-sobretitulo">Arraste o pé e chegue mais</p>
+                    <h2>Comida boa, música e encontro</h2>
+                    <p>A Terça do Forró reúne sabores nordestinos e aquele clima acolhedor que faz todo mundo se sentir
+                        em casa. Venha jantar, brindar e aproveitar a noite com a gente.</p>
+                    <div class="info-acoes">
+                        <a href="https://wa.me/5513981267849?text=Olá!%20Quero%20reservar%20uma%20mesa%20para%20a%20Terça%20do%20Forró."
+                            target="_blank" rel="noopener noreferrer" class="info-cta info-cta-principal">Reservar para o forró</a>
+                        <a href="https://www.instagram.com/becodapraiaoficial/" target="_blank"
+                            rel="noopener noreferrer" class="info-cta info-cta-secundario">Ver fotos e vídeos no Instagram</a>
+                    </div>
+                </section>
+                <section class="forro-agenda" aria-label="Informações do Forró">
+                    <article><small>Quando</small><strong>Toda terça-feira</strong><span>18h às 23h</span></article>
+                    <article><small>Onde</small><strong>Beco da Praia</strong><span>Centro de Bertioga</span></article>
+                    <article><small>Instagram</small><strong>@becodapraiaoficial</strong><span>Confira a programação</span></article>
+                </section>
+                <section class="forro-mural">
+                    <div>
+                        <p class="info-sobretitulo">Nossa identidade</p>
+                        <h2>Um pedacinho do Nordeste perto do mar</h2>
+                    </div>
+                    <figure>
+                        <img src="images/forro-beco-ilustracao.webp"
+                            alt="Ilustração nordestina inspirada em Luiz Gonzaga e bandeirinhas de São João">
+                        <figcaption>Tradição, afeto e muito xote.</figcaption>
+                    </figure>
+                </section>
+                <a href="https://www.instagram.com/becodapraiaoficial/" target="_blank" rel="noopener noreferrer"
+                    class="forro-instagram-final">Acompanhe @becodapraiaoficial e veja os registros mais recentes →</a>
+            </main>
+        </section>
+
+        <section id="pagina-sobre" class="pagina-info" data-app-page style="display: none;" aria-hidden="true">
+            <header class="info-app-header">
+                <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu"><span></span><span></span><span></span></button>
+                <div><small>Conheça nossa casa</small><h1>Sobre o Beco</h1></div>
+            </header>
+            <main class="info-conteudo">
+                <section class="info-hero-card">
+                    <p class="info-sobretitulo">Chegue mais</p>
+                    <h2>O Nordeste encontra o mar em Bertioga</h2>
+                    <p>O Beco da Praia é lugar de comida com afeto, conversa boa e cultura nordestina. Preparamos
+                        pratos para compartilhar, cerveja gelada, cachaças especiais e uma acolhida para você se sentir em casa.</p>
+                </section>
+                <section class="info-grid">
+                    <article><span aria-hidden="true">✦</span><h3>Sabores da nossa terra</h3><p>Receitas nordestinas, porções generosas e ingredientes cheios de identidade.</p></article>
+                    <article><span aria-hidden="true">♫</span><h3>Cultura que aproxima</h3><p>Às terças, o forró toma conta do Beco e transforma a noite em encontro.</p></article>
+                    <article><span aria-hidden="true">♡</span><h3>Casa acolhedora</h3><p>Um ambiente descontraído para chegar com amigos, família ou para conhecer gente nova.</p></article>
+                </section>
+                <button type="button" class="info-cta info-cta-principal" data-nav-page="pagina-cardapio">Voltar ao cardápio</button>
+            </main>
+        </section>
+
+        <section id="pagina-horarios" class="pagina-info" data-app-page style="display: none;" aria-hidden="true">
+            <header class="info-app-header">
+                <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu"><span></span><span></span><span></span></button>
+                <div><small>Programe sua visita</small><h1>Horários</h1></div>
+            </header>
+            <main class="info-conteudo">
+                <section class="info-hero-card"><p class="info-sobretitulo">Estamos esperando você</p><h2>Horário de funcionamento</h2><p>Confira os dias e venha aproveitar o Beco sem pressa.</p></section>
+                <div class="info-lista">
+                    <article class="info-lista-destaque"><div><small>Terça-feira</small><strong>Terça do Forró</strong></div><span>18h às 23h</span></article>
+                    <article><div><small>Sexta-feira</small><strong>Jantar no Beco</strong></div><span>18h às 23h</span></article>
+                    <article><div><small>Sábado e domingo</small><strong>Almoço e jantar</strong></div><span>12h às 22h</span></article>
+                </div>
+                <p class="info-nota">Em feriados e datas especiais, consulte a programação no Instagram.</p>
+            </main>
+        </section>
+
+        <section id="pagina-reservas" class="pagina-info" data-app-page style="display: none;" aria-hidden="true">
+            <header class="info-app-header">
+                <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu"><span></span><span></span><span></span></button>
+                <div><small>Fale com a gente</small><h1>Reservas e contato</h1></div>
+            </header>
+            <main class="info-conteudo">
+                <section class="info-hero-card"><p class="info-sobretitulo">Sua mesa no Beco</p><h2>Vai reunir a turma?</h2><p>Chame nossa equipe pelo WhatsApp para consultar disponibilidade e reservar sua mesa.</p></section>
+                <a href="https://wa.me/5513981267849?text=Olá!%20Quero%20reservar%20uma%20mesa%20no%20Beco%20da%20Praia."
+                    target="_blank" rel="noopener noreferrer" class="contato-card"><span aria-hidden="true">◉</span><div><small>WhatsApp</small><strong>(13) 98126-7849</strong><p>Toque para conversar e reservar</p></div><b>→</b></a>
+                <a href="https://www.instagram.com/becodapraiaoficial/" target="_blank" rel="noopener noreferrer"
+                    class="contato-card"><span aria-hidden="true">◎</span><div><small>Instagram</small><strong>@becodapraiaoficial</strong><p>Novidades, fotos e programação</p></div><b>→</b></a>
+            </main>
+        </section>
+
+        <section id="pagina-localizacao" class="pagina-info" data-app-page style="display: none;" aria-hidden="true">
+            <header class="info-app-header">
+                <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu"><span></span><span></span><span></span></button>
+                <div><small>Venha nos visitar</small><h1>Localização</h1></div>
+            </header>
+            <main class="info-conteudo">
+                <section class="localizacao-card">
+                    <span class="localizacao-icone" aria-hidden="true">⌖</span>
+                    <p class="info-sobretitulo">Beco da Praia</p>
+                    <h2>Av. Vicente de Carvalho, 763</h2>
+                    <p>Centro, Bertioga — SP</p>
+                    <a href="https://maps.google.com/?q=Av.+Vicente+de+Carvalho,+763+-+Centro,+Bertioga+-+SP"
+                        target="_blank" rel="noopener noreferrer" class="info-cta info-cta-principal">Abrir no mapa</a>
+                </section>
+                <p class="info-nota">Estamos próximos ao Parque dos Tupiniquins e ao Forte São João.</p>
+            </main>
+        </section>
+
+        <section id="pagina-pagamentos" class="pagina-info" data-app-page style="display: none;" aria-hidden="true">
+            <header class="info-app-header">
+                <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu"><span></span><span></span><span></span></button>
+                <div><small>Facilidade para você</small><h1>Formas de pagamento</h1></div>
+            </header>
+            <main class="info-conteudo">
+                <section class="info-hero-card"><p class="info-sobretitulo">Escolha como pagar</p><h2>Aceitamos</h2><p>No atendimento presencial, você pode escolher a opção mais conveniente.</p></section>
+                <div class="pagamentos-grid" aria-label="Formas de pagamento aceitas">
+                    <article><span aria-hidden="true">$</span><strong>Dinheiro</strong></article>
+                    <article><span aria-hidden="true">◇</span><strong>Cartão de crédito</strong></article>
+                    <article><span aria-hidden="true">◇</span><strong>Cartão de débito</strong></article>
+                    <article><span aria-hidden="true">▦</span><strong>Pix</strong></article>
+                </div>
+            </main>
         </section>
 
                 <script>
                     const ordemCategorias = [
                         'mais-pedidos',
                         'combos',
+                        'cachacas-do-beco',
                         'entradinhas',
                         'porcoes-do-beco',
                         'bem-nordestinos',
@@ -1253,6 +1510,8 @@
                     });
 
                     let categoriaAtivaAtual = null;
+                    let rolagemPorTab = false;
+                    let timerRolagemPorTab = null;
 
                     function centralizarCategoriaNoMenu(linkAtivo) {
                         if (!linkAtivo) return;
@@ -1269,30 +1528,46 @@
                         });
                     }
 
+                    function travarAtualizacaoPorScroll(duracao = 900) {
+                        rolagemPorTab = true;
+                        clearTimeout(timerRolagemPorTab);
+                        timerRolagemPorTab = setTimeout(function () {
+                            rolagemPorTab = false;
+                        }, duracao);
+                    }
+
+                    function posicaoScrollCategoria(id) {
+                        if (id === 'mais-pedidos') return 0;
+
+                        const alvo = document.getElementById(id);
+                        if (!alvo) return window.scrollY;
+
+                        atualizarAlturaNavegacao();
+                        const alturaNav = navegacaoCardapio ? navegacaoCardapio.offsetHeight : 0;
+                        const destino = window.scrollY + alvo.getBoundingClientRect().top - alturaNav - 6;
+                        return Math.max(0, Math.round(destino));
+                    }
+
                     function selecionarCategoria(id, rolar = true) {
-                        // Remove seleção de todas as categorias do menu mobile
                         document.querySelectorAll('.cardCategoria').forEach(a => {
                             a.classList.remove('cardCategoriaSelected');
                         });
 
-                        // Marca a categoria correspondente
                         const linkAtivo = document.querySelector(`.cardCategoria[href="#${id}"]`);
                         if (linkAtivo) {
                             linkAtivo.classList.add('cardCategoriaSelected');
                             centralizarCategoriaNoMenu(linkAtivo);
                         }
 
-                        // Rola para o bloco de detalhe da categoria
-                        if (rolar) {
-                            const alvo = document.getElementById(id);
-                            if (alvo) {
-                                setTimeout(() => {
-                                    alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                }, 50);
-                            }
-                        }
-
                         categoriaAtivaAtual = id;
+
+                        if (rolar) {
+                            travarAtualizacaoPorScroll();
+                            window.scrollTo({
+                                top: posicaoScrollCategoria(id),
+                                behavior: 'smooth'
+                            });
+                        }
                     }
 
                     function paginaCardapioEstaVisivel() {
@@ -1300,14 +1575,41 @@
                         return paginaCardapio && paginaCardapio.style.display !== 'none';
                     }
 
+                    const navegacaoCardapio = document.querySelector('.cardapio-navegacao-sticky');
+                    const botaoVoltarTopo = document.getElementById('cardapio-voltar-topo');
+
+                    function atualizarAlturaNavegacao() {
+                        const paginaCardapio = document.getElementById('pagina-cardapio');
+                        if (!paginaCardapio || !navegacaoCardapio) return;
+                        const altura = `${navegacaoCardapio.offsetHeight}px`;
+                        paginaCardapio.style.setProperty('--cardapio-nav-height', altura);
+                        document.documentElement.style.setProperty('--cardapio-nav-height', altura);
+                    }
+
+                    function atualizarBotaoVoltarTopo() {
+                        if (!botaoVoltarTopo) return;
+                        const mostrar = paginaCardapioEstaVisivel() && window.scrollY > 520;
+                        botaoVoltarTopo.classList.toggle('is-visible', mostrar);
+                        botaoVoltarTopo.setAttribute('aria-hidden', String(!mostrar));
+                        botaoVoltarTopo.tabIndex = mostrar ? 0 : -1;
+                    }
+
+                    if (navegacaoCardapio && 'ResizeObserver' in window) {
+                        new ResizeObserver(atualizarAlturaNavegacao).observe(navegacaoCardapio);
+                    }
+
+                    botaoVoltarTopo?.addEventListener('click', function() {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+
                     function atualizarCategoriaPorScroll() {
-                        if (!paginaCardapioEstaVisivel()) return;
+                        if (rolagemPorTab || !paginaCardapioEstaVisivel()) return;
 
                         const secoes = Array.from(document.querySelectorAll('#pagina-cardapio .cardapioCategoria'))
                             .filter(secao => !secao.hidden);
                         if (!secoes.length) return;
 
-                        const pontoReferencia = Math.max(140, window.innerHeight * 0.3);
+                        const pontoReferencia = (navegacaoCardapio?.offsetHeight || 150) + 28;
                         let secaoAtiva = null;
 
                         for (const secao of secoes) {
@@ -1338,24 +1640,6 @@
                             selecionarCategoria(idAtivo, false);
                         }
                     }
-
-                    // Navegação entre página inicial e cardápio
-                    document.getElementById('btn-cardapio').addEventListener('click', function() {
-                        document.getElementById('pagina-inicial').style.display = 'none';
-                        document.getElementById('pagina-cardapio').style.display = 'block';
-                        document.body.scrollTop = 0;
-                        document.documentElement.scrollTop = 0;
-                        selecionarCategoria('mais-pedidos', false);
-                        abrirBannerPromocional();
-                        setTimeout(atualizarCategoriaPorScroll, 120);
-                    });
-                    document.getElementById('btn-voltar').addEventListener('click', function() {
-                        document.getElementById('pagina-cardapio').style.display = 'none';
-                        document.getElementById('pagina-inicial').style.display = 'block';
-                        document.body.scrollTop = 0;
-                        document.documentElement.scrollTop = 0;
-                        fecharBannerPromocional();
-                    });
 
                     const bannerPromocional = document.getElementById('banner-promocional');
                     const botaoFecharBanner = document.getElementById('btn-fechar-banner');
@@ -1399,18 +1683,39 @@
                         if (id) selecionarCategoria(id, true);
                     });
 
-                    window.addEventListener('scroll', atualizarCategoriaPorScroll, { passive: true });
-                    window.addEventListener('resize', atualizarCategoriaPorScroll);
+                    window.addEventListener('scroll', function() {
+                        if (rolagemPorTab) {
+                            travarAtualizacaoPorScroll(200);
+                            atualizarBotaoVoltarTopo();
+                            return;
+                        }
+                        atualizarCategoriaPorScroll();
+                        atualizarBotaoVoltarTopo();
+                    }, { passive: true });
+                    window.addEventListener('resize', function() {
+                        atualizarAlturaNavegacao();
+                        atualizarCategoriaPorScroll();
+                    });
 
                     document.addEventListener('keydown', function(e) {
                         if (e.key === 'Escape' && bannerPromocional && bannerPromocional.classList.contains('ativo')) {
                             fecharBannerPromocional();
-                            document.getElementById('btn-cardapio')?.focus();
+                            document.querySelector('[data-open-drawer]')?.focus();
                         }
                     });
+
+                    selecionarCategoria('mais-pedidos', false);
+                    window.selecionarCategoria = selecionarCategoria;
+                    window.atualizarAlturaNavegacao = atualizarAlturaNavegacao;
+                    requestAnimationFrame(function () {
+                        atualizarAlturaNavegacao();
+                        window.scrollTo(0, 0);
+                    });
+                    setTimeout(atualizarCategoriaPorScroll, 120);
                 </script>
                 <script src="config.js"></script>
-                <script src="orders.js"></script>
+                <script src="navigation.js?v=20260820-app-menu-v4"></script>
+                <script src="orders.js?v=20260820-app-menu-v4"></script>
     </div>
 </body>
 

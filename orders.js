@@ -59,12 +59,14 @@
         currentProduct: null,
         items: [],
         cardapioScrollY: 0,
+        cachacasTrigger: null,
         paymentPollId: null,
         lastPixOrder: null
     };
 
     document.addEventListener('DOMContentLoaded', function () {
         createProductDetailUi();
+        setupCachacasExperience();
         if (ONLINE_ORDERS_ENABLED) {
             createPixPaymentUi();
             createOrderSuccessUi();
@@ -77,6 +79,14 @@
     });
 
     document.addEventListener('click', function (event) {
+        const cachacasTrigger = event.target.closest('[data-open-cachacas]');
+        if (cachacasTrigger) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            showCachacasPage(cachacasTrigger);
+            return;
+        }
+
         const product = event.target.closest('.produtoContainer');
         if (!product || event.target.closest('.pedido-carrinho') || event.target.closest('.pagina-detalhe-produto') || event.target.closest('.pagina-pagamento-pix') || event.target.closest('.pagina-sucesso-pedido')) {
             return;
@@ -137,6 +147,67 @@
         `;
         document.getElementById('app').appendChild(detail);
         document.getElementById('detalhe-voltar').addEventListener('click', backToMenu);
+    }
+
+    function setupCachacasExperience() {
+        const triggers = Array.from(document.querySelectorAll('[data-open-cachacas]'));
+        const backButton = document.getElementById('cachacas-voltar');
+        if (!triggers.length || !backButton) return;
+
+        triggers.forEach(function (trigger) {
+            if (trigger.tagName === 'BUTTON') return;
+            trigger.addEventListener('keydown', function (event) {
+                if (event.key !== 'Enter' && event.key !== ' ') return;
+                event.preventDefault();
+                showCachacasPage(trigger);
+            });
+        });
+        backButton.addEventListener('click', backFromCachacas);
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && document.body.classList.contains('cachacas-ativo')) {
+                backFromCachacas();
+            }
+        });
+    }
+
+    function showCachacasPage(trigger) {
+        const cachacasPage = document.getElementById('pagina-cachacas');
+        const paginaCardapio = document.getElementById('pagina-cardapio');
+        const paginaInicial = document.getElementById('pagina-inicial');
+        if (!cachacasPage || !paginaCardapio) return;
+
+        state.cardapioScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        state.cachacasTrigger = trigger || document.activeElement;
+        if (paginaInicial) paginaInicial.style.display = 'none';
+        paginaCardapio.style.display = 'none';
+        cachacasPage.style.display = 'block';
+        cachacasPage.setAttribute('aria-hidden', 'false');
+        cachacasPage.scrollTop = 0;
+        document.body.classList.add('cachacas-ativo');
+        window.scrollTo(0, 0);
+        document.getElementById('cachacas-voltar')?.focus({ preventScroll: true });
+    }
+
+    function backFromCachacas() {
+        const cachacasPage = document.getElementById('pagina-cachacas');
+        const paginaCardapio = document.getElementById('pagina-cardapio');
+        if (!cachacasPage || !paginaCardapio) return;
+
+        cachacasPage.style.display = 'none';
+        cachacasPage.setAttribute('aria-hidden', 'true');
+        paginaCardapio.style.display = 'block';
+        document.body.classList.remove('cachacas-ativo');
+        if (typeof window.selecionarCategoria === 'function') {
+            window.selecionarCategoria('cachacas-do-beco', false);
+        } else {
+            document.querySelectorAll('.cardCategoria').forEach(function (link) {
+                link.classList.toggle('cardCategoriaSelected', link.getAttribute('href') === '#cachacas-do-beco');
+            });
+        }
+        requestAnimationFrame(function () {
+            window.scrollTo(0, state.cardapioScrollY || 0);
+            state.cachacasTrigger?.focus({ preventScroll: true });
+        });
     }
 
     function createPixPaymentUi() {
