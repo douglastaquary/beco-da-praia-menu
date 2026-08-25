@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio - Beco da Praia</title>
     <!-- css -->
-    <link rel="stylesheet" href="style.css?v=20260820-app-menu-v5">
+    <link rel="stylesheet" href="style.css?v=20260825-forro-v6">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,6 +67,10 @@
                     <div data-offset-bottom="100"
                         style="display: flex; flex-direction: row; align-items: center; background-color: rgb(250, 250, 250);">
                         <div class="divCategorias">
+                            <a href="#forro-destaques" class="cardCategoria cardCategoriaForro"
+                                data-forro-only hidden>Forró hoje</a>
+                            <a href="#caipirinhas-do-beco" class="cardCategoria"
+                                data-forro-only hidden>Caipirinhas</a>
                             <a href="#mais-pedidos" class="cardCategoria">Favoritos do Beco</a>
                             <a href="#combos" class="cardCategoria">Combos para compartilhar</a>
                             <a href="#cachacas-do-beco" class="cardCategoria cardCategoriaCachacas">Cachaças do Piauí</a>
@@ -102,6 +106,104 @@
                     </div>
                 </div>
             </div>
+            <section id="forro-destaques" class="cardapioCategoria forro-cardapio-destaques"
+                data-forro-only aria-labelledby="forro-cardapio-titulo" hidden>
+                <div class="forro-cardapio-hero">
+                    <img src="images/forro-terca-arrumadinho.png"
+                        alt="Arrumadinho do Borges no Forró de terça">
+                    <div class="forro-cardapio-hero-info">
+                        <p>Hoje no Beco</p>
+                        <h2 id="forro-cardapio-titulo">Forró de terça</h2>
+                        <strong>Arrumadinho do Borges</strong>
+                    </div>
+                </div>
+                <div class="forro-cardapio-conteudo">
+                    <div class="forro-promocoes">
+                    <article class="forro-promocao-caldo">
+                        <div>
+                            <span class="forro-promocao-selo">Promoção da noite</span>
+                            <p>Caldinho de feijão dobrado</p>
+                            <strong>R$ 15,90</strong>
+                            <small>Dois caldinhos no valor da promoção</small>
+                        </div>
+                        <button type="button" data-forro-scroll="Caldinho de feijão"
+                            data-forro-category="entradinhas">Pedir agora</button>
+                    </article>
+                    <article class="forro-promocao-caldo forro-promocao-mocoto">
+                        <div>
+                            <span class="forro-promocao-selo">Promoção da noite</span>
+                            <p>Mocotó simples com pão</p>
+                            <strong>R$ 19,00</strong>
+                        </div>
+                        <button type="button" data-forro-scroll="Mocotó simples com pão"
+                            data-forro-category="bem-nordestinos">Pedir agora</button>
+                    </article>
+                    </div>
+                    <div class="forro-cardapio-chamada">
+                        <p>Peça para a pista</p>
+                        <h3>Os mais vendidos da terça</h3>
+                    </div>
+                    <nav class="forro-vitrine" aria-label="Produtos mais pedidos no forró">
+                        <button type="button" class="forro-vitrine-item forro-vitrine-item-especial"
+                            data-forro-scroll="Rapadura" data-forro-category="caipirinhas-do-beco">
+                            <img src="images/bebidas_beco/nega-minha.jpg" alt="">
+                            <span>Especial de Terça</span>
+                            <strong>Rapadura</strong>
+                            <b>R$ 34,90</b>
+                        </button>
+                        <button type="button" class="forro-vitrine-item forro-vitrine-item-especial"
+                            data-forro-scroll="Goiabada com limão" data-forro-category="caipirinhas-do-beco">
+                            <img src="images/la_belle_de_jour.jpg" alt="">
+                            <span>Especial de Terça</span>
+                            <strong>Goiabada com limão</strong>
+                            <b>R$ 34,90</b>
+                        </button>
+                        <button type="button" class="forro-vitrine-item"
+                            data-forro-scroll="Mix de churrasco" data-forro-category="porcoes-do-beco">
+                            <img src="images/mix-de-churrasco.jpg" alt="">
+                            <span>Meia porção</span>
+                            <strong>Mix de churrasco</strong>
+                            <b>Meia R$ 55,00</b>
+                        </button>
+                        <button type="button" class="forro-vitrine-item"
+                            data-forro-scroll="Isca de peixe" data-forro-category="porcoes-do-beco">
+                            <img src="images/isca-peixe-gpt.png" alt="">
+                            <span>Meia porção</span>
+                            <strong>Isca de peixe</strong>
+                            <b>Meia R$ 54,00</b>
+                        </button>
+                        <button type="button" class="forro-vitrine-item"
+                            data-forro-scroll="Torresmo" data-forro-category="entradinhas">
+                            <img src="images/Torresmo-de-Barriga.jpeg" alt="">
+                            <span>Queridinho</span>
+                            <strong>Torresmo</strong>
+                            <b>Unid. R$ 10,00</b>
+                            <b class="forro-vitrine-preco-extra">500 g R$ 45,00</b>
+                        </button>
+                        <button type="button" class="forro-vitrine-item"
+                            data-forro-scroll="Batata frita" data-forro-category="entradinhas">
+                            <img src="images/batata-frita.jpeg" alt="">
+                            <span>Para dividir</span>
+                            <strong>Batata frita</strong>
+                            <b>R$ 37,00</b>
+                        </button>
+                        <button type="button" class="forro-vitrine-item"
+                            data-forro-scroll="Caldinho de feijão" data-forro-category="entradinhas">
+                            <img src="images/caldinho-de-feijao.jpeg" alt="">
+                            <span>Dobrado</span>
+                            <strong>Caldinho de feijão</strong>
+                            <b>2 por R$ 15,90</b>
+                        </button>
+                        <button type="button" class="forro-vitrine-item forro-vitrine-item-especial"
+                            data-forro-scroll="Mocotó simples com pão" data-forro-category="bem-nordestinos">
+                            <img src="images/mocoto-com-pao.jpg" alt="">
+                            <span>Promoção</span>
+                            <strong>Mocotó com pão</strong>
+                            <b>R$ 19,00</b>
+                        </button>
+                    </nav>
+                </div>
+            </section>
             <button type="button" class="cachacas-vitrine" data-open-cachacas
                 aria-label="Conhecer as cachaças piauienses Lira e Mangueira">
                 <span class="cachacas-vitrine-slide cachacas-vitrine-lira">
@@ -189,7 +291,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Queridinho da noite" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -207,7 +309,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Perfeita para dividir" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -222,7 +324,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Dobrado 2 por R$ 15,90"
+                            data-forro-promocao="Dois caldinhos por R$ 15,90"
+                            style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -355,7 +459,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Meia porção" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -373,7 +477,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Meia porção" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -397,6 +501,24 @@
                     <p class="cardapioCategoriaTitulo">Sabores do Nordeste</p>
                     <p class="cardapioCategoriaDescricao">Receitas cheias de tradição, tempero e aconchego.</p>
                     <div class="produtos text-center">
+                        <div class="produtoContainer" data-forro-only hidden
+                            data-forro-destaque="R$ 19,00"
+                            data-forro-promocao="Caldo simples com pão por R$ 19,00"
+                            style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="" src="images/mocoto-com-pao.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Mocotó simples com pão</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Promoção da Terça do Forró. Caldo de mocotó simples, acompanhado de pão.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 19,00</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="produtoContainer" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
@@ -415,7 +537,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Caldo da noite" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -893,7 +1015,7 @@
                 <div id="caipirinhas-do-beco" class="cardapioCategoria">
                     <p class="cardapioSubcategoriaTitulo">Caipirinhas do Beco</p>
                     <div class="produtos text-center">
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Drink da noite" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -923,7 +1045,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-hide style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -945,7 +1067,7 @@
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Todas por R$ 34,90</p>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Especial de Terça" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -960,7 +1082,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-forro-destaque="Especial de Terça" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -1537,7 +1659,7 @@
                     }
 
                     function posicaoScrollCategoria(id) {
-                        if (id === 'mais-pedidos') return 0;
+                        if (id === 'mais-pedidos' || id === 'forro-destaques') return 0;
 
                         const alvo = document.getElementById(id);
                         if (!alvo) return window.scrollY;
@@ -1634,7 +1756,13 @@
                             'sucos'
                         ]);
                         let idAtivo = secaoAtiva.id;
-                        if (categoriasBebidas.has(idAtivo)) idAtivo = 'cervejas';
+                        if (idAtivo === 'forro-destaques') {
+                            idAtivo = 'forro-destaques';
+                        } else if (document.body.dataset.cardapioMode === 'forro' && idAtivo === 'caipirinhas-do-beco') {
+                            idAtivo = 'caipirinhas-do-beco';
+                        } else if (categoriasBebidas.has(idAtivo)) {
+                            idAtivo = 'cervejas';
+                        }
                         if (idAtivo === 'extras') idAtivo = 'pratos-executivos';
                         if (idAtivo && idAtivo !== categoriaAtivaAtual) {
                             selecionarCategoria(idAtivo, false);
@@ -1715,6 +1843,7 @@
                 </script>
                 <script src="config.js"></script>
                 <script src="navigation.js?v=20260820-app-menu-v4"></script>
+                <script src="forro-menu.js?v=20260825-forro-v5"></script>
                 <script src="orders.js?v=20260820-app-menu-v4"></script>
     </div>
 </body>
