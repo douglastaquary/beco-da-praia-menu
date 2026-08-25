@@ -4946,3 +4946,377 @@
         transition: none;
       }
     }
+
+    .cardCategoriaForro {
+      border-color: #6b2c20;
+      color: #fff;
+      background: #6b2c20;
+      font-weight: 800;
+    }
+
+    .forro-cardapio-destaques {
+      margin: 12px 12px 8px;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 24px;
+      background: #2b120d;
+      box-shadow: 0 16px 36px rgba(62, 30, 18, 0.18);
+    }
+
+    .forro-cardapio-destaques.cardapioCategoria {
+      scroll-margin-top: calc(var(--cardapio-nav-height, 122px) + 8px);
+    }
+
+    .forro-cardapio-hero {
+      display: flex;
+      align-items: stretch;
+      min-height: 72px;
+      overflow: hidden;
+      background: #4f1b14;
+    }
+
+    .forro-cardapio-hero > img {
+      display: block;
+      width: 78px;
+      height: 72px;
+      flex: 0 0 78px;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    .forro-cardapio-hero-info {
+      display: flex;
+      min-width: 0;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1px;
+      padding: 8px 12px;
+      color: #fffaf1;
+      background: linear-gradient(90deg, #7a2f16 0%, #4f1b14 100%);
+    }
+
+    .forro-cardapio-hero-info p {
+      margin: 0;
+      color: #f3c66c;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .forro-cardapio-hero-info h2 {
+      margin: 0;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.22rem;
+      line-height: 1;
+    }
+
+    .forro-cardapio-hero-info strong {
+      color: #f3d9b4;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .forro-cardapio-conteudo {
+      padding: 12px 12px 14px;
+      background:
+        linear-gradient(180deg, #fff8ea 0%, #fff3d8 100%);
+    }
+
+    .forro-promocoes {
+      display: grid;
+      gap: 8px;
+    }
+
+    .forro-promocao-caldo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      color: #fff;
+      background: linear-gradient(135deg, #6b2c20 0%, #9a4c1d 100%);
+      box-shadow: 0 10px 22px rgba(75, 28, 16, 0.18);
+    }
+
+    .forro-promocao-selo {
+      display: inline-block;
+      margin-bottom: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: #6b2c20;
+      background: #f3c66c;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .forro-promocao-caldo p {
+      margin: 0;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .forro-promocao-caldo strong {
+      display: block;
+      margin: 1px 0 0;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.45rem;
+      line-height: 1;
+    }
+
+    .forro-promocao-caldo small {
+      display: block;
+      margin-top: 4px;
+      color: #f3d9b4;
+      font-size: 0.68rem;
+      line-height: 1.3;
+    }
+
+    .forro-promocao-caldo button {
+      flex: none;
+      padding: 10px 12px;
+      border: 0;
+      border-radius: 999px;
+      color: #4f1b14;
+      background: #fff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .forro-promocao-mocoto {
+      background: linear-gradient(135deg, #4f1b14 0%, #8a3d16 100%);
+    }
+
+    .forro-cardapio-chamada {
+      margin: 14px 2px 8px;
+    }
+
+    .forro-cardapio-chamada p {
+      margin: 0 0 4px;
+      color: #9a4c1d;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .forro-cardapio-chamada h3 {
+      margin: 0;
+      color: #4f1b14;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .forro-atalhos,
+    .forro-vitrine {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .forro-atalhos a {
+      display: flex;
+      min-height: 74px;
+      flex-direction: column;
+      justify-content: center;
+      padding: 12px;
+      border: 1px solid rgba(107, 44, 32, 0.12);
+      border-radius: 16px;
+      color: #4f1b14;
+      background: #fff;
+      text-decoration: none;
+      box-shadow: 0 6px 16px rgba(75, 42, 28, 0.06);
+    }
+
+    .forro-atalhos a span {
+      font-size: 1.05rem;
+      line-height: 1;
+    }
+
+    .forro-atalhos a strong {
+      margin: 4px 0 1px;
+      font-size: 0.9rem;
+    }
+
+    .forro-atalhos a small {
+      color: #8a6758;
+      font-size: 0.7rem;
+    }
+
+    .forro-vitrine-item {
+      display: flex;
+      overflow: hidden;
+      min-height: 0;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0 0 10px;
+      border: 1px solid rgba(107, 44, 32, 0.12);
+      border-radius: 16px;
+      color: #4f1b14;
+      background: #fff;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      appearance: none;
+      box-shadow: 0 6px 16px rgba(75, 42, 28, 0.08);
+    }
+
+    .forro-vitrine-item img {
+      display: block;
+      width: 100%;
+      height: 92px;
+      object-fit: cover;
+      background: #f4e6d2;
+    }
+
+    .forro-vitrine-item span {
+      margin: 8px 10px 0;
+      color: #9a4c1d;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .forro-vitrine-item strong {
+      margin: 2px 10px 0;
+      font-size: 0.88rem;
+      line-height: 1.2;
+    }
+
+    .forro-vitrine-item b {
+      margin: 4px 10px 0;
+      color: #c5831a;
+      font-size: 0.95rem;
+      font-weight: 900;
+    }
+
+    .forro-vitrine-item .forro-vitrine-preco-extra {
+      margin-top: 1px;
+      margin-bottom: 0;
+      color: #8a570d;
+      font-size: 0.78rem;
+    }
+
+    .forro-vitrine-item-especial {
+      border-color: rgba(197, 131, 26, 0.5);
+      background: linear-gradient(180deg, #fffaf1 0%, #fff 70%);
+    }
+
+    .forro-cardapio-saiba-mais {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      padding: 13px 16px;
+      border: 0;
+      border-radius: 14px;
+      color: #fff;
+      background: linear-gradient(100deg, #783b24, #b16f16);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .forro-produto-destaque {
+      border: 1px solid rgba(197, 131, 26, 0.5) !important;
+      background: linear-gradient(180deg, #fffaf1 0%, #fff 72%);
+      box-shadow: 0 10px 24px rgba(107, 44, 32, 0.12);
+    }
+
+    body[data-cardapio-mode="forro"] .cachacas-vitrine {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      body[data-cardapio-mode="forro"] .forro-produto-destaque .container_foto {
+        width: 118px;
+        height: 118px;
+        flex-basis: 118px;
+      }
+
+      body[data-cardapio-mode="forro"] .forro-produto-destaque .listaProdutoTitulo {
+        font-size: 1.08rem;
+      }
+
+      body[data-cardapio-mode="forro"] .forro-produto-destaque .divCardProduto > div[style*="flex-direction: row"] p {
+        font-size: 1.12rem !important;
+      }
+    }
+
+    .forro-produto-badge {
+      display: inline-flex;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 0 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #4f1b14;
+      background: #f3c66c;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .forro-produto-destaque .listaProdutoTitulo {
+      position: relative;
+      z-index: 1;
+    }
+
+    .forro-produto-promocao {
+      display: flex;
+      flex-direction: column;
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      color: #fff;
+      background: #6b2c20;
+    }
+
+    .forro-produto-promocao strong {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .forro-produto-promocao span {
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .forro-produto-pulso {
+      animation: forro-produto-pulso 1.4s ease;
+    }
+
+    @keyframes forro-produto-pulso {
+      0%, 100% { transform: scale(1); }
+      35% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(243, 198, 108, 0.55); }
+    }
+
+    body[data-cardapio-mode="forro"] .header-beco-subtitulo {
+      color: #c5831a;
+    }
+
+    @media (min-width: 701px) {
+      .forro-cardapio-destaques {
+        margin: 16px auto 10px;
+        width: min(calc(100% - 32px), 720px);
+      }
+
+      .forro-cardapio-hero > img {
+        width: 96px;
+        height: 80px;
+        flex-basis: 96px;
+      }
+
+      .forro-atalhos,
+      .forro-vitrine {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
