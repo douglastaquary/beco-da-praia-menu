@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio - Beco da Praia</title>
     <!-- css -->
-    <link rel="stylesheet" href="style.css?v=20260825-forro-v6">
+    <link rel="stylesheet" href="style.css?v=20260825-forro-v7">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,8 +126,6 @@
                             <strong>R$ 15,90</strong>
                             <small>Dois caldinhos no valor da promoção</small>
                         </div>
-                        <button type="button" data-forro-scroll="Caldinho de feijão"
-                            data-forro-category="entradinhas">Pedir agora</button>
                     </article>
                     <article class="forro-promocao-caldo forro-promocao-mocoto">
                         <div>
@@ -135,8 +133,6 @@
                             <p>Mocotó simples com pão</p>
                             <strong>R$ 19,00</strong>
                         </div>
-                        <button type="button" data-forro-scroll="Mocotó simples com pão"
-                            data-forro-category="bem-nordestinos">Pedir agora</button>
                     </article>
                     </div>
                     <div class="forro-cardapio-chamada">
@@ -324,8 +320,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Dobrado 2 por R$ 15,90"
-                            data-forro-promocao="Dois caldinhos por R$ 15,90"
+                        <div class="produtoContainer" data-forro-destaque="Promoção de terça"
+                            data-forro-promocao="Dobrado: 2 por R$ 15,90"
                             style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
@@ -336,8 +332,16 @@
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
                                 <p class="listaProdutoTitulo">Caldinho de feijão</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Porção de 200 ml.</p>
-                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                <div data-forro-hide style="display: flex; flex-direction: row; align-items: center;">
                                     <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
+                                </div>
+                                <div data-forro-only hidden>
+                                    <div style="display: flex; flex-direction: row; align-items: center;">
+                                        <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Unidade: R$ 15,00</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row; align-items: center;">
+                                        <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Dobrado: 2 por R$ 15,90</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
