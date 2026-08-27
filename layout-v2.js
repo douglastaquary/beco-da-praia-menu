@@ -33,6 +33,19 @@
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    function updateNavHeights() {
+        const header = document.querySelector('.cardapio-nav-inner > .header-cardapio');
+        const categories = document.querySelector('.cardapio-nav-inner > .menuMobile');
+        const pagina = document.getElementById('pagina-cardapio');
+        if (!pagina) return;
+
+        const headerHeight = header?.offsetHeight || 0;
+        const categoriesHeight = categories?.offsetHeight || 0;
+        pagina.style.setProperty('--layout-v2-header-height', `${headerHeight}px`);
+        pagina.style.setProperty('--layout-v2-categories-height', `${categoriesHeight}px`);
+        window.atualizarAlturaNavegacao?.();
+    }
+
     function initHeroCarousel(root) {
         const track = root.querySelector('.layout-v2-hero-track');
         const dotsHost = root.querySelector('.layout-v2-hero-dots');
@@ -53,10 +66,12 @@
                 slide.classList.toggle('is-active', slideIndex === index);
             });
             renderDots();
+            restartAutoplay();
         }
 
         function renderDots() {
             dotsHost.innerHTML = '';
+            if (slides.length < 2) return;
             slides.forEach(function (_slide, dotIndex) {
                 const dot = document.createElement('button');
                 dot.type = 'button';
@@ -104,8 +119,6 @@
         });
 
         collectSlides();
-        restartAutoplay();
-
         return { refresh: collectSlides, goTo: goTo };
     }
 
@@ -126,13 +139,7 @@
             });
         });
 
-        document.addEventListener('scroll', function () {
-            if (document.body.dataset.cardapioMode !== 'forro') return;
-            const forroTab = tabs.find(function (tab) {
-                return tab.dataset.layoutTarget === 'forro-destaques';
-            });
-            if (forroTab && !forroTab.hidden) setActiveTab(forroTab);
-        }, { passive: true });
+        window.layoutV2SetPrimaryTab = setActiveTab;
     }
 
     function initVenueActions() {
@@ -167,12 +174,122 @@
         });
     }
 
-    function syncForroSlide(carousel) {
-        const forroSlide = document.querySelector('.layout-v2-hero-slide[data-forro-only]');
-        if (forroSlide) {
-            forroSlide.hidden = document.body.dataset.cardapioMode !== 'forro';
+    function initSearch() {
+        const toggle = document.querySelector('.layout-v2-search-toggle');
+        const panel = document.getElementById('layout-v2-search-panel');
+        const input = document.getElementById('layout-v2-search-input');
+        const clearButton = document.getElementById('layout-v2-search-clear');
+        if (!toggle || !panel || !input) return;
+
+        toggle.hidden = false;
+
+        function setPanelOpen(open) {
+            panel.hidden = !open;
+            toggle.setAttribute('aria-expanded', String(open));
+            if (open) input.focus({ preventScroll: true });
+            else input.value = '';
+            filterProducts('');
+            updateNavHeights();
         }
+
+        function filterProducts(query) {
+            const normalized = query.trim().toLowerCase();
+            const products = document.querySelectorAll('#pagina-cardapio .produtoContainer');
+            let visibleCount = 0;
+
+            products.forEach(function (product) {
+                const title = product.querySelector('.listaProdutoTitulo')?.textContent.trim() || '';
+                const description = product.querySelector('.threeDots')?.textContent.trim() || '';
+                const matches = !normalized
+                    || title.toLowerCase().includes(normalized)
+                    || description.toLowerCase().includes(normalized);
+                product.classList.toggle('layout-v2-search-hidden', !matches);
+                if (matches) visibleCount += 1;
+            });
+
+            document.body.classList.toggle('layout-v2-search-active', Boolean(normalized));
+            if (clearButton) clearButton.hidden = !normalized;
+
+            let emptyState = document.getElementById('layout-v2-search-empty');
+            if (normalized && visibleCount === 0) {
+                if (!emptyState) {
+                    emptyState = document.createElement('p');
+                    emptyState.id = 'layout-v2-search-empty';
+                    emptyState.className = 'layout-v2-search-empty';
+                    emptyState.textContent = 'Nenhum item encontrado. Tente outro nome.';
+                    document.querySelector('.mainCard')?.prepend(emptyState);
+                }
+                emptyState.hidden = false;
+            } else if (emptyState) {
+                emptyState.hidden = true;
+            }
+        }
+
+        toggle.addEventListener('click', function () {
+            setPanelOpen(panel.hidden);
+        });
+
+        input.addEventListener('input', function () {
+            filterProducts(input.value);
+        });
+
+        clearButton?.addEventListener('click', function () {
+            input.value = '';
+            filterProducts('');
+            input.focus({ preventScroll: true });
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && !panel.hidden) setPanelOpen(false);
+        });
+    }
+
+    function initProductEnhancements() {
+        document.querySelectorAll('#pagina-cardapio .produtoContainer').forEach(function (product) {
+            if (product.querySelector('.layout-v2-saiba-mais')) return;
+
+            const card = product.querySelector('.divCardProduto');
+            const title = product.querySelector('.listaProdutoTitulo')?.textContent.trim();
+            const description = product.querySelector('.threeDots')?.textContent.trim();
+            if (!card || !title || title === 'Importante' || title === 'Disponibilidade' || title === 'Informação') return;
+
+            const priceBlocks = Array.from(card.querySelectorAll(':scope > div[style*="flex-direction: row"]'));
+            if (priceBlocks.length > 1) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'layout-v2-price-stack';
+                priceBlocks.forEach(function (block) {
+                    wrapper.appendChild(block);
+                });
+                card.appendChild(wrapper);
+            }
+
+            if (description) {
+                const link = document.createElement('button');
+                link.type = 'button';
+                link.className = 'layout-v2-saiba-mais';
+                link.textContent = 'Saiba mais';
+                link.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    product.classList.toggle('layout-v2-expanded');
+                    link.textContent = product.classList.contains('layout-v2-expanded') ? 'Ver menos' : 'Saiba mais';
+                });
+                card.appendChild(link);
+            }
+        });
+    }
+
+    function syncForroUI(carousel) {
+        const isForro = document.body.dataset.cardapioMode === 'forro';
+        const forroSlide = document.querySelector('.layout-v2-hero-slide[data-forro-only]');
+        const forroPrimaryTab = document.querySelector('.layout-v2-primary-tab[data-layout-target="forro-destaques"]');
+        const forroCategoryLink = document.querySelector('.cardCategoria[href="#forro-destaques"]');
+
+        if (forroSlide) forroSlide.hidden = !isForro;
+        if (forroPrimaryTab) forroPrimaryTab.hidden = !isForro;
+        if (forroCategoryLink) forroCategoryLink.hidden = !isForro;
+
         carousel?.refresh();
+        updateNavHeights();
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -197,13 +314,23 @@
         const carousel = initHeroCarousel(document);
         if (shell) initPrimaryTabs(shell);
         initVenueActions();
-        syncForroSlide(carousel);
+        initSearch();
+        initProductEnhancements();
+        syncForroUI(carousel);
+        updateNavHeights();
+
+        const navInner = document.querySelector('.cardapio-nav-inner');
+        if (navInner && window.ResizeObserver) {
+            new ResizeObserver(updateNavHeights).observe(navInner);
+        }
+
+        window.addEventListener('resize', updateNavHeights);
 
         const observer = new MutationObserver(function () {
-            syncForroSlide(carousel);
+            syncForroUI(carousel);
         });
         observer.observe(document.body, { attributes: true, attributeFilter: ['data-cardapio-mode'] });
 
-        window.becoLayoutV2 = { active: true, scrollToCategory: scrollToCategory };
+        window.becoLayoutV2 = { active: true, scrollToCategory: scrollToCategory, updateNavHeights: updateNavHeights };
     });
 })();
