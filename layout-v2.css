@@ -148,8 +148,16 @@ body.layout-v2-search-active .cardapioCategoria {
   scroll-margin-top: calc(var(--layout-v2-header-height, 52px) + var(--layout-v2-categories-height, 48px) + 12px);
 }
 
-body.layout-v2 .produtoContainer.layout-v2-search-hidden {
+body.layout-v2 .cardCategoria.layout-v2-nav-hidden {
   display: none !important;
+}
+
+body.layout-v2 .produtoContainer.layout-v2-product-row {
+  cursor: pointer;
+}
+
+body.layout-v2 .produtoContainer.layout-v2-product-row:active {
+  background: #fffaf1;
 }
 
 /* Hero carrossel */
@@ -507,6 +515,10 @@ body.layout-v2 .produtoContainer .threeDots {
   overflow: hidden;
 }
 
+body.layout-v2 .produtoContainer.layout-v2-search-hidden {
+  display: none !important;
+}
+
 body.layout-v2 .produtoContainer.layout-v2-expanded .threeDots {
   display: block;
   -webkit-line-clamp: unset;
@@ -570,4 +582,52 @@ body.layout-v2.layout-v2-text-lg .produtoContainer .listaProdutoTitulo {
   body.layout-v2 .layout-v2-hero-slide img {
     height: 280px;
   }
+}
+
+/* Tela de detalhe integrada ao layout v2 */
+body.layout-v2.detalhe-produto-ativo .cardapio-navegacao-sticky,
+body.layout-v2.detalhe-produto-ativo .layout-v2-shell,
+body.layout-v2.detalhe-produto-ativo .mainCard,
+body.layout-v2.detalhe-produto-ativo .cardapio-voltar-topo {
+  display: none !important;
+}
+
+body.layout-v2 .pagina-detalhe-produto {
+  background: var(--layout-v2-bg);
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-produto-header {
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  background: var(--layout-v2-surface);
+  border-bottom: 1px solid #ececec;
+  box-shadow: none;
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-voltar {
+  border-color: #e5e7eb;
+  color: var(--layout-v2-primary);
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-header-textos h1,
+body.layout-v2 .pagina-detalhe-produto .detalhe-produto-body h2 {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--layout-v2-text);
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-precos {
+  color: var(--layout-v2-text);
+  font-weight: 700;
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-imagem-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-adicionar,
+body.layout-v2 .pagina-detalhe-produto .pedido-adicionar {
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--layout-v2-primary), #8a3d16);
 }

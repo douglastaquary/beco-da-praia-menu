@@ -3,6 +3,20 @@
 
     const STORAGE_KEY = 'beco-layout-v2';
     const params = new URLSearchParams(window.location.search);
+    const BEBIDAS_SECTIONS = new Set([
+        'cervejas',
+        'caipirinhas-do-beco',
+        'coqueteis',
+        'agua-e-refrigerantes',
+        'sucos'
+    ]);
+
+    let activePrimaryGroup = 'cardapio';
+    let syncingPrimaryGroup = false;
+
+    function groupsConfig() {
+        return window.BECO_LAYOUT_V2?.groups || {};
+    }
 
     function isEnabled() {
         const layoutParam = params.get('layout');
@@ -33,16 +47,79 @@
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    function categoryIdToPrimaryGroup(categoryId) {
+        const groups = groupsConfig();
+        if (document.body.dataset.cardapioMode === 'forro' && groups.forro?.includes(categoryId)) {
+            return 'forro';
+        }
+        if (categoryId === 'cachacas-do-beco') return 'cachacas';
+        if (BEBIDAS_SECTIONS.has(categoryId)) return 'bebidas';
+        return 'cardapio';
+    }
+
+    function filterSecondaryNav(group) {
+        const allowed = new Set(groupsConfig()[group] || []);
+        document.querySelectorAll('.cardCategoria[href^="#"]').forEach(function (link) {
+            if (link.hidden) {
+                link.classList.add('layout-v2-nav-hidden');
+                return;
+            }
+            const id = link.getAttribute('href').replace('#', '');
+            link.classList.toggle('layout-v2-nav-hidden', !allowed.has(id));
+        });
+        updateNavHeights();
+    }
+
+    function applyPrimaryGroup(group, options) {
+        const opts = options || {};
+        if (!groupsConfig()[group]) return;
+
+        activePrimaryGroup = group;
+        syncingPrimaryGroup = true;
+
+        const tab = document.querySelector('.layout-v2-primary-tab[data-layout-group="' + group + '"]:not([hidden])');
+        if (tab && window.layoutV2SetPrimaryTab) {
+            window.layoutV2SetPrimaryTab(tab);
+        }
+
+        filterSecondaryNav(group);
+
+        if (opts.scrollTo !== false && tab?.dataset.layoutTarget) {
+            scrollToCategory(tab.dataset.layoutTarget);
+        }
+
+        window.setTimeout(function () {
+            syncingPrimaryGroup = false;
+        }, 120);
+    }
+
+    function syncPrimaryFromCategoryId(categoryId) {
+        if (syncingPrimaryGroup || !categoryId) return;
+        const group = categoryIdToPrimaryGroup(categoryId);
+        if (group === activePrimaryGroup) return;
+        applyPrimaryGroup(group, { scrollTo: false });
+    }
+
+    function hookCategorySelection() {
+        const original = window.selecionarCategoria;
+        if (!original || original.__layoutV2Wrapped) return;
+
+        function wrappedSelectCategory(id, rolar) {
+            original(id, rolar);
+            syncPrimaryFromCategoryId(id);
+        }
+        wrappedSelectCategory.__layoutV2Wrapped = true;
+        window.selecionarCategoria = wrappedSelectCategory;
+    }
+
     function updateNavHeights() {
         const header = document.querySelector('.cardapio-nav-inner > .header-cardapio');
         const categories = document.querySelector('.cardapio-nav-inner > .menuMobile');
         const pagina = document.getElementById('pagina-cardapio');
         if (!pagina) return;
 
-        const headerHeight = header?.offsetHeight || 0;
-        const categoriesHeight = categories?.offsetHeight || 0;
-        pagina.style.setProperty('--layout-v2-header-height', `${headerHeight}px`);
-        pagina.style.setProperty('--layout-v2-categories-height', `${categoriesHeight}px`);
+        pagina.style.setProperty('--layout-v2-header-height', (header?.offsetHeight || 0) + 'px');
+        pagina.style.setProperty('--layout-v2-categories-height', (categories?.offsetHeight || 0) + 'px');
         window.atualizarAlturaNavegacao?.();
     }
 
@@ -114,7 +191,10 @@
 
         root.querySelectorAll('[data-layout-scroll]').forEach(function (button) {
             button.addEventListener('click', function () {
-                scrollToCategory(button.dataset.layoutScroll || '');
+                const targetId = button.dataset.layoutScroll || '';
+                const group = categoryIdToPrimaryGroup(targetId);
+                applyPrimaryGroup(group, { scrollTo: false });
+                scrollToCategory(targetId);
             });
         });
 
@@ -124,7 +204,6 @@
 
     function initPrimaryTabs(shell) {
         const tabs = Array.from(shell.querySelectorAll('.layout-v2-primary-tab'));
-        if (!tabs.length) return;
 
         function setActiveTab(tab) {
             tabs.forEach(function (item) {
@@ -134,7 +213,8 @@
 
         tabs.forEach(function (tab) {
             tab.addEventListener('click', function () {
-                setActiveTab(tab);
+                const group = tab.dataset.layoutGroup || 'cardapio';
+                applyPrimaryGroup(group, { scrollTo: false });
                 scrollToCategory(tab.dataset.layoutTarget || '');
             });
         });
@@ -246,15 +326,19 @@
 
     function initProductEnhancements() {
         document.querySelectorAll('#pagina-cardapio .produtoContainer').forEach(function (product) {
-            if (product.querySelector('.layout-v2-saiba-mais')) return;
+            if (product.classList.contains('cachacas-chamada')) return;
 
             const card = product.querySelector('.divCardProduto');
             const title = product.querySelector('.listaProdutoTitulo')?.textContent.trim();
             const description = product.querySelector('.threeDots')?.textContent.trim();
-            if (!card || !title || title === 'Importante' || title === 'Disponibilidade' || title === 'Informação') return;
+            if (!card || !title || title === 'Importante' || title === 'Disponibilidade' || title === 'Informação') {
+                return;
+            }
+
+            product.classList.add('layout-v2-product-row');
 
             const priceBlocks = Array.from(card.querySelectorAll(':scope > div[style*="flex-direction: row"]'));
-            if (priceBlocks.length > 1) {
+            if (priceBlocks.length > 1 && !card.querySelector('.layout-v2-price-stack')) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'layout-v2-price-stack';
                 priceBlocks.forEach(function (block) {
@@ -263,16 +347,11 @@
                 card.appendChild(wrapper);
             }
 
-            if (description) {
+            if (!product.querySelector('.layout-v2-saiba-mais') && description) {
                 const link = document.createElement('button');
                 link.type = 'button';
                 link.className = 'layout-v2-saiba-mais';
                 link.textContent = 'Saiba mais';
-                link.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    product.classList.toggle('layout-v2-expanded');
-                    link.textContent = product.classList.contains('layout-v2-expanded') ? 'Ver menos' : 'Saiba mais';
-                });
                 card.appendChild(link);
             }
         });
@@ -281,14 +360,21 @@
     function syncForroUI(carousel) {
         const isForro = document.body.dataset.cardapioMode === 'forro';
         const forroSlide = document.querySelector('.layout-v2-hero-slide[data-forro-only]');
-        const forroPrimaryTab = document.querySelector('.layout-v2-primary-tab[data-layout-target="forro-destaques"]');
-        const forroCategoryLink = document.querySelector('.cardCategoria[href="#forro-destaques"]');
+        const forroPrimaryTab = document.querySelector('.layout-v2-primary-tab[data-layout-group="forro"]');
 
         if (forroSlide) forroSlide.hidden = !isForro;
         if (forroPrimaryTab) forroPrimaryTab.hidden = !isForro;
-        if (forroCategoryLink) forroCategoryLink.hidden = !isForro;
 
         carousel?.refresh();
+
+        if (isForro && activePrimaryGroup === 'cardapio') {
+            applyPrimaryGroup('forro', { scrollTo: false });
+        } else if (!isForro && activePrimaryGroup === 'forro') {
+            applyPrimaryGroup('cardapio', { scrollTo: false });
+        } else {
+            filterSecondaryNav(activePrimaryGroup);
+        }
+
         updateNavHeights();
     }
 
@@ -311,12 +397,15 @@
             shell.setAttribute('aria-hidden', 'false');
         }
 
+        hookCategorySelection();
+
         const carousel = initHeroCarousel(document);
         if (shell) initPrimaryTabs(shell);
         initVenueActions();
         initSearch();
         initProductEnhancements();
         syncForroUI(carousel);
+        applyPrimaryGroup(document.body.dataset.cardapioMode === 'forro' ? 'forro' : 'cardapio', { scrollTo: false });
         updateNavHeights();
 
         const navInner = document.querySelector('.cardapio-nav-inner');
@@ -328,9 +417,15 @@
 
         const observer = new MutationObserver(function () {
             syncForroUI(carousel);
+            initProductEnhancements();
         });
         observer.observe(document.body, { attributes: true, attributeFilter: ['data-cardapio-mode'] });
 
-        window.becoLayoutV2 = { active: true, scrollToCategory: scrollToCategory, updateNavHeights: updateNavHeights };
+        window.becoLayoutV2 = {
+            active: true,
+            scrollToCategory: scrollToCategory,
+            updateNavHeights: updateNavHeights,
+            applyPrimaryGroup: applyPrimaryGroup
+        };
     });
 })();

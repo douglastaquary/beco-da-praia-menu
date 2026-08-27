@@ -22,7 +22,7 @@
     </script>
     <!-- css -->
     <link rel="stylesheet" href="style.css?v=20260825-forro-v7">
-    <link rel="stylesheet" href="layout-v2.css?v=20260826-v2">
+    <link rel="stylesheet" href="layout-v2.css?v=20260826-v3">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,21 +140,22 @@
                         <nav class="layout-v2-primary" aria-label="Seções principais do cardápio">
                             <div class="layout-v2-primary-track">
                                 <button type="button" class="layout-v2-primary-tab is-active"
-                                    data-layout-target="mais-pedidos">
+                                    data-layout-target="mais-pedidos" data-layout-group="cardapio">
                                     <img src="images/trio-nordestino-gpt.png" alt="">
                                     <span>Cardápio</span>
                                 </button>
-                                <button type="button" class="layout-v2-primary-tab" data-layout-target="cervejas">
+                                <button type="button" class="layout-v2-primary-tab" data-layout-target="cervejas"
+                                    data-layout-group="bebidas">
                                     <img src="images/drink-copa-beco.png" alt="">
                                     <span>Bebidas</span>
                                 </button>
                                 <button type="button" class="layout-v2-primary-tab"
-                                    data-layout-target="cachacas-do-beco">
+                                    data-layout-target="cachacas-do-beco" data-layout-group="cachacas">
                                     <img src="images/bebidas_beco/cachaca-lira-amburana.webp" alt="">
                                     <span>Cachaças</span>
                                 </button>
                                 <button type="button" class="layout-v2-primary-tab" data-layout-target="forro-destaques"
-                                    data-forro-only hidden>
+                                    data-layout-group="forro" data-forro-only hidden>
                                     <img src="images/forro-beco-hero.webp" alt="">
                                     <span>Forró hoje</span>
                                 </button>
@@ -1951,7 +1952,7 @@
                     setTimeout(atualizarCategoriaPorScroll, 120);
                 </script>
                 <script src="config.js"></script>
-                <script src="layout-v2.js?v=20260826-v2"></script>
+                <script src="layout-v2.js?v=20260826-v3"></script>
                 <script src="navigation.js?v=20260820-app-menu-v4"></script>
                 <script src="forro-menu.js?v=20260825-forro-v5"></script>
                 <script src="orders.js?v=20260820-app-menu-v4"></script>
