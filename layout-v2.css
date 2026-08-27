@@ -21,33 +21,42 @@ body.layout-v2 .layout-v2-shell {
 }
 
 body:not(.layout-v2) .layout-v2-shell,
+body:not(.layout-v2) .layout-v2-primary,
 body:not(.layout-v2) .layout-v2-search-panel,
-body:not(.layout-v2) .layout-v2-search-toggle {
+body:not(.layout-v2) .layout-v2-search-toggle,
+body:not(.layout-v2) .layout-v2-only {
   display: none !important;
 }
 
-/* Header sticky no topo; categorias sticky abaixo do banner */
+/* Banner rola; header + tabs primárias + categorias ficam sticky */
 body.layout-v2 .cardapio-navegacao-sticky {
-  position: static;
-  box-shadow: none;
-  background: transparent;
-}
-
-body.layout-v2 .cardapio-nav-inner > .header-cardapio {
   position: sticky;
   top: 0;
   z-index: 140;
+  background: var(--layout-v2-surface);
+  box-shadow: 0 2px 12px rgba(45, 24, 17, 0.08);
+}
+
+body.layout-v2 .cardapio-nav-inner > .header-cardapio {
+  position: relative;
+  top: auto;
+  z-index: auto;
   background: var(--layout-v2-surface);
   border-bottom: 1px solid #ececec;
   padding: 8px 12px;
 }
 
-body.layout-v2 .cardapio-nav-inner > .menuMobile {
-  position: sticky;
-  top: var(--layout-v2-header-height, 52px);
-  z-index: 130;
+body.layout-v2 .cardapio-nav-inner > .layout-v2-primary {
   background: var(--layout-v2-surface);
   border-bottom: 1px solid #ececec;
+}
+
+body.layout-v2 .cardapio-nav-inner > .menuMobile {
+  position: relative;
+  top: auto;
+  z-index: auto;
+  background: var(--layout-v2-surface);
+  border-bottom: none;
 }
 
 body.layout-v2 .header-beco-conteudo {
@@ -105,6 +114,12 @@ body:not(.layout-v2) .layout-v2-header-spacer {
   border-bottom: 1px solid #ececec;
 }
 
+.layout-v2-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .layout-v2-search-label {
   position: absolute;
   width: 1px;
@@ -114,7 +129,9 @@ body:not(.layout-v2) .layout-v2-header-spacer {
 }
 
 .layout-v2-search-panel input {
+  flex: 1;
   width: 100%;
+  min-width: 0;
   padding: 12px 14px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -126,14 +143,95 @@ body:not(.layout-v2) .layout-v2-header-spacer {
   border-color: var(--layout-v2-accent);
 }
 
-#layout-v2-search-clear {
-  margin-top: 8px;
+#layout-v2-search-close {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   border: 0;
-  background: transparent;
+  border-radius: 12px;
+  background: #f3f4f6;
   color: var(--layout-v2-primary);
-  font-size: 0.78rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.layout-v2-search-results {
+  margin-top: 10px;
+  max-height: min(52vh, 420px);
+  overflow-y: auto;
+  border: 1px solid #ececec;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.layout-v2-search-result {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-bottom: 1px solid #f0f0f0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.layout-v2-search-result:last-child {
+  border-bottom: 0;
+}
+
+.layout-v2-search-result:active,
+.layout-v2-search-result:hover {
+  background: #fffaf1;
+}
+
+.layout-v2-search-result-thumb {
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f3f4f6;
+}
+
+.layout-v2-search-result-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.layout-v2-search-result-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.layout-v2-search-result-info strong {
+  color: var(--layout-v2-text);
+  font-size: 0.9rem;
   font-weight: 700;
+  line-height: 1.25;
+}
+
+.layout-v2-search-result-info small {
+  color: var(--layout-v2-muted);
+  font-size: 0.72rem;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.layout-v2-search-result-price {
+  color: var(--layout-v2-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .layout-v2-search-empty {
@@ -145,7 +243,16 @@ body:not(.layout-v2) .layout-v2-header-spacer {
 }
 
 body.layout-v2-search-active .cardapioCategoria {
-  scroll-margin-top: calc(var(--layout-v2-header-height, 52px) + var(--layout-v2-categories-height, 48px) + 12px);
+  scroll-margin-top: calc(var(--cardapio-nav-height, 180px) + 8px);
+}
+
+@keyframes layout-v2-search-pulse {
+  0% { background: rgba(197, 131, 26, 0.28); }
+  100% { background: transparent; }
+}
+
+body.layout-v2 .produtoContainer.layout-v2-search-pulse {
+  animation: layout-v2-search-pulse 1.6s ease;
 }
 
 body.layout-v2 .cardCategoria.layout-v2-nav-hidden {
@@ -315,6 +422,8 @@ body.layout-v2 .produtoContainer.layout-v2-product-row:active {
   gap: 10px;
   overflow-x: auto;
   scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
 }
 
 .layout-v2-primary-track::-webkit-scrollbar {
@@ -323,7 +432,7 @@ body.layout-v2 .produtoContainer.layout-v2-product-row:active {
 
 .layout-v2-primary-tab {
   position: relative;
-  flex: 0 0 132px;
+  flex: 0 0 120px;
   height: 78px;
   padding: 0;
   overflow: hidden;
@@ -332,6 +441,7 @@ body.layout-v2 .produtoContainer.layout-v2-product-row:active {
   background: #eef0f3;
   box-shadow: inset 0 0 0 1px #e5e7eb;
   text-align: left;
+  scroll-snap-align: start;
 }
 
 .layout-v2-primary-tab img {
@@ -387,39 +497,133 @@ body.layout-v2 #forro-destaques .forro-cardapio-conteudo {
   padding-top: 8px;
 }
 
-/* Tabs secundárias */
+/* Tabs secundárias — sobrescreve pills/dourado do layout clássico */
 body.layout-v2 .menuMobile {
   background: var(--layout-v2-surface);
   border-top: none;
+}
+
+body.layout-v2 .menuMobile > div {
+  background: var(--layout-v2-surface) !important;
 }
 
 body.layout-v2 .divCategorias {
   display: flex;
   gap: 0;
   padding: 0 8px;
+  background: transparent;
 }
 
-body.layout-v2 .cardCategoria {
+body.layout-v2 .cardCategoria,
+body.layout-v2 .cardCategoriaCachacas,
+body.layout-v2 .cardCategoriaForro,
+body.layout-v2 a.cardCategoria {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 12px 14px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  border-bottom: 3px solid transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--layout-v2-text) !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+}
+
+body.layout-v2 .cardCategoria:hover,
+body.layout-v2 .cardCategoria:active {
+  color: var(--layout-v2-primary) !important;
+  background: transparent !important;
+}
+
+body.layout-v2 .cardCategoria:focus,
+body.layout-v2 .cardCategoria:focus-visible {
+  outline: none;
+  color: var(--layout-v2-text) !important;
+  background: transparent !important;
+}
+
+body.layout-v2 .cardCategoria.cardCategoriaSelected,
+body.layout-v2 .cardCategoria.cardCategoriaSelected:hover,
+body.layout-v2 .cardCategoria.cardCategoriaSelected:active,
+body.layout-v2 .cardCategoria.cardCategoriaSelected:focus,
+body.layout-v2 .cardCategoria.cardCategoriaSelected:focus-visible,
+body.layout-v2 a.cardCategoria.cardCategoriaSelected {
+  color: var(--layout-v2-primary) !important;
+  background: transparent !important;
+  border-bottom: 3px solid var(--layout-v2-primary) !important;
+  text-decoration: none !important;
+}
+
+body.layout-v2 .cachacas-vitrine,
+body.layout-v2 .produtoContainer.cachacas-chamada {
+  display: none !important;
+}
+
+/* Sub-tabs de cerveja (bebidas) */
+.layout-v2-cerveja-tabs {
+  background: var(--layout-v2-surface);
+}
+
+.layout-v2-cerveja-tabs[hidden] {
+  display: none !important;
+}
+
+.layout-v2-cerveja-track {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  padding: 0 8px;
+  scrollbar-width: none;
+}
+
+.layout-v2-cerveja-track::-webkit-scrollbar {
+  display: none;
+}
+
+.layout-v2-cerveja-tab {
   flex: 0 0 auto;
   margin: 0;
-  padding: 12px 14px;
+  padding: 10px 14px;
   border: 0;
   border-radius: 0;
   border-bottom: 3px solid transparent;
   background: transparent;
-  box-shadow: none;
   color: var(--layout-v2-text);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
-body.layout-v2 .cardCategoriaSelected,
-body.layout-v2 .cardCategoria:hover,
-body.layout-v2 .cardCategoria:active {
-  background: transparent;
+.layout-v2-cerveja-tab:hover,
+.layout-v2-cerveja-tab:focus,
+.layout-v2-cerveja-tab:focus-visible {
+  outline: none;
   color: var(--layout-v2-primary);
-  border-bottom-color: var(--layout-v2-primary);
-  box-shadow: none;
+}
+
+.layout-v2-cerveja-tab.is-active,
+.layout-v2-cerveja-tab.is-active:hover,
+.layout-v2-cerveja-tab.is-active:focus,
+.layout-v2-cerveja-tab.is-active:focus-visible {
+  color: var(--layout-v2-primary);
+  border-bottom: 3px solid var(--layout-v2-primary);
+}
+
+body.layout-v2 #cervejas .cervejasSubcategoria {
+  display: none;
+}
+
+body.layout-v2 .layout-v2-cerveja-panel {
+  display: block;
+}
+
+body.layout-v2 .layout-v2-cerveja-panel[hidden] {
+  display: none !important;
 }
 
 body.layout-v2 .cardapioCategoriaTitulo {
@@ -437,7 +641,7 @@ body.layout-v2 .cardapioCategoriaDescricao {
 }
 
 body.layout-v2 .pagina-cardapio .cardapioCategoria {
-  scroll-margin-top: calc(var(--layout-v2-header-height, 52px) + var(--layout-v2-categories-height, 48px) + 12px);
+  scroll-margin-top: calc(var(--cardapio-nav-height, 180px) + 8px);
 }
 
 /* Lista de produtos */
@@ -573,6 +777,7 @@ body.layout-v2.layout-v2-text-lg .produtoContainer .listaProdutoTitulo {
 
 @media (min-width: 768px) {
   body.layout-v2 .pagina-cardapio,
+  body.layout-v2 .layout-v2-shell,
   body.layout-v2 .cardapio-navegacao-sticky {
     max-width: 720px;
     margin-left: auto;
@@ -585,6 +790,7 @@ body.layout-v2.layout-v2-text-lg .produtoContainer .listaProdutoTitulo {
 }
 
 /* Tela de detalhe integrada ao layout v2 */
+body.layout-v2.detalhe-produto-ativo .layout-v2-cerveja-tabs,
 body.layout-v2.detalhe-produto-ativo .cardapio-navegacao-sticky,
 body.layout-v2.detalhe-produto-ativo .layout-v2-shell,
 body.layout-v2.detalhe-produto-ativo .mainCard,

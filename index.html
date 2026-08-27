@@ -22,7 +22,7 @@
     </script>
     <!-- css -->
     <link rel="stylesheet" href="style.css?v=20260825-forro-v7">
-    <link rel="stylesheet" href="layout-v2.css?v=20260826-v3">
+    <link rel="stylesheet" href="layout-v2.css?v=20260826-v8">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,6 +66,66 @@
 
         <!-- Página do cardápio -->
         <section id="pagina-cardapio" class="pagina-cardapio" data-app-page>
+            <div class="layout-v2-shell" hidden aria-hidden="true">
+                <section class="layout-v2-hero" aria-roledescription="carousel" aria-label="Destaques do Beco">
+                    <div class="layout-v2-hero-viewport">
+                        <div class="layout-v2-hero-track">
+                            <article class="layout-v2-hero-slide is-active">
+                                <img src="images/trio-nordestino-gpt.png"
+                                    alt="Trio Nordestino com carne de sol, Baião à Moda do Cheff e mandioca">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Queridinho da casa</span>
+                                    <strong>Trio Nordestino</strong>
+                                    <p>Carne de sol artesanal, Baião à Moda do Cheff e mandioca na manteiga. Serve 2 pessoas.</p>
+                                    <button type="button" data-layout-scroll="mais-pedidos">Ver favoritos</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide" data-forro-only hidden>
+                                <img src="images/forro-terca-arrumadinho.png"
+                                    alt="Forró de terça no Beco da Praia">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Hoje no Beco</span>
+                                    <strong>Forró de terça</strong>
+                                    <p>Promoções da noite, caipirinhas especiais e petiscos para a pista.</p>
+                                    <button type="button" data-layout-scroll="forro-destaques">Ver promoções</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/bebidas_beco/cachaca-lira-amburana.webp"
+                                    alt="Cachaça Lira Amburana do Piauí">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Do Piauí para o Beco</span>
+                                    <strong>Lira Amburana</strong>
+                                    <p>Edição especial envelhecida em amburana. Dose R$ 29 · Litro R$ 110.</p>
+                                    <button type="button" data-layout-scroll="cachacas-do-beco">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/bebidas_beco/cachaca-mangueira.webp"
+                                    alt="Cachaça Mangueira do Piauí">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Tradição de Castelo do Piauí</span>
+                                    <strong>Cachaça Mangueira</strong>
+                                    <p>Dose, litro, long neck e embalagem para levar. A partir de R$ 15.</p>
+                                    <button type="button" data-layout-scroll="cachacas-do-beco">Ver no cardápio</button>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="layout-v2-hero-dots" aria-hidden="true"></div>
+                </section>
+                <div class="layout-v2-venue">
+                    <div class="layout-v2-venue-info">
+                        <h2 class="layout-v2-venue-name">Beco da Praia</h2>
+                        <p class="layout-v2-venue-tagline">boteco com alma nordestina • Bertioga, SP</p>
+                    </div>
+                    <div class="layout-v2-venue-actions">
+                        <button type="button" id="layout-v2-font-toggle" aria-label="Ajustar tamanho do texto"
+                            aria-pressed="false">Aa</button>
+                        <button type="button" id="layout-v2-share" aria-label="Compartilhar cardápio">↗</button>
+                    </div>
+                </div>
+            </div>
             <div class="cardapio-navegacao-sticky">
                 <div class="cardapio-nav-inner">
                     <header class="header-beco header-cardapio">
@@ -88,104 +148,70 @@
                             <span class="layout-v2-header-spacer" aria-hidden="true"></span>
                         </div>
                     </header>
-                    <div class="layout-v2-shell" hidden aria-hidden="true">
-                        <section class="layout-v2-hero" aria-roledescription="carousel" aria-label="Destaques do Beco">
-                            <div class="layout-v2-hero-viewport">
-                                <div class="layout-v2-hero-track">
-                                    <article class="layout-v2-hero-slide is-active">
-                                        <img src="images/trio-nordestino-gpt.png"
-                                            alt="Trio Nordestino com carne de sol, Baião à Moda do Cheff e mandioca">
-                                        <div class="layout-v2-hero-caption">
-                                            <span>Queridinho da casa</span>
-                                            <strong>Trio Nordestino</strong>
-                                            <p>Carne de sol artesanal, Baião à Moda do Cheff e mandioca na manteiga. Serve 2 pessoas.</p>
-                                            <button type="button" data-layout-scroll="mais-pedidos">Ver favoritos</button>
-                                        </div>
-                                    </article>
-                                    <article class="layout-v2-hero-slide" data-forro-only hidden>
-                                        <img src="images/forro-terca-arrumadinho.png"
-                                            alt="Forró de terça no Beco da Praia">
-                                        <div class="layout-v2-hero-caption">
-                                            <span>Hoje no Beco</span>
-                                            <strong>Forró de terça</strong>
-                                            <p>Promoções da noite, caipirinhas especiais e petiscos para a pista.</p>
-                                            <button type="button" data-layout-scroll="forro-destaques">Ver promoções</button>
-                                        </div>
-                                    </article>
-                                    <article class="layout-v2-hero-slide">
-                                        <img src="images/bebidas_beco/cachaca-mangueira.webp"
-                                            alt="Cachaça Mangueira do Piauí">
-                                        <div class="layout-v2-hero-caption">
-                                            <span>Do Piauí para o Beco</span>
-                                            <strong>Cachaças especiais</strong>
-                                            <p>Lira Amburana e Mangueira no balcão do Beco da Praia.</p>
-                                            <button type="button" data-layout-scroll="cachacas-do-beco">Conhecer rótulos</button>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="layout-v2-hero-dots" aria-hidden="true"></div>
-                        </section>
-                        <div class="layout-v2-venue">
-                            <div class="layout-v2-venue-info">
-                                <h2 class="layout-v2-venue-name">Beco da Praia</h2>
-                                <p class="layout-v2-venue-tagline">boteco com alma nordestina • Bertioga, SP</p>
-                            </div>
-                            <div class="layout-v2-venue-actions">
-                                <button type="button" id="layout-v2-font-toggle" aria-label="Ajustar tamanho do texto"
-                                    aria-pressed="false">Aa</button>
-                                <button type="button" id="layout-v2-share" aria-label="Compartilhar cardápio">↗</button>
-                            </div>
-                        </div>
-                        <nav class="layout-v2-primary" aria-label="Seções principais do cardápio">
-                            <div class="layout-v2-primary-track">
-                                <button type="button" class="layout-v2-primary-tab is-active"
-                                    data-layout-target="mais-pedidos" data-layout-group="cardapio">
-                                    <img src="images/trio-nordestino-gpt.png" alt="">
-                                    <span>Cardápio</span>
-                                </button>
-                                <button type="button" class="layout-v2-primary-tab" data-layout-target="cervejas"
-                                    data-layout-group="bebidas">
-                                    <img src="images/drink-copa-beco.png" alt="">
-                                    <span>Bebidas</span>
-                                </button>
-                                <button type="button" class="layout-v2-primary-tab"
-                                    data-layout-target="cachacas-do-beco" data-layout-group="cachacas">
-                                    <img src="images/bebidas_beco/cachaca-lira-amburana.webp" alt="">
-                                    <span>Cachaças</span>
-                                </button>
-                                <button type="button" class="layout-v2-primary-tab" data-layout-target="forro-destaques"
-                                    data-layout-group="forro" data-forro-only hidden>
-                                    <img src="images/forro-beco-hero.webp" alt="">
-                                    <span>Forró hoje</span>
-                                </button>
-                            </div>
-                        </nav>
-                    </div>
                     <div id="layout-v2-search-panel" class="layout-v2-search-panel" hidden>
-                        <label class="layout-v2-search-label" for="layout-v2-search-input">Buscar no cardápio</label>
-                        <input id="layout-v2-search-input" type="search" inputmode="search"
-                            placeholder="Digite o nome de um item" autocomplete="off">
-                        <button type="button" id="layout-v2-search-clear" hidden>Limpar</button>
+                        <div class="layout-v2-search-bar">
+                            <label class="layout-v2-search-label" for="layout-v2-search-input">Buscar no cardápio</label>
+                            <input id="layout-v2-search-input" type="search" inputmode="search"
+                                placeholder="Digite o nome de um item" autocomplete="off">
+                            <button type="button" id="layout-v2-search-close" aria-label="Fechar busca">×</button>
+                        </div>
+                        <div id="layout-v2-search-results" class="layout-v2-search-results" hidden role="listbox"
+                            aria-label="Resultados da busca"></div>
                     </div>
+                    <nav class="layout-v2-primary" aria-label="Seções principais do cardápio" hidden>
+                        <div class="layout-v2-primary-track">
+                            <button type="button" class="layout-v2-primary-tab is-active"
+                                data-layout-target="mais-pedidos" data-layout-group="cardapio">
+                                <img src="images/trio-nordestino-gpt.png" alt="">
+                                <span>Cardápio</span>
+                            </button>
+                            <button type="button" class="layout-v2-primary-tab" data-layout-target="cervejas"
+                                data-layout-group="cervejas">
+                                <img src="images/heineken-long-neck.jpeg" alt="">
+                                <span>Cervejas</span>
+                            </button>
+                            <button type="button" class="layout-v2-primary-tab"
+                                data-layout-target="caipirinhas-do-beco" data-layout-group="caipirinhas">
+                                <img src="images/drink-copa-beco.png" alt="">
+                                <span>Caipirinhas</span>
+                            </button>
+                            <button type="button" class="layout-v2-primary-tab"
+                                data-layout-target="agua-e-refrigerantes" data-layout-group="sem-alcool">
+                                <img src="images/agua-mineral-sem-gas.jpeg" alt="">
+                                <span>Sem álcool</span>
+                            </button>
+                            <button type="button" class="layout-v2-primary-tab"
+                                data-layout-target="cachacas-do-beco" data-layout-group="cachacas">
+                                <img src="images/bebidas_beco/cachaca-lira-amburana.webp" alt="">
+                                <span>Cachaças</span>
+                            </button>
+                            <button type="button" class="layout-v2-primary-tab" data-layout-target="forro-destaques"
+                                data-layout-group="forro" data-forro-only hidden>
+                                <img src="images/forro-beco-hero.webp" alt="">
+                                <span>Forró hoje</span>
+                            </button>
+                        </div>
+                    </nav>
                     <nav class="menuMobile" aria-label="Categorias do cardápio">
                     <div data-offset-bottom="100"
                         style="display: flex; flex-direction: row; align-items: center; background-color: rgb(250, 250, 250);">
                         <div class="divCategorias">
                             <a href="#forro-destaques" class="cardCategoria cardCategoriaForro"
                                 data-forro-only hidden>Forró hoje</a>
-                            <a href="#caipirinhas-do-beco" class="cardCategoria"
-                                data-forro-only hidden>Caipirinhas</a>
                             <a href="#mais-pedidos" class="cardCategoria">Favoritos do Beco</a>
                             <a href="#combos" class="cardCategoria">Combos para compartilhar</a>
-                            <a href="#cachacas-do-beco" class="cardCategoria cardCategoriaCachacas">Cachaças do Piauí</a>
                             <a href="#entradinhas" class="cardCategoria">Para começar</a>
                             <a href="#porcoes-do-beco" class="cardCategoria">Porções para dividir</a>
                             <a href="#bem-nordestinos" class="cardCategoria">Sabores do Nordeste</a>
                             <a href="#pratos-executivos" class="cardCategoria">Pratos executivos</a>
                             <a href="#pasteis-gigantes-20-cm" class="cardCategoria">Pastéis gigantes</a>
                             <a href="#sobremesas" class="cardCategoria">Doces do Beco</a>
-                            <a href="#cervejas" class="cardCategoria">Bebidas</a>
+                            <a href="#cachacas-do-beco" class="cardCategoria">Cachaças</a>
+                            <a href="#cervejas" class="cardCategoria">Cervejas</a>
+                            <a href="#caipirinhas-do-beco" class="cardCategoria" data-forro-only hidden>Caipirinhas</a>
+                            <a href="#coqueteis" class="cardCategoria layout-v2-only" hidden>Coquetéis</a>
+                            <a href="#agua-e-refrigerantes" class="cardCategoria layout-v2-only" hidden>Água e refrigerantes</a>
+                            <a href="#sucos" class="cardCategoria layout-v2-only" hidden>Sucos</a>
                         </div>
                     </div>
                 </nav>
@@ -337,7 +363,7 @@
                 <!-- cardápio gerado -->
                 <div id="cachacas-do-beco" class="cardapioCategoria">
                     <p class="cardapioCategoriaTitulo">Cachaças do Piauí</p>
-                    <p class="cardapioCategoriaDescricao">Dois rótulos que carregam história, identidade e o sabor da nossa terra.</p>
+                    <p class="cardapioCategoriaDescricao">Rótulos especiais e doses clássicas para brindar no Beco.</p>
                     <div class="produtos text-center">
                         <div class="produtoContainer cachacas-chamada" data-open-cachacas role="button" tabindex="0"
                             aria-label="Conhecer as Cachaças do Beco">
@@ -352,6 +378,194 @@
                                 <p class="listaProdutoTitulo">Lira & Mangueira — orgulho piauiense no Beco</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Experimente uma dose, descubra novos sabores ou leve uma lembrança especial para casa.</p>
                                 <span class="cachacas-chamada-link" aria-hidden="true">Ver doses, litros e embalagens →</span>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa da cachaça Lira Amburana"
+                                        src="images/bebidas_beco/cachaca-lira-amburana.webp" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Lira Amburana</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Amarante, Piauí. Envelhecida 2 anos em barris de amburana.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Dose R$ 29,00</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Litro R$ 110,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafas da cachaça Mangueira"
+                                        src="images/bebidas_beco/cachaca-mangueira.webp" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Mangueira</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Castelo do Piauí. Dose, litro, long neck “Pé de Tonel” e embalagem plástica “Celular”.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Dose R$ 15,00</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Litro R$ 70,00</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Long neck R$ 45,00</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">“Celular” R$ 35,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa da cachaça Lira Ouro"
+                                        src="images/bebidas_beco/cachaca-lira-ouro.webp" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Lira Ouro</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Somente dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 25,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa da cachaça Salinas Tradicional"
+                                        src="images/bebidas_beco/cachaca-salinas.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Salinas</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa da cachaça Seleta"
+                                        src="images/bebidas_beco/cachaca-seleta.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Seleta</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa da cachaça Kariri"
+                                        src="images/bebidas_beco/cachaca-kariri.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Kariri</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 8,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa de cachaça de alambique envelhecida em amburana"
+                                        src="images/bebidas_beco/cachaca-amburana-alambique.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Pinga de Alambique Amburana</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 7,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa da cachaça Velho Barreiro Gold"
+                                        src="images/bebidas_beco/cachaca-velho-barreiro.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Velho Barreiro</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 5,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa de Campari"
+                                        src="images/bebidas_beco/campari-garrafa.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Campari</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 25,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa da cachaça Gabriela cravo e canela"
+                                        src="images/bebidas_beco/cachaca-gabriela.webp" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Cachaça Gabriela</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 7,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produtoContainer" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="Garrafa do conhaque de alcatrão São João da Barra"
+                                        src="images/bebidas_beco/conhaque-sao-joao-da-barra.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">São João da Barra com mel e limão</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">“Receita do Médico”. Dose.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -933,8 +1147,6 @@
                     </div>
                 </div>
                 <div id="cervejas" class="cardapioCategoria">
-                    <p class="cardapioCategoriaTitulo">Bebidas</p>
-                    <p class="cardapioCategoriaDescricao">Cervejas bem geladas, drinks da casa e opções sem álcool para acompanhar seu pedido.</p>
                     <p class="cardapioSubcategoriaTitulo">Cervejas</p>
                     <div class="produtos text-center">
                         <p class="cervejasSubcategoria">600 ml e litrão</p>
@@ -1720,7 +1932,6 @@
                     const ordemCategorias = [
                         'mais-pedidos',
                         'combos',
-                        'cachacas-do-beco',
                         'entradinhas',
                         'porcoes-do-beco',
                         'bem-nordestinos',
@@ -1728,6 +1939,7 @@
                         'extras',
                         'pasteis-gigantes-20-cm',
                         'sobremesas',
+                        'cachacas-do-beco',
                         'cervejas',
                         'caipirinhas-do-beco',
                         'coqueteis',
@@ -1870,7 +2082,7 @@
                             idAtivo = 'forro-destaques';
                         } else if (document.body.dataset.cardapioMode === 'forro' && idAtivo === 'caipirinhas-do-beco') {
                             idAtivo = 'caipirinhas-do-beco';
-                        } else if (categoriasBebidas.has(idAtivo)) {
+                        } else if (!document.body.classList.contains('layout-v2') && categoriasBebidas.has(idAtivo)) {
                             idAtivo = 'cervejas';
                         }
                         if (idAtivo === 'extras') idAtivo = 'pratos-executivos';
@@ -1952,7 +2164,7 @@
                     setTimeout(atualizarCategoriaPorScroll, 120);
                 </script>
                 <script src="config.js"></script>
-                <script src="layout-v2.js?v=20260826-v3"></script>
+                <script src="layout-v2.js?v=20260826-v8"></script>
                 <script src="navigation.js?v=20260820-app-menu-v4"></script>
                 <script src="forro-menu.js?v=20260825-forro-v5"></script>
                 <script src="orders.js?v=20260820-app-menu-v4"></script>

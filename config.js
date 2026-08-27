@@ -8,18 +8,20 @@ window.BECO_LAYOUT_V2 = {
         cardapio: [
             'mais-pedidos',
             'combos',
-            'cachacas-do-beco',
             'entradinhas',
             'porcoes-do-beco',
             'bem-nordestinos',
             'pratos-executivos',
             'pasteis-gigantes-20-cm',
-            'sobremesas'
+            'sobremesas',
+            'cachacas-do-beco'
         ],
-        bebidas: [
-            'cervejas',
+        cervejas: ['cervejas'],
+        caipirinhas: [
             'caipirinhas-do-beco',
-            'coqueteis',
+            'coqueteis'
+        ],
+        'sem-alcool': [
             'agua-e-refrigerantes',
             'sucos'
         ],

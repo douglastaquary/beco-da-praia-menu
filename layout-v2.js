@@ -3,16 +3,38 @@
 
     const STORAGE_KEY = 'beco-layout-v2';
     const params = new URLSearchParams(window.location.search);
-    const BEBIDAS_SECTIONS = new Set([
-        'cervejas',
-        'caipirinhas-do-beco',
-        'coqueteis',
-        'agua-e-refrigerantes',
-        'sucos'
-    ]);
+    const GROUP_BY_CATEGORY = {
+        cervejas: 'cervejas',
+        'caipirinhas-do-beco': 'caipirinhas',
+        coqueteis: 'caipirinhas',
+        'agua-e-refrigerantes': 'sem-alcool',
+        sucos: 'sem-alcool',
+        'cachacas-do-beco': 'cachacas',
+        'forro-destaques': 'forro'
+    };
 
     let activePrimaryGroup = 'cardapio';
     let syncingPrimaryGroup = false;
+    let cervejaTabsController = null;
+
+    function centerScrollChild(child, container) {
+        if (!child || !container) return;
+        const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth);
+        if (maxScroll <= 0) {
+            if (container.scrollLeft !== 0) container.scrollTo({ left: 0, behavior: 'smooth' });
+            return;
+        }
+
+        const containerRect = container.getBoundingClientRect();
+        const childRect = child.getBoundingClientRect();
+        const delta = (childRect.left + childRect.width / 2) - (containerRect.left + containerRect.width / 2);
+        const target = Math.min(maxScroll, Math.max(0, container.scrollLeft + delta));
+
+        container.scrollTo({
+            left: target,
+            behavior: 'smooth'
+        });
+    }
 
     function groupsConfig() {
         return window.BECO_LAYOUT_V2?.groups || {};
@@ -52,22 +74,34 @@
         if (document.body.dataset.cardapioMode === 'forro' && groups.forro?.includes(categoryId)) {
             return 'forro';
         }
-        if (categoryId === 'cachacas-do-beco') return 'cachacas';
-        if (BEBIDAS_SECTIONS.has(categoryId)) return 'bebidas';
+        if (GROUP_BY_CATEGORY[categoryId]) return GROUP_BY_CATEGORY[categoryId];
         return 'cardapio';
     }
 
     function filterSecondaryNav(group) {
         const allowed = new Set(groupsConfig()[group] || []);
         document.querySelectorAll('.cardCategoria[href^="#"]').forEach(function (link) {
-            if (link.hidden) {
+            if (link.hasAttribute('data-forro-only') && link.hidden) {
                 link.classList.add('layout-v2-nav-hidden');
                 return;
             }
             const id = link.getAttribute('href').replace('#', '');
-            link.classList.toggle('layout-v2-nav-hidden', !allowed.has(id));
+            const show = allowed.has(id);
+            link.classList.toggle('layout-v2-nav-hidden', !show);
+            if (show && link.classList.contains('layout-v2-only')) {
+                link.hidden = false;
+            }
         });
         updateNavHeights();
+
+        // Centraliza a tab primária ativa sem deixar faixa vazia
+        const activeTab = document.querySelector('.layout-v2-primary-tab.is-active');
+        const track = document.querySelector('.layout-v2-primary-track');
+        if (activeTab && track) {
+            window.requestAnimationFrame(function () {
+                centerScrollChild(activeTab, track);
+            });
+        }
     }
 
     function applyPrimaryGroup(group, options) {
@@ -107,20 +141,21 @@
         function wrappedSelectCategory(id, rolar) {
             original(id, rolar);
             syncPrimaryFromCategoryId(id);
+            cervejaTabsController?.syncCategory(id);
         }
         wrappedSelectCategory.__layoutV2Wrapped = true;
         window.selecionarCategoria = wrappedSelectCategory;
     }
 
     function updateNavHeights() {
-        const header = document.querySelector('.cardapio-nav-inner > .header-cardapio');
-        const categories = document.querySelector('.cardapio-nav-inner > .menuMobile');
+        const stickyNav = document.querySelector('.cardapio-navegacao-sticky');
         const pagina = document.getElementById('pagina-cardapio');
         if (!pagina) return;
 
-        pagina.style.setProperty('--layout-v2-header-height', (header?.offsetHeight || 0) + 'px');
-        pagina.style.setProperty('--layout-v2-categories-height', (categories?.offsetHeight || 0) + 'px');
         window.atualizarAlturaNavegacao?.();
+
+        const navHeight = stickyNav?.offsetHeight || 0;
+        pagina.style.setProperty('--layout-v2-nav-height', navHeight + 'px');
     }
 
     function initHeroCarousel(root) {
@@ -202,13 +237,19 @@
         return { refresh: collectSlides, goTo: goTo };
     }
 
-    function initPrimaryTabs(shell) {
-        const tabs = Array.from(shell.querySelectorAll('.layout-v2-primary-tab'));
+    function initPrimaryTabs(primaryNav) {
+        const track = primaryNav.querySelector('.layout-v2-primary-track');
+        const tabs = Array.from(primaryNav.querySelectorAll('.layout-v2-primary-tab'));
 
         function setActiveTab(tab) {
             tabs.forEach(function (item) {
                 item.classList.toggle('is-active', item === tab);
             });
+            if (tab && track) {
+                window.requestAnimationFrame(function () {
+                    centerScrollChild(tab, track);
+                });
+            }
         }
 
         tabs.forEach(function (tab) {
@@ -216,10 +257,130 @@
                 const group = tab.dataset.layoutGroup || 'cardapio';
                 applyPrimaryGroup(group, { scrollTo: false });
                 scrollToCategory(tab.dataset.layoutTarget || '');
+                setActiveTab(tab);
             });
         });
 
         window.layoutV2SetPrimaryTab = setActiveTab;
+    }
+
+    function initCervejaTabs() {
+        const section = document.getElementById('cervejas');
+        const produtos = section?.querySelector('.produtos');
+        if (!section || !produtos || produtos.dataset.cervejaTabsReady === '1') {
+            return cervejaTabsController;
+        }
+
+        const TAB_DEFS = [
+            { id: '600ml', label: '600 ml' },
+            { id: 'longneck', label: 'Long neck' },
+            { id: 'lata-269', label: 'Lata 269' },
+            { id: 'lata-350', label: 'Lata 350' }
+        ];
+
+        function tabIdForProduct(product) {
+            const desc = product.querySelector('.threeDots')?.textContent || '';
+            if (/long neck/i.test(desc)) return 'longneck';
+            if (/350 ml/i.test(desc)) return 'lata-350';
+            if (/269 ml/i.test(desc)) return 'lata-269';
+            return '600ml';
+        }
+
+        const panels = {};
+        TAB_DEFS.forEach(function (def) {
+            const panel = document.createElement('div');
+            panel.className = 'layout-v2-cerveja-panel';
+            panel.dataset.cervejaPanel = def.id;
+            panel.hidden = def.id !== '600ml';
+            panels[def.id] = panel;
+        });
+
+        produtos.querySelectorAll('.produtoContainer').forEach(function (product) {
+            panels[tabIdForProduct(product)].appendChild(product);
+        });
+
+        produtos.querySelectorAll('.cervejasSubcategoria').forEach(function (heading) {
+            heading.remove();
+        });
+
+        TAB_DEFS.forEach(function (def) {
+            produtos.appendChild(panels[def.id]);
+        });
+
+        const nav = document.createElement('nav');
+        nav.className = 'layout-v2-cerveja-tabs';
+        nav.hidden = true;
+        nav.setAttribute('aria-label', 'Tipos de cerveja');
+
+        const track = document.createElement('div');
+        track.className = 'layout-v2-cerveja-track';
+
+        let activeCervejaTab = '600ml';
+
+        function setActiveCervejaTab(tabId, options) {
+            const opts = options || {};
+            if (!panels[tabId]) return;
+            activeCervejaTab = tabId;
+
+            TAB_DEFS.forEach(function (def) {
+                panels[def.id].hidden = def.id !== tabId;
+            });
+
+            track.querySelectorAll('.layout-v2-cerveja-tab').forEach(function (button) {
+                const isActive = button.dataset.cervejaTab === tabId;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-selected', String(isActive));
+                if (isActive && opts.center !== false) {
+                    window.requestAnimationFrame(function () {
+                        centerScrollChild(button, track);
+                    });
+                }
+            });
+
+            updateNavHeights();
+        }
+
+        TAB_DEFS.forEach(function (def) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'layout-v2-cerveja-tab' + (def.id === '600ml' ? ' is-active' : '');
+            button.dataset.cervejaTab = def.id;
+            button.textContent = def.label;
+            button.setAttribute('role', 'tab');
+            button.setAttribute('aria-selected', String(def.id === '600ml'));
+            button.addEventListener('click', function () {
+                setActiveCervejaTab(def.id);
+                if (typeof window.selecionarCategoria === 'function') {
+                    window.selecionarCategoria('cervejas', false);
+                }
+            });
+            track.appendChild(button);
+        });
+
+        nav.appendChild(track);
+
+        const menuMobile = document.querySelector('.cardapio-nav-inner > .menuMobile');
+        if (menuMobile?.parentNode) {
+            menuMobile.parentNode.insertBefore(nav, menuMobile.nextSibling);
+        }
+
+        produtos.dataset.cervejaTabsReady = '1';
+
+        cervejaTabsController = {
+            nav: nav,
+            syncCategory: function (categoryId) {
+                const visible = categoryId === 'cervejas';
+                nav.hidden = !visible;
+                if (visible) {
+                    setActiveCervejaTab(activeCervejaTab, { center: false });
+                } else {
+                    updateNavHeights();
+                }
+            },
+            setActiveCervejaTab: setActiveCervejaTab
+        };
+
+        return cervejaTabsController;
     }
 
     function initVenueActions() {
@@ -258,65 +419,187 @@
         const toggle = document.querySelector('.layout-v2-search-toggle');
         const panel = document.getElementById('layout-v2-search-panel');
         const input = document.getElementById('layout-v2-search-input');
-        const clearButton = document.getElementById('layout-v2-search-clear');
-        if (!toggle || !panel || !input) return;
+        const closeButton = document.getElementById('layout-v2-search-close');
+        const results = document.getElementById('layout-v2-search-results');
+        if (!toggle || !panel || !input || !results) return;
 
         toggle.hidden = false;
+        const SKIP_TITLES = new Set(['Importante', 'Disponibilidade', 'Informação']);
 
         function setPanelOpen(open) {
             panel.hidden = !open;
             toggle.setAttribute('aria-expanded', String(open));
-            if (open) input.focus({ preventScroll: true });
-            else input.value = '';
-            filterProducts('');
+            document.body.classList.toggle('layout-v2-search-open', open);
+
+            if (!open) {
+                input.value = '';
+                clearResults();
+                document.querySelectorAll('.produtoContainer.layout-v2-search-hidden').forEach(function (product) {
+                    product.classList.remove('layout-v2-search-hidden');
+                });
+                document.body.classList.remove('layout-v2-search-active');
+                const emptyState = document.getElementById('layout-v2-search-empty');
+                if (emptyState) emptyState.hidden = true;
+            } else {
+                input.focus({ preventScroll: true });
+            }
+
             updateNavHeights();
         }
 
-        function filterProducts(query) {
-            const normalized = query.trim().toLowerCase();
-            const products = document.querySelectorAll('#pagina-cardapio .produtoContainer');
-            let visibleCount = 0;
+        function clearResults() {
+            results.innerHTML = '';
+            results.hidden = true;
+        }
 
-            products.forEach(function (product) {
+        function collectMatches(query) {
+            const normalized = query.trim().toLowerCase();
+            if (!normalized) return [];
+
+            const matches = [];
+            document.querySelectorAll('#pagina-cardapio .produtoContainer').forEach(function (product) {
+                if (product.classList.contains('cachacas-chamada')) return;
+                if (product.hidden) return;
+
                 const title = product.querySelector('.listaProdutoTitulo')?.textContent.trim() || '';
+                if (!title || SKIP_TITLES.has(title)) return;
+
                 const description = product.querySelector('.threeDots')?.textContent.trim() || '';
-                const matches = !normalized
-                    || title.toLowerCase().includes(normalized)
-                    || description.toLowerCase().includes(normalized);
-                product.classList.toggle('layout-v2-search-hidden', !matches);
-                if (matches) visibleCount += 1;
+                const price = Array.from(product.querySelectorAll('.divCardProduto p'))
+                    .map(function (node) { return node.textContent.trim(); })
+                    .find(function (text) { return /^R\$|Dose|Litro|MEIA|INTEIRA|UNID/i.test(text); }) || '';
+
+                if (
+                    title.toLowerCase().includes(normalized)
+                    || description.toLowerCase().includes(normalized)
+                ) {
+                    const category = product.closest('.cardapioCategoria');
+                    matches.push({
+                        product: product,
+                        title: title,
+                        description: description,
+                        price: price,
+                        categoryId: category?.id || '',
+                        categoryLabel: category?.querySelector('.cardapioCategoriaTitulo, .cardapioSubcategoriaTitulo')?.textContent.trim() || ''
+                    });
+                }
             });
 
-            document.body.classList.toggle('layout-v2-search-active', Boolean(normalized));
-            if (clearButton) clearButton.hidden = !normalized;
+            return matches.slice(0, 12);
+        }
 
-            let emptyState = document.getElementById('layout-v2-search-empty');
-            if (normalized && visibleCount === 0) {
-                if (!emptyState) {
-                    emptyState = document.createElement('p');
-                    emptyState.id = 'layout-v2-search-empty';
-                    emptyState.className = 'layout-v2-search-empty';
-                    emptyState.textContent = 'Nenhum item encontrado. Tente outro nome.';
-                    document.querySelector('.mainCard')?.prepend(emptyState);
-                }
-                emptyState.hidden = false;
-            } else if (emptyState) {
-                emptyState.hidden = true;
+        function renderResults(query) {
+            const normalized = query.trim();
+            document.body.classList.toggle('layout-v2-search-active', Boolean(normalized));
+
+            if (!normalized) {
+                clearResults();
+                return;
             }
+
+            const matches = collectMatches(normalized);
+            results.innerHTML = '';
+            results.hidden = false;
+
+            if (!matches.length) {
+                const empty = document.createElement('p');
+                empty.className = 'layout-v2-search-empty';
+                empty.textContent = 'Nenhum item encontrado. Tente outro nome.';
+                results.appendChild(empty);
+                return;
+            }
+
+            matches.forEach(function (match) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'layout-v2-search-result';
+                button.setAttribute('role', 'option');
+
+                const img = match.product.querySelector('img.imagemProduto');
+                const thumb = document.createElement('span');
+                thumb.className = 'layout-v2-search-result-thumb';
+                if (img?.src) {
+                    const image = document.createElement('img');
+                    image.src = img.currentSrc || img.src;
+                    image.alt = '';
+                    thumb.appendChild(image);
+                }
+
+                const info = document.createElement('span');
+                info.className = 'layout-v2-search-result-info';
+                info.innerHTML = '<strong></strong><small></small>';
+                info.querySelector('strong').textContent = match.title;
+                info.querySelector('small').textContent = match.categoryLabel
+                    || match.description.slice(0, 80)
+                    || match.price;
+
+                const price = document.createElement('span');
+                price.className = 'layout-v2-search-result-price';
+                price.textContent = match.price.replace(/^[^R$]*/, function (prefix) {
+                    return prefix;
+                }).split('\n')[0].slice(0, 28);
+
+                button.appendChild(thumb);
+                button.appendChild(info);
+                button.appendChild(price);
+
+                button.addEventListener('click', function () {
+                    goToProduct(match);
+                });
+
+                results.appendChild(button);
+            });
+        }
+
+        function revealCervejaPanelIfNeeded(product) {
+            const panelEl = product.closest('.layout-v2-cerveja-panel');
+            if (!panelEl || !cervejaTabsController) return;
+            const tabId = panelEl.dataset.cervejaPanel;
+            if (tabId) cervejaTabsController.setActiveCervejaTab(tabId, { center: true });
+        }
+
+        function goToProduct(match) {
+            setPanelOpen(false);
+
+            const group = categoryIdToPrimaryGroup(match.categoryId);
+            if (group) applyPrimaryGroup(group, { scrollTo: false });
+
+            if (match.categoryId && typeof window.selecionarCategoria === 'function') {
+                window.selecionarCategoria(match.categoryId, false);
+            }
+
+            revealCervejaPanelIfNeeded(match.product);
+
+            window.requestAnimationFrame(function () {
+                const stickyNav = document.querySelector('.cardapio-navegacao-sticky');
+                const offset = (stickyNav?.offsetHeight || 0) + 12;
+                const top = window.scrollY + match.product.getBoundingClientRect().top - offset;
+                window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+
+                match.product.classList.remove('layout-v2-search-pulse');
+                window.setTimeout(function () {
+                    match.product.classList.add('layout-v2-search-pulse');
+                }, 280);
+                window.setTimeout(function () {
+                    match.product.classList.remove('layout-v2-search-pulse');
+                }, 2200);
+
+                window.setTimeout(function () {
+                    match.product.click();
+                }, 450);
+            });
         }
 
         toggle.addEventListener('click', function () {
             setPanelOpen(panel.hidden);
         });
 
-        input.addEventListener('input', function () {
-            filterProducts(input.value);
+        closeButton?.addEventListener('click', function () {
+            setPanelOpen(false);
         });
 
-        clearButton?.addEventListener('click', function () {
-            input.value = '';
-            filterProducts('');
-            input.focus({ preventScroll: true });
+        input.addEventListener('input', function () {
+            renderResults(input.value);
         });
 
         document.addEventListener('keydown', function (event) {
@@ -392,25 +675,42 @@
         document.documentElement.classList.remove('layout-v2-pending');
 
         const shell = document.querySelector('.layout-v2-shell');
+        const primaryNav = document.querySelector('.layout-v2-primary');
         if (shell) {
             shell.hidden = false;
             shell.setAttribute('aria-hidden', 'false');
         }
+        if (primaryNav) {
+            primaryNav.hidden = false;
+        }
+
+        document.querySelectorAll('.cardCategoria.layout-v2-only').forEach(function (link) {
+            link.hidden = false;
+        });
+        const caipiLink = document.querySelector('.cardCategoria[href="#caipirinhas-do-beco"]');
+        if (caipiLink) {
+            caipiLink.hidden = false;
+            caipiLink.removeAttribute('data-forro-only');
+        }
 
         hookCategorySelection();
 
-        const carousel = initHeroCarousel(document);
-        if (shell) initPrimaryTabs(shell);
+        const carousel = initHeroCarousel(shell || document);
+        if (primaryNav) initPrimaryTabs(primaryNav);
         initVenueActions();
         initSearch();
         initProductEnhancements();
+        cervejaTabsController = initCervejaTabs();
         syncForroUI(carousel);
         applyPrimaryGroup(document.body.dataset.cardapioMode === 'forro' ? 'forro' : 'cardapio', { scrollTo: false });
+        cervejaTabsController?.syncCategory(document.body.dataset.cardapioMode === 'forro' ? 'forro-destaques' : 'mais-pedidos');
         updateNavHeights();
 
         const navInner = document.querySelector('.cardapio-nav-inner');
-        if (navInner && window.ResizeObserver) {
-            new ResizeObserver(updateNavHeights).observe(navInner);
+        const stickyNav = document.querySelector('.cardapio-navegacao-sticky');
+        if (window.ResizeObserver) {
+            if (navInner) new ResizeObserver(updateNavHeights).observe(navInner);
+            if (stickyNav) new ResizeObserver(updateNavHeights).observe(stickyNav);
         }
 
         window.addEventListener('resize', updateNavHeights);
@@ -425,7 +725,11 @@
             active: true,
             scrollToCategory: scrollToCategory,
             updateNavHeights: updateNavHeights,
-            applyPrimaryGroup: applyPrimaryGroup
+            applyPrimaryGroup: applyPrimaryGroup,
+            centerScrollChild: centerScrollChild,
+            updateCervejaTabs: function (categoryId) {
+                cervejaTabsController?.syncCategory(categoryId);
+            }
         };
     });
 })();

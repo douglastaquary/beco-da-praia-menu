@@ -37,7 +37,6 @@
         [
             'forro-destaques',
             'caipirinhas-do-beco',
-            'cachacas-do-beco',
             'entradinhas',
             'porcoes-do-beco',
             'bem-nordestinos',
@@ -46,7 +45,8 @@
             'combos',
             'pratos-executivos',
             'pasteis-gigantes-20-cm',
-            'sobremesas'
+            'sobremesas',
+            'cachacas-do-beco'
         ].forEach(function (id) {
             const link = navigation.querySelector(`.cardCategoria[href="#${id}"]`);
             if (link) navigation.appendChild(link);
@@ -151,7 +151,6 @@
 
         reorder(document.querySelector('.mainCard'), [
             'caipirinhas-do-beco',
-            'cachacas-do-beco',
             'entradinhas',
             'porcoes-do-beco',
             'bem-nordestinos',
@@ -165,6 +164,7 @@
             'extras',
             'pasteis-gigantes-20-cm',
             'sobremesas',
+            'cachacas-do-beco',
             'testes-online'
         ]);
         reorderCategoryLinks();
