@@ -1,0 +1,418 @@
+:root {
+  --layout-v2-primary: #563020;
+  --layout-v2-accent: #c5831a;
+  --layout-v2-bg: #fafafa;
+  --layout-v2-surface: #ffffff;
+  --layout-v2-text: #30323b;
+  --layout-v2-muted: #6b7280;
+}
+
+html.layout-v2-pending body {
+  visibility: hidden;
+}
+
+body.layout-v2 {
+  visibility: visible;
+  background: var(--layout-v2-bg);
+}
+
+body.layout-v2 .layout-v2-shell {
+  display: block;
+}
+
+body:not(.layout-v2) .layout-v2-shell {
+  display: none !important;
+}
+
+/* Header compacto estilo LiveMenu */
+body.layout-v2 .cardapio-navegacao-sticky {
+  box-shadow: none;
+  background: var(--layout-v2-surface);
+}
+
+body.layout-v2 .header-cardapio {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ececec;
+}
+
+body.layout-v2 .header-beco-conteudo {
+  justify-content: space-between;
+  max-width: 720px;
+}
+
+body.layout-v2 .header-beco-textos {
+  display: none;
+}
+
+body.layout-v2 .header-beco-logo-v2 {
+  display: block;
+  width: 92px;
+  height: 44px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+body.layout-v2 .header-beco-conteudo .app-menu-button {
+  flex: 0 0 44px;
+}
+
+body.layout-v2 .layout-v2-header-spacer {
+  flex: 0 0 44px;
+}
+
+.header-beco-logo-v2 {
+  display: none;
+}
+
+body:not(.layout-v2) .layout-v2-header-spacer {
+  display: none;
+}
+
+/* Hero carrossel */
+.layout-v2-hero {
+  position: relative;
+  background: #1a120e;
+}
+
+.layout-v2-hero-viewport {
+  overflow: hidden;
+}
+
+.layout-v2-hero-track {
+  display: flex;
+  transition: transform 0.45s ease;
+}
+
+.layout-v2-hero-slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-height: 220px;
+  max-height: 280px;
+  overflow: hidden;
+  display: none;
+}
+
+.layout-v2-hero-slide.is-active {
+  display: block;
+}
+
+.layout-v2-hero-slide img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.layout-v2-hero-caption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 18px 16px 20px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(20, 10, 6, 0.88));
+}
+
+.layout-v2-hero-caption span {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--layout-v2-accent);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.layout-v2-hero-caption strong {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.layout-v2-hero-caption p {
+  margin: 4px 0 10px;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  opacity: 0.92;
+}
+
+.layout-v2-hero-caption button {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--layout-v2-primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.layout-v2-hero-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.layout-v2-hero-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  pointer-events: auto;
+}
+
+.layout-v2-hero-dot.is-active {
+  width: 18px;
+  background: #fff;
+}
+
+/* Bloco do estabelecimento */
+.layout-v2-venue {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 10px;
+  background: var(--layout-v2-surface);
+}
+
+.layout-v2-venue-name {
+  margin: 0;
+  color: var(--layout-v2-text);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.layout-v2-venue-tagline {
+  margin: 2px 0 0;
+  color: var(--layout-v2-muted);
+  font-size: 0.78rem;
+}
+
+.layout-v2-venue-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.layout-v2-venue-actions button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--layout-v2-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.layout-v2-venue-actions button[aria-pressed="true"] {
+  background: var(--layout-v2-primary);
+  border-color: var(--layout-v2-primary);
+  color: #fff;
+}
+
+/* Tabs primárias (pills) */
+.layout-v2-primary {
+  padding: 0 12px 12px;
+  background: var(--layout-v2-surface);
+  border-bottom: 1px solid #ececec;
+}
+
+.layout-v2-primary-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.layout-v2-primary-track::-webkit-scrollbar {
+  display: none;
+}
+
+.layout-v2-primary-tab {
+  flex: 0 0 auto;
+  min-width: 118px;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #6b2c20, #9a4c1d);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-align: left;
+  box-shadow: 0 8px 18px rgba(86, 48, 32, 0.18);
+}
+
+.layout-v2-primary-tab:not(.is-active) {
+  background: #f3f4f6;
+  color: var(--layout-v2-text);
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.layout-v2-primary-tab.is-active {
+  background: linear-gradient(135deg, var(--layout-v2-primary), #8a3d16);
+}
+
+/* Tabs secundárias (categorias) estilo underline */
+body.layout-v2 .menuMobile {
+  background: var(--layout-v2-surface);
+  border-top: none;
+}
+
+body.layout-v2 .divCategorias {
+  display: flex;
+  gap: 0;
+  padding: 0 8px;
+}
+
+body.layout-v2 .cardCategoria {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  color: var(--layout-v2-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+body.layout-v2 .cardCategoriaSelected,
+body.layout-v2 .cardCategoria:hover,
+body.layout-v2 .cardCategoria:active {
+  background: transparent;
+  color: var(--layout-v2-primary);
+  border-bottom-color: var(--layout-v2-primary);
+  box-shadow: none;
+}
+
+body.layout-v2 .cardapioCategoriaTitulo {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--layout-v2-muted);
+}
+
+body.layout-v2 .cardapioCategoriaDescricao {
+  font-size: 0.82rem;
+  color: var(--layout-v2-muted);
+}
+
+/* Lista de produtos (preview Fase 3) */
+body.layout-v2 .produtos {
+  display: block;
+  padding: 0;
+  background: var(--layout-v2-surface);
+}
+
+body.layout-v2 .produtoContainer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 88px;
+  grid-template-areas:
+    "badge image"
+    "title image"
+    "desc image"
+    "price image"
+    "promo promo";
+  align-items: start;
+  gap: 2px 12px;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 0;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: none;
+}
+
+body.layout-v2 .produtoContainer .container_foto {
+  grid-area: image;
+  width: 88px;
+  height: 88px;
+  margin: 0;
+}
+
+body.layout-v2 .produtoContainer img.imagemProduto {
+  width: 88px;
+  height: 88px;
+  max-width: none;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+body.layout-v2 .produtoContainer .divCardProduto {
+  display: contents;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.layout-v2 .produtoContainer .forro-produto-badge {
+  grid-area: badge;
+}
+
+body.layout-v2 .produtoContainer .listaProdutoTitulo {
+  grid-area: title;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--layout-v2-text);
+  text-align: left !important;
+}
+
+body.layout-v2 .produtoContainer .threeDots {
+  grid-area: desc;
+  margin: 0;
+  font-size: 0.78rem !important;
+  color: var(--layout-v2-muted);
+  text-align: left !important;
+}
+
+body.layout-v2 .produtoContainer .divCardProduto > div[style*="flex-direction: row"] {
+  grid-area: price;
+  justify-content: flex-start !important;
+}
+
+body.layout-v2 .produtoContainer .divCardProduto > div[style*="flex-direction: row"] p {
+  font-size: 0.95rem !important;
+  color: var(--layout-v2-text) !important;
+}
+
+body.layout-v2 .produtoContainer .forro-produto-promocao {
+  grid-area: promo;
+}
+
+body.layout-v2.layout-v2-text-lg {
+  font-size: 106%;
+}
+
+body.layout-v2.layout-v2-text-lg .produtoContainer .listaProdutoTitulo {
+  font-size: 1.08rem;
+}
+
+@media (min-width: 768px) {
+  body.layout-v2 .pagina-cardapio,
+  body.layout-v2 .layout-v2-shell,
+  body.layout-v2 .cardapio-navegacao-sticky {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  body.layout-v2 .layout-v2-hero-slide img {
+    height: 280px;
+  }
+}

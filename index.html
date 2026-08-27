@@ -6,8 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio - Beco da Praia</title>
+    <script>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('layout') === 'v2') {
+                document.documentElement.classList.add('layout-v2-pending');
+            } else {
+                try {
+                    if (localStorage.getItem('beco-layout-v2') === 'on') {
+                        document.documentElement.classList.add('layout-v2-pending');
+                    }
+                } catch (error) { /* ignore */ }
+            }
+        })();
+    </script>
     <!-- css -->
     <link rel="stylesheet" href="style.css?v=20260825-forro-v7">
+    <link rel="stylesheet" href="layout-v2.css?v=20260826-v1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,16 +66,80 @@
 
         <!-- Página do cardápio -->
         <section id="pagina-cardapio" class="pagina-cardapio" data-app-page>
+            <div class="layout-v2-shell" hidden aria-hidden="true">
+                <section class="layout-v2-hero" aria-roledescription="carousel" aria-label="Destaques do Beco">
+                    <div class="layout-v2-hero-viewport">
+                        <div class="layout-v2-hero-track">
+                            <article class="layout-v2-hero-slide is-active">
+                                <img src="images/trio-nordestino-gpt.png"
+                                    alt="Trio Nordestino com carne de sol, Baião à Moda do Cheff e mandioca">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Queridinho da casa</span>
+                                    <strong>Trio Nordestino</strong>
+                                    <p>Carne de sol artesanal, Baião à Moda do Cheff e mandioca na manteiga. Serve 2 pessoas.</p>
+                                    <button type="button" data-layout-scroll="mais-pedidos">Ver favoritos</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide" data-forro-only hidden>
+                                <img src="images/forro-terca-arrumadinho.png"
+                                    alt="Forró de terça no Beco da Praia">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Hoje no Beco</span>
+                                    <strong>Forró de terça</strong>
+                                    <p>Promoções da noite, caipirinhas especiais e petiscos para a pista.</p>
+                                    <button type="button" data-layout-scroll="forro-destaques">Ver promoções</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/bebidas_beco/cachaca-mangueira.webp"
+                                    alt="Cachaça Mangueira do Piauí">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Do Piauí para o Beco</span>
+                                    <strong>Cachaças especiais</strong>
+                                    <p>Lira Amburana e Mangueira no balcão do Beco da Praia.</p>
+                                    <button type="button" data-layout-scroll="cachacas-do-beco">Conhecer rótulos</button>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="layout-v2-hero-dots" aria-hidden="true"></div>
+                </section>
+                <div class="layout-v2-venue">
+                    <div class="layout-v2-venue-info">
+                        <h2 class="layout-v2-venue-name">Beco da Praia</h2>
+                        <p class="layout-v2-venue-tagline">boteco com alma nordestina • Bertioga, SP</p>
+                    </div>
+                    <div class="layout-v2-venue-actions">
+                        <button type="button" id="layout-v2-font-toggle" aria-label="Ajustar tamanho do texto"
+                            aria-pressed="false">Aa</button>
+                        <button type="button" id="layout-v2-share" aria-label="Compartilhar cardápio">↗</button>
+                    </div>
+                </div>
+                <nav class="layout-v2-primary" aria-label="Seções principais do cardápio">
+                    <div class="layout-v2-primary-track">
+                        <button type="button" class="layout-v2-primary-tab is-active"
+                            data-layout-target="mais-pedidos">Cardápio</button>
+                        <button type="button" class="layout-v2-primary-tab"
+                            data-layout-target="cervejas">Bebidas</button>
+                        <button type="button" class="layout-v2-primary-tab"
+                            data-layout-target="cachacas-do-beco">Cachaças</button>
+                        <button type="button" class="layout-v2-primary-tab" data-layout-target="forro-destaques"
+                            data-forro-only hidden>Forró hoje</button>
+                    </div>
+                </nav>
+            </div>
             <div class="cardapio-navegacao-sticky">
                 <header class="header-beco header-cardapio">
                     <div class="header-beco-conteudo">
                         <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu">
                             <span></span><span></span><span></span>
                         </button>
+                        <img src="images/logo-beco-bg-black.png" alt="Beco da Praia" class="header-beco-logo-v2">
                         <div class="header-beco-textos">
                             <h1 class="header-beco-nome">BECO DA PRAIA</h1>
                             <p class="header-beco-subtitulo">• boteco com alma nordestina •</p>
                         </div>
+                        <span class="layout-v2-header-spacer" aria-hidden="true"></span>
                     </div>
                 </header>
                 <nav class="menuMobile" aria-label="Categorias do cardápio">
@@ -1846,6 +1925,7 @@
                     setTimeout(atualizarCategoriaPorScroll, 120);
                 </script>
                 <script src="config.js"></script>
+                <script src="layout-v2.js?v=20260826-v1"></script>
                 <script src="navigation.js?v=20260820-app-menu-v4"></script>
                 <script src="forro-menu.js?v=20260825-forro-v5"></script>
                 <script src="orders.js?v=20260820-app-menu-v4"></script>
