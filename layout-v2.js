@@ -45,16 +45,19 @@
         if (layoutParam === 'v2') return true;
         if (layoutParam === 'classic') return false;
         try {
-            return localStorage.getItem(STORAGE_KEY) === 'on';
+            const preference = localStorage.getItem(STORAGE_KEY);
+            if (preference === 'off') return false;
+            if (preference === 'on') return true;
         } catch (error) {
-            return false;
+            /* ignore */
         }
+        // Layout v2 é o padrão no cardápio publicado.
+        return true;
     }
 
     function persistPreference(enabled) {
         try {
-            if (enabled) localStorage.setItem(STORAGE_KEY, 'on');
-            else localStorage.removeItem(STORAGE_KEY);
+            localStorage.setItem(STORAGE_KEY, enabled ? 'on' : 'off');
         } catch (error) {
             /* ignore */
         }

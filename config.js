@@ -2,7 +2,9 @@ window.BECO_ORDERS_API_BASE_URL = window.BECO_ORDERS_API_BASE_URL || 'https://82
 window.BECO_ONLINE_ORDERS_ENABLED = false;
 
 window.BECO_LAYOUT_V2 = {
+    enabledByDefault: true,
     enabledByQuery: 'layout=v2',
+    disabledByQuery: 'layout=classic',
     heroAutoplayMs: 5500,
     groups: {
         cardapio: [
