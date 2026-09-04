@@ -9,20 +9,24 @@
     <script>
         (function () {
             var params = new URLSearchParams(window.location.search);
-            if (params.get('layout') === 'v2') {
-                document.documentElement.classList.add('layout-v2-pending');
+            var layout = params.get('layout');
+            var enabled = true;
+            if (layout === 'classic') {
+                enabled = false;
+            } else if (layout === 'v2') {
+                enabled = true;
             } else {
                 try {
-                    if (localStorage.getItem('beco-layout-v2') === 'on') {
-                        document.documentElement.classList.add('layout-v2-pending');
-                    }
+                    var pref = localStorage.getItem('beco-layout-v2');
+                    if (pref === 'off') enabled = false;
                 } catch (error) { /* ignore */ }
             }
+            if (enabled) document.documentElement.classList.add('layout-v2-pending');
         })();
     </script>
     <!-- css -->
     <link rel="stylesheet" href="style.css?v=20260825-forro-v7">
-    <link rel="stylesheet" href="layout-v2.css?v=20260901-v1">
+    <link rel="stylesheet" href="layout-v2.css?v=20260904-v1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -252,7 +256,7 @@
                             <a href="#sobremesas" class="cardCategoria">Doces do Beco</a>
                             <a href="#cachacas-do-beco" class="cardCategoria">Cachaças</a>
                             <a href="#cervejas" class="cardCategoria">Cervejas</a>
-                            <a href="#caipirinhas-do-beco" class="cardCategoria" data-forro-only hidden>Caipirinhas</a>
+                            <a href="#caipirinhas-do-beco" class="cardCategoria">Caipirinhas</a>
                             <a href="#coqueteis" class="cardCategoria layout-v2-only" hidden>Coquetéis</a>
                             <a href="#agua-e-refrigerantes" class="cardCategoria layout-v2-only" hidden>Água e refrigerantes</a>
                             <a href="#sucos" class="cardCategoria layout-v2-only" hidden>Sucos</a>
@@ -2208,7 +2212,7 @@
                     setTimeout(atualizarCategoriaPorScroll, 120);
                 </script>
                 <script src="config.js"></script>
-                <script src="layout-v2.js?v=20260901-v1"></script>
+                <script src="layout-v2.js?v=20260904-v1"></script>
                 <script src="navigation.js?v=20260820-app-menu-v4"></script>
                 <script src="forro-menu.js?v=20260825-forro-v5"></script>
                 <script src="orders.js?v=20260820-app-menu-v4"></script>
