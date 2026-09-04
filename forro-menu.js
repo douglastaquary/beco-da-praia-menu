@@ -78,7 +78,7 @@
             if (product.hasAttribute('data-forro-promocao')) {
                 const promotion = document.createElement('div');
                 promotion.className = 'forro-produto-promocao';
-                const message = product.dataset.forroPromocao || 'Leve 2 caldinhos por R$ 15,90';
+                const message = product.dataset.forroPromocao || 'Leve 2 caldinhos por R$ 19,90';
                 promotion.innerHTML = '<strong>Terça do Forró</strong><span></span>';
                 promotion.querySelector('span').textContent = message;
                 product.querySelector('.divCardProduto')?.appendChild(promotion);
@@ -173,6 +173,7 @@
             'Goiabada com limão',
             'Tradicional',
             'De frutas',
+            'Cajú Amigo',
             'Caipirinhas especiais',
             'Manga com pimenta'
         ]);
@@ -190,7 +191,7 @@
             'Carne de sol'
         ]);
         reorderProducts('bem-nordestinos', [
-            'Mocotó simples com pão',
+            'Mocotó simples',
             'Mocotó (Prato individual)',
             'Dobradinha (Prato individual)'
         ]);

@@ -22,7 +22,7 @@
     </script>
     <!-- css -->
     <link rel="stylesheet" href="style.css?v=20260825-forro-v7">
-    <link rel="stylesheet" href="layout-v2.css?v=20260826-v8">
+    <link rel="stylesheet" href="layout-v2.css?v=20260901-v1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,6 +71,50 @@
                     <div class="layout-v2-hero-viewport">
                         <div class="layout-v2-hero-track">
                             <article class="layout-v2-hero-slide is-active">
+                                <img src="images/batidinhas.jpg"
+                                    alt="Batidinhas do Beco — coco, paçoca e maracujá">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Mais pedido no balcão</span>
+                                    <strong>Batidinhas</strong>
+                                    <p>Coco, paçoca ou maracujá. Vodka, leite condensado e fruta. R$ 15,00.</p>
+                                    <button type="button" data-layout-scroll="coqueteis"
+                                        data-layout-product="Batidinhas — Coco, paçoca, maracujá">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/caju-amigo.jpeg"
+                                    alt="Drink Cajú Amigo do Beco da Praia">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Drink da casa</span>
+                                    <strong>Cajú Amigo</strong>
+                                    <p>Destilado, compota de caju, suco de caju, limão e gelo. R$ 39,90.</p>
+                                    <button type="button" data-layout-scroll="caipirinhas-do-beco"
+                                        data-layout-product="Cajú Amigo">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/caldinho-de-feijao.jpeg"
+                                    alt="Caldinho de feijão do Beco da Praia">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Para esquentar a noite</span>
+                                    <strong>Caldinho de feijão</strong>
+                                    <p>Unidade R$ 14,90. Na terça do Forró: 2 por R$ 19,90.</p>
+                                    <button type="button" data-layout-scroll="entradinhas"
+                                        data-layout-product="Caldinho de feijão">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide" data-forro-only hidden>
+                                <img src="images/mocoto.png"
+                                    alt="Mocotó simples do Beco da Praia">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Promoção da terça</span>
+                                    <strong>Mocotó simples</strong>
+                                    <p>Caldo tradicional e encorpado. Promoção da noite por R$ 19,00.</p>
+                                    <button type="button" data-layout-scroll="bem-nordestinos"
+                                        data-layout-product="Mocotó simples">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
                                 <img src="images/trio-nordestino-gpt.png"
                                     alt="Trio Nordestino com carne de sol, Baião à Moda do Cheff e mandioca">
                                 <div class="layout-v2-hero-caption">
@@ -255,14 +299,14 @@
                         <div>
                             <span class="forro-promocao-selo">Promoção da noite</span>
                             <p>Caldinho de feijão dobrado</p>
-                            <strong>R$ 15,90</strong>
+                            <strong>R$ 19,90</strong>
                             <small>Dois caldinhos no valor da promoção</small>
                         </div>
                     </article>
                     <article class="forro-promocao-caldo forro-promocao-mocoto">
                         <div>
                             <span class="forro-promocao-selo">Promoção da noite</span>
-                            <p>Mocotó simples com pão</p>
+                            <p>Mocotó simples</p>
                             <strong>R$ 19,00</strong>
                         </div>
                     </article>
@@ -320,13 +364,13 @@
                             <img src="images/caldinho-de-feijao.jpeg" alt="">
                             <span>Dobrado</span>
                             <strong>Caldinho de feijão</strong>
-                            <b>2 por R$ 15,90</b>
+                            <b>2 por R$ 19,90</b>
                         </button>
                         <button type="button" class="forro-vitrine-item forro-vitrine-item-especial"
-                            data-forro-scroll="Mocotó simples com pão" data-forro-category="bem-nordestinos">
-                            <img src="images/mocoto-com-pao.jpg" alt="">
+                            data-forro-scroll="Mocotó simples" data-forro-category="bem-nordestinos">
+                            <img src="images/mocoto.png" alt="">
                             <span>Promoção</span>
-                            <strong>Mocotó com pão</strong>
+                            <strong>Mocotó simples</strong>
                             <b>R$ 19,00</b>
                         </button>
                     </nav>
@@ -641,7 +685,7 @@
                             </div>
                         </div>
                         <div class="produtoContainer" data-forro-destaque="Promoção de terça"
-                            data-forro-promocao="Dobrado: 2 por R$ 15,90"
+                            data-forro-promocao="Dobrado: 2 por R$ 19,90"
                             style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
@@ -653,14 +697,14 @@
                                 <p class="listaProdutoTitulo">Caldinho de feijão</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Porção de 200 ml.</p>
                                 <div data-forro-hide style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 14,90</p>
                                 </div>
                                 <div data-forro-only hidden>
                                     <div style="display: flex; flex-direction: row; align-items: center;">
-                                        <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Unidade: R$ 15,00</p>
+                                        <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Unidade: R$ 14,90</p>
                                     </div>
                                     <div style="display: flex; flex-direction: row; align-items: center;">
-                                        <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Dobrado: 2 por R$ 15,90</p>
+                                        <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Dobrado: 2 por R$ 19,90</p>
                                     </div>
                                 </div>
                             </div>
@@ -827,17 +871,17 @@
                     <div class="produtos text-center">
                         <div class="produtoContainer" data-forro-only hidden
                             data-forro-destaque="R$ 19,00"
-                            data-forro-promocao="Caldo simples com pão por R$ 19,00"
+                            data-forro-promocao="Mocotó simples por R$ 19,00"
                             style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
-                                    <img loading="lazy" alt="" src="images/mocoto-com-pao.jpg" class="imagemProduto">
+                                    <img loading="lazy" alt="" src="images/mocoto.png" class="imagemProduto">
                                 </picture>
                             </div>
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
-                                <p class="listaProdutoTitulo">Mocotó simples com pão</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Promoção da Terça do Forró. Caldo de mocotó simples, acompanhado de pão.</p>
+                                <p class="listaProdutoTitulo">Mocotó simples</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Promoção da Terça do Forró. Caldo de mocotó simples.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
                                     <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 19,00</p>
                                 </div>
@@ -1367,7 +1411,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-hide style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Queridinho da casa" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -1439,6 +1483,21 @@
                 <div id="coqueteis" class="cardapioCategoria">
                     <p class="cardapioSubcategoriaTitulo">Coquetéis</p>
                     <div class="produtos text-center">
+                        <div class="produtoContainer" data-layout-v2-destaque="Mais pedido" style="cursor: pointer;">
+                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
+                            <div class="container_foto">
+                                <picture>
+                                    <img loading="lazy" alt="" src="images/batidinhas.jpg" class="imagemProduto">
+                                </picture>
+                            </div>
+                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
+                                <p class="listaProdutoTitulo">Batidinhas — Coco, paçoca, maracujá</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Vodka, leite condensado, fruta ou paçoca.</p>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="produtoContainer" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
@@ -1466,21 +1525,6 @@
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Gin e Red Bull tropical, melancia, zero açúcar ou tradicional.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
                                     <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 45,00</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
-                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
-                            <div class="container_foto">
-                                <picture>
-                                    <img loading="lazy" alt="" src="images/batidinhas.jpg" class="imagemProduto">
-                                </picture>
-                            </div>
-                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
-                                <p class="listaProdutoTitulo">Batidinhas — Coco, paçoca, maracujá</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Vodka, leite condensado, fruta ou paçoca.</p>
-                                <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 15,00</p>
                                 </div>
                             </div>
                         </div>
@@ -2164,7 +2208,7 @@
                     setTimeout(atualizarCategoriaPorScroll, 120);
                 </script>
                 <script src="config.js"></script>
-                <script src="layout-v2.js?v=20260826-v8"></script>
+                <script src="layout-v2.js?v=20260901-v1"></script>
                 <script src="navigation.js?v=20260820-app-menu-v4"></script>
                 <script src="forro-menu.js?v=20260825-forro-v5"></script>
                 <script src="orders.js?v=20260820-app-menu-v4"></script>

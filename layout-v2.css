@@ -694,8 +694,25 @@ body.layout-v2 .produtoContainer .divCardProduto {
   padding: 0 !important;
 }
 
-body.layout-v2 .produtoContainer .forro-produto-badge {
+body.layout-v2 .produtoContainer .forro-produto-badge,
+body.layout-v2 .produtoContainer .layout-v2-destaque-badge {
   grid-area: badge;
+}
+
+body.layout-v2 .layout-v2-destaque-badge {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #4f1b14;
+  background: #f3c66c;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 body.layout-v2 .produtoContainer .listaProdutoTitulo {

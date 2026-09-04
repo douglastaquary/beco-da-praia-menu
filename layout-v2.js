@@ -69,6 +69,61 @@
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    function findProductInMenu(categoryId, productTitle) {
+        const category = document.getElementById(categoryId);
+        if (!category || !productTitle) return null;
+        return Array.from(category.querySelectorAll('.produtoContainer')).find(function (product) {
+            return product.querySelector('.listaProdutoTitulo')?.textContent.trim() === productTitle;
+        }) || null;
+    }
+
+    function revealCervejaPanelForProduct(product) {
+        const panelEl = product?.closest('.layout-v2-cerveja-panel');
+        if (!panelEl || !cervejaTabsController) return;
+        const tabId = panelEl.dataset.cervejaPanel;
+        if (tabId) cervejaTabsController.setActiveCervejaTab(tabId, { center: true });
+    }
+
+    function pulseProduct(product) {
+        if (!product) return;
+        window.requestAnimationFrame(function () {
+            const stickyNav = document.querySelector('.cardapio-navegacao-sticky');
+            const offset = (stickyNav?.offsetHeight || 0) + 12;
+            const top = window.scrollY + product.getBoundingClientRect().top - offset;
+            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+
+            product.classList.remove('layout-v2-search-pulse');
+            window.setTimeout(function () {
+                product.classList.add('layout-v2-search-pulse');
+            }, 280);
+            window.setTimeout(function () {
+                product.classList.remove('layout-v2-search-pulse');
+            }, 2200);
+
+            window.setTimeout(function () {
+                product.click();
+            }, 450);
+        });
+    }
+
+    function scrollToMenuProduct(categoryId, productTitle) {
+        const product = findProductInMenu(categoryId, productTitle);
+        if (!product) {
+            scrollToCategory(categoryId);
+            return;
+        }
+
+        const group = categoryIdToPrimaryGroup(categoryId);
+        if (group) applyPrimaryGroup(group, { scrollTo: false });
+
+        if (categoryId && typeof window.selecionarCategoria === 'function') {
+            window.selecionarCategoria(categoryId, false);
+        }
+
+        revealCervejaPanelForProduct(product);
+        pulseProduct(product);
+    }
+
     function categoryIdToPrimaryGroup(categoryId) {
         const groups = groupsConfig();
         if (document.body.dataset.cardapioMode === 'forro' && groups.forro?.includes(categoryId)) {
@@ -227,6 +282,11 @@
         root.querySelectorAll('[data-layout-scroll]').forEach(function (button) {
             button.addEventListener('click', function () {
                 const targetId = button.dataset.layoutScroll || '';
+                const productTitle = button.dataset.layoutProduct || '';
+                if (productTitle) {
+                    scrollToMenuProduct(targetId, productTitle);
+                    return;
+                }
                 const group = categoryIdToPrimaryGroup(targetId);
                 applyPrimaryGroup(group, { scrollTo: false });
                 scrollToCategory(targetId);
@@ -552,42 +612,12 @@
         }
 
         function revealCervejaPanelIfNeeded(product) {
-            const panelEl = product.closest('.layout-v2-cerveja-panel');
-            if (!panelEl || !cervejaTabsController) return;
-            const tabId = panelEl.dataset.cervejaPanel;
-            if (tabId) cervejaTabsController.setActiveCervejaTab(tabId, { center: true });
+            revealCervejaPanelForProduct(product);
         }
 
         function goToProduct(match) {
             setPanelOpen(false);
-
-            const group = categoryIdToPrimaryGroup(match.categoryId);
-            if (group) applyPrimaryGroup(group, { scrollTo: false });
-
-            if (match.categoryId && typeof window.selecionarCategoria === 'function') {
-                window.selecionarCategoria(match.categoryId, false);
-            }
-
-            revealCervejaPanelIfNeeded(match.product);
-
-            window.requestAnimationFrame(function () {
-                const stickyNav = document.querySelector('.cardapio-navegacao-sticky');
-                const offset = (stickyNav?.offsetHeight || 0) + 12;
-                const top = window.scrollY + match.product.getBoundingClientRect().top - offset;
-                window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-
-                match.product.classList.remove('layout-v2-search-pulse');
-                window.setTimeout(function () {
-                    match.product.classList.add('layout-v2-search-pulse');
-                }, 280);
-                window.setTimeout(function () {
-                    match.product.classList.remove('layout-v2-search-pulse');
-                }, 2200);
-
-                window.setTimeout(function () {
-                    match.product.click();
-                }, 450);
-            });
+            scrollToMenuProduct(match.categoryId, match.title);
         }
 
         toggle.addEventListener('click', function () {
@@ -620,6 +650,16 @@
 
             product.classList.add('layout-v2-product-row');
 
+            const destaqueLabel = product.dataset.layoutV2Destaque;
+            if (destaqueLabel && !product.querySelector('.layout-v2-destaque-badge')) {
+                const badge = document.createElement('span');
+                badge.className = 'layout-v2-destaque-badge';
+                badge.textContent = destaqueLabel;
+                const title = product.querySelector('.listaProdutoTitulo');
+                if (title) title.insertAdjacentElement('beforebegin', badge);
+                else card.prepend(badge);
+            }
+
             const priceBlocks = Array.from(card.querySelectorAll(':scope > div[style*="flex-direction: row"]'));
             if (priceBlocks.length > 1 && !card.querySelector('.layout-v2-price-stack')) {
                 const wrapper = document.createElement('div');
@@ -642,10 +682,11 @@
 
     function syncForroUI(carousel) {
         const isForro = document.body.dataset.cardapioMode === 'forro';
-        const forroSlide = document.querySelector('.layout-v2-hero-slide[data-forro-only]');
         const forroPrimaryTab = document.querySelector('.layout-v2-primary-tab[data-layout-group="forro"]');
 
-        if (forroSlide) forroSlide.hidden = !isForro;
+        document.querySelectorAll('.layout-v2-hero-slide[data-forro-only]').forEach(function (slide) {
+            slide.hidden = !isForro;
+        });
         if (forroPrimaryTab) forroPrimaryTab.hidden = !isForro;
 
         carousel?.refresh();
