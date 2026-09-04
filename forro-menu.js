@@ -37,7 +37,6 @@
         [
             'forro-destaques',
             'caipirinhas-do-beco',
-            'cachacas-do-beco',
             'entradinhas',
             'porcoes-do-beco',
             'bem-nordestinos',
@@ -46,7 +45,8 @@
             'combos',
             'pratos-executivos',
             'pasteis-gigantes-20-cm',
-            'sobremesas'
+            'sobremesas',
+            'cachacas-do-beco'
         ].forEach(function (id) {
             const link = navigation.querySelector(`.cardCategoria[href="#${id}"]`);
             if (link) navigation.appendChild(link);
@@ -78,7 +78,7 @@
             if (product.hasAttribute('data-forro-promocao')) {
                 const promotion = document.createElement('div');
                 promotion.className = 'forro-produto-promocao';
-                const message = product.dataset.forroPromocao || 'Leve 2 caldinhos por R$ 15,90';
+                const message = product.dataset.forroPromocao || 'Leve 2 caldinhos por R$ 19,90';
                 promotion.innerHTML = '<strong>Terça do Forró</strong><span></span>';
                 promotion.querySelector('span').textContent = message;
                 product.querySelector('.divCardProduto')?.appendChild(promotion);
@@ -151,7 +151,6 @@
 
         reorder(document.querySelector('.mainCard'), [
             'caipirinhas-do-beco',
-            'cachacas-do-beco',
             'entradinhas',
             'porcoes-do-beco',
             'bem-nordestinos',
@@ -165,6 +164,7 @@
             'extras',
             'pasteis-gigantes-20-cm',
             'sobremesas',
+            'cachacas-do-beco',
             'testes-online'
         ]);
         reorderCategoryLinks();
@@ -173,6 +173,7 @@
             'Goiabada com limão',
             'Tradicional',
             'De frutas',
+            'Cajú Amigo',
             'Caipirinhas especiais',
             'Manga com pimenta'
         ]);
@@ -190,7 +191,7 @@
             'Carne de sol'
         ]);
         reorderProducts('bem-nordestinos', [
-            'Mocotó simples com pão',
+            'Mocotó simples',
             'Mocotó (Prato individual)',
             'Dobradinha (Prato individual)'
         ]);

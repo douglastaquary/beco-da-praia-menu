@@ -1,0 +1,856 @@
+:root {
+  --layout-v2-primary: #563020;
+  --layout-v2-accent: #c5831a;
+  --layout-v2-bg: #fafafa;
+  --layout-v2-surface: #ffffff;
+  --layout-v2-text: #30323b;
+  --layout-v2-muted: #6b7280;
+}
+
+html.layout-v2-pending body {
+  visibility: hidden;
+}
+
+body.layout-v2 {
+  visibility: visible;
+  background: var(--layout-v2-bg);
+}
+
+body.layout-v2 .layout-v2-shell {
+  display: block;
+}
+
+body:not(.layout-v2) .layout-v2-shell,
+body:not(.layout-v2) .layout-v2-primary,
+body:not(.layout-v2) .layout-v2-search-panel,
+body:not(.layout-v2) .layout-v2-search-toggle,
+body:not(.layout-v2) .layout-v2-only {
+  display: none !important;
+}
+
+/* Banner rola; header + tabs primárias + categorias ficam sticky */
+body.layout-v2 .cardapio-navegacao-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 140;
+  background: var(--layout-v2-surface);
+  box-shadow: 0 2px 12px rgba(45, 24, 17, 0.08);
+}
+
+body.layout-v2 .cardapio-nav-inner > .header-cardapio {
+  position: relative;
+  top: auto;
+  z-index: auto;
+  background: var(--layout-v2-surface);
+  border-bottom: 1px solid #ececec;
+  padding: 8px 12px;
+}
+
+body.layout-v2 .cardapio-nav-inner > .layout-v2-primary {
+  background: var(--layout-v2-surface);
+  border-bottom: 1px solid #ececec;
+}
+
+body.layout-v2 .cardapio-nav-inner > .menuMobile {
+  position: relative;
+  top: auto;
+  z-index: auto;
+  background: var(--layout-v2-surface);
+  border-bottom: none;
+}
+
+body.layout-v2 .header-beco-conteudo {
+  justify-content: space-between;
+  max-width: 720px;
+}
+
+body.layout-v2 .header-beco-textos {
+  display: none;
+}
+
+body.layout-v2 .header-beco-logo-v2 {
+  display: block;
+  width: 92px;
+  height: 44px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+body.layout-v2 .header-beco-conteudo .app-menu-button {
+  flex: 0 0 44px;
+}
+
+body.layout-v2 .layout-v2-search-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--layout-v2-primary);
+}
+
+body.layout-v2 .layout-v2-header-spacer {
+  display: none;
+}
+
+.header-beco-logo-v2,
+.layout-v2-search-toggle {
+  display: none;
+}
+
+body:not(.layout-v2) .layout-v2-header-spacer {
+  display: none;
+}
+
+/* Busca */
+.layout-v2-search-panel {
+  padding: 10px 12px 12px;
+  background: var(--layout-v2-surface);
+  border-bottom: 1px solid #ececec;
+}
+
+.layout-v2-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.layout-v2-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.layout-v2-search-panel input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 0.92rem;
+}
+
+.layout-v2-search-panel input:focus {
+  outline: 2px solid rgba(197, 131, 26, 0.35);
+  border-color: var(--layout-v2-accent);
+}
+
+#layout-v2-search-close {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: #f3f4f6;
+  color: var(--layout-v2-primary);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.layout-v2-search-results {
+  margin-top: 10px;
+  max-height: min(52vh, 420px);
+  overflow-y: auto;
+  border: 1px solid #ececec;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.layout-v2-search-result {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-bottom: 1px solid #f0f0f0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.layout-v2-search-result:last-child {
+  border-bottom: 0;
+}
+
+.layout-v2-search-result:active,
+.layout-v2-search-result:hover {
+  background: #fffaf1;
+}
+
+.layout-v2-search-result-thumb {
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f3f4f6;
+}
+
+.layout-v2-search-result-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.layout-v2-search-result-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.layout-v2-search-result-info strong {
+  color: var(--layout-v2-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.layout-v2-search-result-info small {
+  color: var(--layout-v2-muted);
+  font-size: 0.72rem;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.layout-v2-search-result-price {
+  color: var(--layout-v2-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.layout-v2-search-empty {
+  margin: 0;
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--layout-v2-muted);
+  font-size: 0.88rem;
+}
+
+body.layout-v2-search-active .cardapioCategoria {
+  scroll-margin-top: calc(var(--cardapio-nav-height, 180px) + 8px);
+}
+
+@keyframes layout-v2-search-pulse {
+  0% { background: rgba(197, 131, 26, 0.28); }
+  100% { background: transparent; }
+}
+
+body.layout-v2 .produtoContainer.layout-v2-search-pulse {
+  animation: layout-v2-search-pulse 1.6s ease;
+}
+
+body.layout-v2 .cardCategoria.layout-v2-nav-hidden {
+  display: none !important;
+}
+
+body.layout-v2 .produtoContainer.layout-v2-product-row {
+  cursor: pointer;
+}
+
+body.layout-v2 .produtoContainer.layout-v2-product-row:active {
+  background: #fffaf1;
+}
+
+/* Hero carrossel */
+.layout-v2-hero {
+  position: relative;
+  background: #1a120e;
+}
+
+.layout-v2-hero-viewport {
+  overflow: hidden;
+}
+
+.layout-v2-hero-slide {
+  position: relative;
+  overflow: hidden;
+  display: none;
+}
+
+.layout-v2-hero-slide.is-active {
+  display: block;
+}
+
+.layout-v2-hero-slide img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.layout-v2-hero-caption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 18px 16px 24px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(20, 10, 6, 0.88));
+}
+
+.layout-v2-hero-caption span {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--layout-v2-accent);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.layout-v2-hero-caption strong {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.layout-v2-hero-caption p {
+  margin: 4px 0 10px;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  opacity: 0.92;
+}
+
+.layout-v2-hero-caption button {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--layout-v2-primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.layout-v2-hero-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.layout-v2-hero-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  pointer-events: auto;
+}
+
+.layout-v2-hero-dot.is-active {
+  width: 18px;
+  background: #fff;
+}
+
+/* Bloco do estabelecimento */
+.layout-v2-venue {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 10px;
+  background: var(--layout-v2-surface);
+}
+
+.layout-v2-venue-name {
+  margin: 0;
+  color: var(--layout-v2-text);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.layout-v2-venue-tagline {
+  margin: 2px 0 0;
+  color: var(--layout-v2-muted);
+  font-size: 0.78rem;
+}
+
+.layout-v2-venue-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.layout-v2-venue-actions button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--layout-v2-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.layout-v2-venue-actions button[aria-pressed="true"] {
+  background: var(--layout-v2-primary);
+  border-color: var(--layout-v2-primary);
+  color: #fff;
+}
+
+/* Tabs primárias com imagem */
+.layout-v2-primary {
+  padding: 0 12px 12px;
+  background: var(--layout-v2-surface);
+}
+
+.layout-v2-primary-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.layout-v2-primary-track::-webkit-scrollbar {
+  display: none;
+}
+
+.layout-v2-primary-tab {
+  position: relative;
+  flex: 0 0 120px;
+  height: 78px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 16px;
+  background: #eef0f3;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+  text-align: left;
+  scroll-snap-align: start;
+}
+
+.layout-v2-primary-tab img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+}
+
+.layout-v2-primary-tab span {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1;
+  color: var(--layout-v2-text);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.layout-v2-primary-tab.is-active {
+  box-shadow: 0 10px 22px rgba(86, 48, 32, 0.22);
+}
+
+.layout-v2-primary-tab.is-active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(86, 48, 32, 0.08), rgba(86, 48, 32, 0.82));
+}
+
+.layout-v2-primary-tab.is-active img {
+  opacity: 0.72;
+}
+
+.layout-v2-primary-tab.is-active span {
+  color: #fff;
+}
+
+/* Forró: esconder hero duplicado, manter promoções */
+body.layout-v2 #forro-destaques .forro-cardapio-hero {
+  display: none;
+}
+
+body.layout-v2 #forro-destaques.forro-cardapio-destaques {
+  padding-top: 0;
+}
+
+body.layout-v2 #forro-destaques .forro-cardapio-conteudo {
+  padding-top: 8px;
+}
+
+/* Tabs secundárias — sobrescreve pills/dourado do layout clássico */
+body.layout-v2 .menuMobile {
+  background: var(--layout-v2-surface);
+  border-top: none;
+}
+
+body.layout-v2 .menuMobile > div {
+  background: var(--layout-v2-surface) !important;
+}
+
+body.layout-v2 .divCategorias {
+  display: flex;
+  gap: 0;
+  padding: 0 8px;
+  background: transparent;
+}
+
+body.layout-v2 .cardCategoria,
+body.layout-v2 .cardCategoriaCachacas,
+body.layout-v2 .cardCategoriaForro,
+body.layout-v2 a.cardCategoria {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 12px 14px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  border-bottom: 3px solid transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--layout-v2-text) !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+}
+
+body.layout-v2 .cardCategoria:hover,
+body.layout-v2 .cardCategoria:active {
+  color: var(--layout-v2-primary) !important;
+  background: transparent !important;
+}
+
+body.layout-v2 .cardCategoria:focus,
+body.layout-v2 .cardCategoria:focus-visible {
+  outline: none;
+  color: var(--layout-v2-text) !important;
+  background: transparent !important;
+}
+
+body.layout-v2 .cardCategoria.cardCategoriaSelected,
+body.layout-v2 .cardCategoria.cardCategoriaSelected:hover,
+body.layout-v2 .cardCategoria.cardCategoriaSelected:active,
+body.layout-v2 .cardCategoria.cardCategoriaSelected:focus,
+body.layout-v2 .cardCategoria.cardCategoriaSelected:focus-visible,
+body.layout-v2 a.cardCategoria.cardCategoriaSelected {
+  color: var(--layout-v2-primary) !important;
+  background: transparent !important;
+  border-bottom: 3px solid var(--layout-v2-primary) !important;
+  text-decoration: none !important;
+}
+
+body.layout-v2 .cachacas-vitrine,
+body.layout-v2 .produtoContainer.cachacas-chamada {
+  display: none !important;
+}
+
+/* Sub-tabs de cerveja (bebidas) */
+.layout-v2-cerveja-tabs {
+  background: var(--layout-v2-surface);
+}
+
+.layout-v2-cerveja-tabs[hidden] {
+  display: none !important;
+}
+
+.layout-v2-cerveja-track {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  padding: 0 8px;
+  scrollbar-width: none;
+}
+
+.layout-v2-cerveja-track::-webkit-scrollbar {
+  display: none;
+}
+
+.layout-v2-cerveja-tab {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--layout-v2-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.layout-v2-cerveja-tab:hover,
+.layout-v2-cerveja-tab:focus,
+.layout-v2-cerveja-tab:focus-visible {
+  outline: none;
+  color: var(--layout-v2-primary);
+}
+
+.layout-v2-cerveja-tab.is-active,
+.layout-v2-cerveja-tab.is-active:hover,
+.layout-v2-cerveja-tab.is-active:focus,
+.layout-v2-cerveja-tab.is-active:focus-visible {
+  color: var(--layout-v2-primary);
+  border-bottom: 3px solid var(--layout-v2-primary);
+}
+
+body.layout-v2 #cervejas .cervejasSubcategoria {
+  display: none;
+}
+
+body.layout-v2 .layout-v2-cerveja-panel {
+  display: block;
+}
+
+body.layout-v2 .layout-v2-cerveja-panel[hidden] {
+  display: none !important;
+}
+
+body.layout-v2 .cardapioCategoriaTitulo {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--layout-v2-muted);
+}
+
+body.layout-v2 .cardapioCategoriaDescricao {
+  font-size: 0.82rem;
+  color: var(--layout-v2-muted);
+}
+
+body.layout-v2 .pagina-cardapio .cardapioCategoria {
+  scroll-margin-top: calc(var(--cardapio-nav-height, 180px) + 8px);
+}
+
+/* Lista de produtos */
+body.layout-v2 .produtos {
+  display: block;
+  padding: 0;
+  background: var(--layout-v2-surface);
+}
+
+body.layout-v2 .produtoContainer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 88px;
+  grid-template-areas:
+    "badge image"
+    "title image"
+    "desc image"
+    "prices image"
+    "action action"
+    "promo promo";
+  align-items: start;
+  gap: 2px 12px;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 0;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: none;
+}
+
+body.layout-v2 .produtoContainer .container_foto {
+  grid-area: image;
+  width: 88px;
+  height: 88px;
+  margin: 0;
+}
+
+body.layout-v2 .produtoContainer img.imagemProduto {
+  width: 88px;
+  height: 88px;
+  max-width: none;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+body.layout-v2 .produtoContainer .divCardProduto {
+  display: contents;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.layout-v2 .produtoContainer .forro-produto-badge,
+body.layout-v2 .produtoContainer .layout-v2-destaque-badge {
+  grid-area: badge;
+}
+
+body.layout-v2 .layout-v2-destaque-badge {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #4f1b14;
+  background: #f3c66c;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+body.layout-v2 .produtoContainer .listaProdutoTitulo {
+  grid-area: title;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--layout-v2-text);
+  text-align: left !important;
+}
+
+body.layout-v2 .produtoContainer .threeDots {
+  grid-area: desc;
+  margin: 0;
+  font-size: 0.78rem !important;
+  color: var(--layout-v2-muted);
+  text-align: left !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+body.layout-v2 .produtoContainer.layout-v2-search-hidden {
+  display: none !important;
+}
+
+body.layout-v2 .produtoContainer.layout-v2-expanded .threeDots {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+body.layout-v2 .produtoContainer .layout-v2-price-stack,
+body.layout-v2 .produtoContainer .divCardProduto > div[style*="flex-direction: row"] {
+  grid-area: prices;
+}
+
+body.layout-v2 .produtoContainer .layout-v2-price-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+body.layout-v2 .produtoContainer .divCardProduto > div[style*="flex-direction: row"] {
+  justify-content: flex-start !important;
+}
+
+body.layout-v2 .produtoContainer .divCardProduto > div[style*="flex-direction: row"] p,
+body.layout-v2 .produtoContainer .layout-v2-price-stack p {
+  font-size: 0.92rem !important;
+  color: var(--layout-v2-text) !important;
+  font-weight: 700 !important;
+}
+
+body.layout-v2 .layout-v2-saiba-mais {
+  grid-area: action;
+  justify-self: start;
+  margin-top: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--layout-v2-primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+body.layout-v2 .produtoContainer .forro-produto-promocao {
+  grid-area: promo;
+}
+
+body.layout-v2.layout-v2-text-lg {
+  font-size: 106%;
+}
+
+body.layout-v2.layout-v2-text-lg .produtoContainer .listaProdutoTitulo {
+  font-size: 1.08rem;
+}
+
+@media (min-width: 768px) {
+  body.layout-v2 .pagina-cardapio,
+  body.layout-v2 .layout-v2-shell,
+  body.layout-v2 .cardapio-navegacao-sticky {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  body.layout-v2 .layout-v2-hero-slide img {
+    height: 280px;
+  }
+}
+
+/* Tela de detalhe integrada ao layout v2 */
+body.layout-v2.detalhe-produto-ativo .layout-v2-cerveja-tabs,
+body.layout-v2.detalhe-produto-ativo .cardapio-navegacao-sticky,
+body.layout-v2.detalhe-produto-ativo .layout-v2-shell,
+body.layout-v2.detalhe-produto-ativo .mainCard,
+body.layout-v2.detalhe-produto-ativo .cardapio-voltar-topo {
+  display: none !important;
+}
+
+body.layout-v2 .pagina-detalhe-produto {
+  background: var(--layout-v2-bg);
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-produto-header {
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  background: var(--layout-v2-surface);
+  border-bottom: 1px solid #ececec;
+  box-shadow: none;
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-voltar {
+  border-color: #e5e7eb;
+  color: var(--layout-v2-primary);
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-header-textos h1,
+body.layout-v2 .pagina-detalhe-produto .detalhe-produto-body h2 {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--layout-v2-text);
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-precos {
+  color: var(--layout-v2-text);
+  font-weight: 700;
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-imagem-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+body.layout-v2 .pagina-detalhe-produto .detalhe-adicionar,
+body.layout-v2 .pagina-detalhe-produto .pedido-adicionar {
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--layout-v2-primary), #8a3d16);
+}
