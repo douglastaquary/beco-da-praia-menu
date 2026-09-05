@@ -27,7 +27,7 @@
 |------|----------------------|-------|
 | Carne de sol | Tirinhas de carne de sol artesanal (não é carne seca), macias e cheias de sabor. Acompanha batata frita ou mandioca frita, queijo coalho, vinagrete fresco e farofa crocante. | MEIA: R$ 59,00 / INTEIRA: R$ 97,00 |
 | Isca de peixe | Deliciosas iscas de peixe empanadas, crocantes por fora e macias por dentro. Acompanha batata frita ou mandioca frita e molho especial da casa. | MEIA: R$ 54,00 / INTEIRA: R$ 92,00 |
-| Mix de churrasco | Porção suculenta de carne bovina com linguiça toscana, preparada para realçar o sabor do churrasco. Acompanha batata frita ou mandioca frita e vinagrete fresco. | MEIA: R$ 55,00 / INTEIRA: R$ 95,00 |
+| Mix do sertão | Porção suculenta de carne bovina com linguiça toscana, preparada para realçar o sabor do churrasco. Acompanha batata frita ou mandioca frita e vinagrete fresco. | MEIA: R$ 55,00 / INTEIRA: R$ 95,00 |
 
 ## Bem nordestinos
 
