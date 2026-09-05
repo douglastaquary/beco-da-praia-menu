@@ -186,7 +186,7 @@
             'Importante'
         ]);
         reorderProducts('porcoes-do-beco', [
-            'Mix de churrasco',
+            'Mix do sertão',
             'Isca de peixe',
             'Carne de sol'
         ]);

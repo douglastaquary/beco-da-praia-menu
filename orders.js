@@ -24,7 +24,7 @@
             derivedOptions: [sizeFromPrice()],
             requiredOptions: [sideDish()]
         },
-        'porcoes-do-beco|Mix de churrasco': {
+        'porcoes-do-beco|Mix do sertão': {
             derivedOptions: [sizeFromPrice()],
             requiredOptions: [sideDish(), meatDoneness()]
         },
@@ -1060,7 +1060,7 @@
     }
 
     function openScreenshotProductDetail() {
-        const product = findProductByTitle('Mix de churrasco');
+        const product = findProductByTitle('Mix do sertão');
         if (!product) return;
         state.currentProduct = readProduct(product);
         showProductDetail();
@@ -1073,7 +1073,7 @@
 
     function addScreenshotItem() {
         state.items = [{
-            name: 'Mix de churrasco',
+            name: 'Mix do sertão',
             variant: 'INTEIRA: R$ 95,00',
             quantity: 1,
             unitPriceText: 'INTEIRA: R$ 95,00',
@@ -1103,7 +1103,7 @@
             customerName: '',
             totalText: 'R$ 95,00',
             items: [{
-                name: 'Mix de churrasco',
+                name: 'Mix do sertão',
                 quantity: 1,
                 unitPriceText: 'INTEIRA: R$ 95,00'
             }],

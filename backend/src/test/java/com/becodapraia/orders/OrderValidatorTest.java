@@ -115,7 +115,7 @@ class OrderValidatorTest {
                 "Pix",
                 "TAKEAWAY",
                 "",
-                List.of(new OrderItem("Mix de churrasco", "INTEIRA: R$ 95,00", 1, "INTEIRA: R$ 95,00",
+                List.of(new OrderItem("Mix do sertão", "INTEIRA: R$ 95,00", 1, "INTEIRA: R$ 95,00",
                         List.of(new OrderOption("Ponto da carne", "")), "")),
                 "R$ 95,00"
         );
