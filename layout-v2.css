@@ -274,17 +274,44 @@ body.layout-v2 .produtoContainer.layout-v2-product-row:active {
 }
 
 .layout-v2-hero-viewport {
+  position: relative;
   overflow: hidden;
+}
+
+.layout-v2-hero-track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  touch-action: pan-x;
+}
+
+.layout-v2-hero-track::-webkit-scrollbar {
+  display: none;
+}
+
+.layout-v2-hero-track.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
 }
 
 .layout-v2-hero-slide {
   position: relative;
   overflow: hidden;
-  display: none;
+  flex: 0 0 100%;
+  width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: block;
 }
 
-.layout-v2-hero-slide.is-active {
-  display: block;
+.layout-v2-hero-slide[hidden] {
+  display: none !important;
 }
 
 .layout-v2-hero-slide img {
@@ -292,14 +319,17 @@ body.layout-v2 .produtoContainer.layout-v2-product-row:active {
   height: 220px;
   object-fit: cover;
   display: block;
+  pointer-events: none;
+  user-select: none;
 }
 
 .layout-v2-hero-caption {
   position: absolute;
   inset: auto 0 0;
-  padding: 18px 16px 24px;
+  padding: 18px 16px 28px;
   color: #fff;
   background: linear-gradient(transparent, rgba(20, 10, 6, 0.88));
+  pointer-events: none;
 }
 
 .layout-v2-hero-caption span {
@@ -337,6 +367,34 @@ body.layout-v2 .produtoContainer.layout-v2-product-row:active {
   color: var(--layout-v2-primary);
   font-size: 0.72rem;
   font-weight: 800;
+  pointer-events: auto;
+}
+
+.layout-v2-hero-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(20, 10, 6, 0.55);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.layout-v2-hero-prev {
+  left: 10px;
+}
+
+.layout-v2-hero-next {
+  right: 10px;
 }
 
 .layout-v2-hero-dots {
@@ -348,6 +406,7 @@ body.layout-v2 .produtoContainer.layout-v2-product-row:active {
   justify-content: center;
   gap: 6px;
   pointer-events: none;
+  z-index: 2;
 }
 
 .layout-v2-hero-dot {

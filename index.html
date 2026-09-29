@@ -26,7 +26,7 @@
     </script>
     <!-- css -->
     <link rel="stylesheet" href="style.css?v=20260825-forro-v7">
-    <link rel="stylesheet" href="layout-v2.css?v=20260904-v1">
+    <link rel="stylesheet" href="layout-v2.css?v=20260928-v1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +55,6 @@
             </div>
             <nav class="menu-lateral-links" aria-label="Navegação principal">
                 <button type="button" data-nav-page="pagina-cardapio"><span aria-hidden="true">⌂</span> Cardápio</button>
-                <button type="button" data-nav-page="pagina-forro"><span aria-hidden="true">♫</span> Forró das Terças</button>
                 <button type="button" data-nav-page="pagina-sobre"><span aria-hidden="true">✦</span> Sobre o Beco</button>
                 <button type="button" data-nav-page="pagina-horarios"><span aria-hidden="true">◷</span> Horários</button>
                 <button type="button" data-nav-page="pagina-reservas"><span aria-hidden="true">◉</span> Reservas e contato</button>
@@ -71,94 +70,99 @@
         <!-- Página do cardápio -->
         <section id="pagina-cardapio" class="pagina-cardapio" data-app-page>
             <div class="layout-v2-shell" hidden aria-hidden="true">
-                <section class="layout-v2-hero" aria-roledescription="carousel" aria-label="Destaques do Beco">
+                <section class="layout-v2-hero" aria-roledescription="carousel" aria-label="Destaques e promoções do Beco">
                     <div class="layout-v2-hero-viewport">
-                        <div class="layout-v2-hero-track">
+                        <button type="button" class="layout-v2-hero-nav layout-v2-hero-prev" aria-label="Destaque anterior">‹</button>
+                        <div class="layout-v2-hero-track" tabindex="0">
                             <article class="layout-v2-hero-slide is-active">
-                                <img src="images/batidinhas.jpg"
-                                    alt="Batidinhas do Beco — coco, paçoca e maracujá">
-                                <div class="layout-v2-hero-caption">
-                                    <span>Mais pedido no balcão</span>
-                                    <strong>Batidinhas</strong>
-                                    <p>Coco, paçoca ou maracujá. Vodka, leite condensado e fruta. R$ 15,00.</p>
-                                    <button type="button" data-layout-scroll="coqueteis"
-                                        data-layout-product="Batidinhas — Coco, paçoca, maracujá">Ver no cardápio</button>
-                                </div>
-                            </article>
-                            <article class="layout-v2-hero-slide">
-                                <img src="images/caju-amigo.jpeg"
-                                    alt="Drink Cajú Amigo do Beco da Praia">
-                                <div class="layout-v2-hero-caption">
-                                    <span>Drink da casa</span>
-                                    <strong>Cajú Amigo</strong>
-                                    <p>Destilado, compota de caju, suco de caju, limão e gelo. R$ 39,90.</p>
-                                    <button type="button" data-layout-scroll="caipirinhas-do-beco"
-                                        data-layout-product="Cajú Amigo">Ver no cardápio</button>
-                                </div>
-                            </article>
-                            <article class="layout-v2-hero-slide">
-                                <img src="images/caldinho-de-feijao.jpeg"
-                                    alt="Caldinho de feijão do Beco da Praia">
-                                <div class="layout-v2-hero-caption">
-                                    <span>Para esquentar a noite</span>
-                                    <strong>Caldinho de feijão</strong>
-                                    <p>Unidade R$ 14,90. Na terça do Forró: 2 por R$ 19,90.</p>
-                                    <button type="button" data-layout-scroll="entradinhas"
-                                        data-layout-product="Caldinho de feijão">Ver no cardápio</button>
-                                </div>
-                            </article>
-                            <article class="layout-v2-hero-slide" data-forro-only hidden>
-                                <img src="images/mocoto.png"
-                                    alt="Mocotó simples do Beco da Praia">
-                                <div class="layout-v2-hero-caption">
-                                    <span>Promoção da terça</span>
-                                    <strong>Mocotó simples</strong>
-                                    <p>Caldo tradicional e encorpado. Promoção da noite por R$ 19,00.</p>
-                                    <button type="button" data-layout-scroll="bem-nordestinos"
-                                        data-layout-product="Mocotó simples">Ver no cardápio</button>
-                                </div>
-                            </article>
-                            <article class="layout-v2-hero-slide">
                                 <img src="images/trio-nordestino-gpt.png"
                                     alt="Trio Nordestino com carne de sol, Baião à Moda do Cheff e mandioca">
                                 <div class="layout-v2-hero-caption">
                                     <span>Queridinho da casa</span>
                                     <strong>Trio Nordestino</strong>
-                                    <p>Carne de sol artesanal, Baião à Moda do Cheff e mandioca na manteiga. Serve 2 pessoas.</p>
-                                    <button type="button" data-layout-scroll="mais-pedidos">Ver favoritos</button>
-                                </div>
-                            </article>
-                            <article class="layout-v2-hero-slide" data-forro-only hidden>
-                                <img src="images/forro-terca-arrumadinho.png"
-                                    alt="Forró de terça no Beco da Praia">
-                                <div class="layout-v2-hero-caption">
-                                    <span>Hoje no Beco</span>
-                                    <strong>Forró de terça</strong>
-                                    <p>Promoções da noite, caipirinhas especiais e petiscos para a pista.</p>
-                                    <button type="button" data-layout-scroll="forro-destaques">Ver promoções</button>
+                                    <p>Carne de sol, Baião à Moda do Cheff e mandioca na manteiga. Serve 2 · R$ 99,90.</p>
+                                    <button type="button" data-layout-scroll="mais-pedidos"
+                                        data-layout-product="Trio Nordestino (Serve 2 pessoas)">Quero pedir</button>
                                 </div>
                             </article>
                             <article class="layout-v2-hero-slide">
-                                <img src="images/bebidas_beco/cachaca-lira-amburana.webp"
-                                    alt="Cachaça Lira Amburana do Piauí">
+                                <img src="images/arrumadinho-gpt.png"
+                                    alt="Arrumadinho com feijão-fradinho, carne seca, vinagrete e farofa">
                                 <div class="layout-v2-hero-caption">
-                                    <span>Do Piauí para o Beco</span>
-                                    <strong>Lira Amburana</strong>
-                                    <p>Edição especial envelhecida em amburana. Dose R$ 29 · Litro R$ 110.</p>
-                                    <button type="button" data-layout-scroll="cachacas-do-beco">Ver no cardápio</button>
+                                    <span>Destaque da casa</span>
+                                    <strong>Arrumadinho</strong>
+                                    <p>Feijão-fradinho, carne seca na manteiga de garrafa, vinagrete e farofa. Serve 2 · R$ 75,00.</p>
+                                    <button type="button" data-layout-scroll="mais-pedidos"
+                                        data-layout-product="Arrumadinho (Serve 2 pessoas)">Quero pedir</button>
                                 </div>
                             </article>
                             <article class="layout-v2-hero-slide">
-                                <img src="images/bebidas_beco/cachaca-mangueira.webp"
-                                    alt="Cachaça Mangueira do Piauí">
+                                <img src="images/baiao-gpt.png"
+                                    alt="Combos do Beco para compartilhar">
                                 <div class="layout-v2-hero-caption">
-                                    <span>Tradição de Castelo do Piauí</span>
-                                    <strong>Cachaça Mangueira</strong>
-                                    <p>Dose, litro, long neck e embalagem para levar. A partir de R$ 15.</p>
-                                    <button type="button" data-layout-scroll="cachacas-do-beco">Ver no cardápio</button>
+                                    <span>Para compartilhar</span>
+                                    <strong>Combos do Beco</strong>
+                                    <p>Combo Casal R$ 119,00 · Combo Família R$ 209,00. Prato, bebida e sobremesa.</p>
+                                    <button type="button" data-layout-scroll="combos">Ver combos</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/bebidas_beco/caipirinha-de-limão.png"
+                                    alt="Caipirinha de limão com cachaça em promoção">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Happy hour 18h–21h</span>
+                                    <strong>Caipirinha de limão</strong>
+                                    <p>Cachaça, limão e açúcar por R$ 19,90. Somente às quintas e sextas, das 18h às 21h.</p>
+                                    <button type="button" data-layout-scroll="caipirinhas-do-beco"
+                                        data-layout-product="Tradicional">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/bebidas_beco/nega-minha.jpg"
+                                    alt="Caipirinha de rapadura, a famosinha do Beco">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Famosinha do Beco · Happy hour 18h–21h</span>
+                                    <strong>Caipirinha de rapadura</strong>
+                                    <p>A queridinha da casa com cachaça por R$ 29,90. Quintas e sextas, das 18h às 21h.</p>
+                                    <button type="button" data-layout-scroll="caipirinhas-do-beco"
+                                        data-layout-product="Rapadura">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/caldinho-de-feijao.jpeg"
+                                    alt="Caldinho de feijão para esquentar">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Noite fria</span>
+                                    <strong>Caldinho de feijão</strong>
+                                    <p>Porção quentinha de 200 ml. Unidade R$ 14,90.</p>
+                                    <button type="button" data-layout-scroll="entradinhas"
+                                        data-layout-product="Caldinho de feijão">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/caldo-de-mocoto.jpeg"
+                                    alt="Caldo de mocotó do Beco da Praia">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Para esquentar</span>
+                                    <strong>Caldo de mocotó</strong>
+                                    <p>Tradicional e encorpado. Ideal para a noite fria.</p>
+                                    <button type="button" data-layout-scroll="bem-nordestinos"
+                                        data-layout-product="Mocotó (Prato individual)">Ver no cardápio</button>
+                                </div>
+                            </article>
+                            <article class="layout-v2-hero-slide">
+                                <img src="images/mix-do-sertao-update.png"
+                                    alt="Tábuas e porções do Beco da Praia">
+                                <div class="layout-v2-hero-caption">
+                                    <span>Para compartilhar</span>
+                                    <strong>Tábuas do Beco</strong>
+                                    <p>Mix do sertão, carne de sol e isca de peixe. Meia ou inteira.</p>
+                                    <button type="button" data-layout-scroll="porcoes-do-beco"
+                                        data-layout-product="Mix do sertão">Ver tábuas</button>
                                 </div>
                             </article>
                         </div>
+                        <button type="button" class="layout-v2-hero-nav layout-v2-hero-next" aria-label="Próximo destaque">›</button>
                     </div>
                     <div class="layout-v2-hero-dots" aria-hidden="true"></div>
                 </section>
@@ -233,19 +237,12 @@
                                 <img src="images/bebidas_beco/cachaca-lira-amburana.webp" alt="">
                                 <span>Cachaças</span>
                             </button>
-                            <button type="button" class="layout-v2-primary-tab" data-layout-target="forro-destaques"
-                                data-layout-group="forro" data-forro-only hidden>
-                                <img src="images/forro-beco-hero.webp" alt="">
-                                <span>Forró hoje</span>
-                            </button>
                         </div>
                     </nav>
                     <nav class="menuMobile" aria-label="Categorias do cardápio">
                     <div data-offset-bottom="100"
                         style="display: flex; flex-direction: row; align-items: center; background-color: rgb(250, 250, 250);">
                         <div class="divCategorias">
-                            <a href="#forro-destaques" class="cardCategoria cardCategoriaForro"
-                                data-forro-only hidden>Forró hoje</a>
                             <a href="#mais-pedidos" class="cardCategoria">Favoritos do Beco</a>
                             <a href="#combos" class="cardCategoria">Combos para compartilhar</a>
                             <a href="#entradinhas" class="cardCategoria">Para começar</a>
@@ -286,100 +283,6 @@
                     </div>
                 </div>
             </div>
-            <section id="forro-destaques" class="cardapioCategoria forro-cardapio-destaques"
-                data-forro-only aria-labelledby="forro-cardapio-titulo" hidden>
-                <div class="forro-cardapio-hero">
-                    <img src="images/forro-terca-arrumadinho.png"
-                        alt="Arrumadinho do Borges no Forró de terça">
-                    <div class="forro-cardapio-hero-info">
-                        <p>Hoje no Beco</p>
-                        <h2 id="forro-cardapio-titulo">Forró de terça</h2>
-                        <strong>Arrumadinho do Borges</strong>
-                    </div>
-                </div>
-                <div class="forro-cardapio-conteudo">
-                    <div class="forro-promocoes">
-                    <article class="forro-promocao-caldo">
-                        <div>
-                            <span class="forro-promocao-selo">Promoção da noite</span>
-                            <p>Caldinho de feijão dobrado</p>
-                            <strong>R$ 19,90</strong>
-                            <small>Dois caldinhos no valor da promoção</small>
-                        </div>
-                    </article>
-                    <article class="forro-promocao-caldo forro-promocao-mocoto">
-                        <div>
-                            <span class="forro-promocao-selo">Promoção da noite</span>
-                            <p>Mocotó simples</p>
-                            <strong>R$ 19,00</strong>
-                        </div>
-                    </article>
-                    </div>
-                    <div class="forro-cardapio-chamada">
-                        <p>Peça para a pista</p>
-                        <h3>Os mais vendidos da terça</h3>
-                    </div>
-                    <nav class="forro-vitrine" aria-label="Produtos mais pedidos no forró">
-                        <button type="button" class="forro-vitrine-item forro-vitrine-item-especial"
-                            data-forro-scroll="Rapadura" data-forro-category="caipirinhas-do-beco">
-                            <img src="images/bebidas_beco/nega-minha.jpg" alt="">
-                            <span>Especial de Terça</span>
-                            <strong>Rapadura</strong>
-                            <b>R$ 34,90</b>
-                        </button>
-                        <button type="button" class="forro-vitrine-item forro-vitrine-item-especial"
-                            data-forro-scroll="Goiabada com limão" data-forro-category="caipirinhas-do-beco">
-                            <img src="images/la_belle_de_jour.jpg" alt="">
-                            <span>Especial de Terça</span>
-                            <strong>Goiabada com limão</strong>
-                            <b>R$ 34,90</b>
-                        </button>
-                        <button type="button" class="forro-vitrine-item"
-                            data-forro-scroll="Mix do sertão" data-forro-category="porcoes-do-beco">
-                            <img src="images/mix-do-sertao.jpeg" alt="">
-                            <span>Meia porção</span>
-                            <strong>Mix do sertão</strong>
-                            <b>Meia R$ 55,00</b>
-                        </button>
-                        <button type="button" class="forro-vitrine-item"
-                            data-forro-scroll="Isca de peixe" data-forro-category="porcoes-do-beco">
-                            <img src="images/isca-peixe-gpt.png" alt="">
-                            <span>Meia porção</span>
-                            <strong>Isca de peixe</strong>
-                            <b>Meia R$ 54,00</b>
-                        </button>
-                        <button type="button" class="forro-vitrine-item"
-                            data-forro-scroll="Torresmo" data-forro-category="entradinhas">
-                            <img src="images/Torresmo-de-Barriga.jpeg" alt="">
-                            <span>Queridinho</span>
-                            <strong>Torresmo</strong>
-                            <b>Unid. R$ 10,00</b>
-                            <b class="forro-vitrine-preco-extra">500 g R$ 45,00</b>
-                        </button>
-                        <button type="button" class="forro-vitrine-item"
-                            data-forro-scroll="Batata frita" data-forro-category="entradinhas">
-                            <img src="images/batata-frita.jpeg" alt="">
-                            <span>Para dividir</span>
-                            <strong>Batata frita</strong>
-                            <b>R$ 37,00</b>
-                        </button>
-                        <button type="button" class="forro-vitrine-item"
-                            data-forro-scroll="Caldinho de feijão" data-forro-category="entradinhas">
-                            <img src="images/caldinho-de-feijao.jpeg" alt="">
-                            <span>Dobrado</span>
-                            <strong>Caldinho de feijão</strong>
-                            <b>2 por R$ 19,90</b>
-                        </button>
-                        <button type="button" class="forro-vitrine-item forro-vitrine-item-especial"
-                            data-forro-scroll="Mocotó simples" data-forro-category="bem-nordestinos">
-                            <img src="images/mocoto.png" alt="">
-                            <span>Promoção</span>
-                            <strong>Mocotó simples</strong>
-                            <b>R$ 19,00</b>
-                        </button>
-                    </nav>
-                </div>
-            </section>
             <button type="button" class="cachacas-vitrine" data-open-cachacas
                 aria-label="Conhecer as cachaças piauienses Lira e Mangueira">
                 <span class="cachacas-vitrine-slide cachacas-vitrine-lira">
@@ -655,7 +558,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Queridinho da noite" style="cursor: pointer;">
+                        <div class="produtoContainer" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -673,7 +576,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Perfeita para dividir" style="cursor: pointer;">
+                        <div class="produtoContainer" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -688,9 +591,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Promoção de terça"
-                            data-forro-promocao="Dobrado: 2 por R$ 19,90"
-                            style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Noite fria" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -700,16 +601,8 @@
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
                                 <p class="listaProdutoTitulo">Caldinho de feijão</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Porção de 200 ml.</p>
-                                <div data-forro-hide style="display: flex; flex-direction: row; align-items: center;">
+                                <div style="display: flex; flex-direction: row; align-items: center;">
                                     <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 14,90</p>
-                                </div>
-                                <div data-forro-only hidden>
-                                    <div style="display: flex; flex-direction: row; align-items: center;">
-                                        <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Unidade: R$ 14,90</p>
-                                    </div>
-                                    <div style="display: flex; flex-direction: row; align-items: center;">
-                                        <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">Dobrado: 2 por R$ 19,90</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -726,7 +619,7 @@
                     <p class="cardapioCategoriaTitulo">Favoritos do Beco</p>
                     <p class="cardapioCategoriaDescricao">Não sabe por onde começar? Estes são os queridinhos de quem já conhece a casa.</p>
                     <div class="produtos text-center">
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Queridinho da casa" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -756,7 +649,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Destaque da casa" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -767,7 +660,7 @@
                                 <p class="listaProdutoTitulo">Arrumadinho (Serve 2 pessoas)</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Feijão-fradinho temperado, vinagrete fresquinho, farofa crocante e carne seca desfiada refogada na cebola com manteiga de garrafa.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 62,00</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 75,00</p>
                                 </div>
                             </div>
                         </div>
@@ -777,7 +670,7 @@
                     <p class="cardapioCategoriaTitulo">Combos para compartilhar</p>
                     <p class="cardapioCategoriaDescricao">Escolhas completas para aproveitar junto, sem complicação.</p>
                     <div class="produtos text-center">
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Ideal para casal" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -792,7 +685,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Para a família" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -831,7 +724,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Meia porção" style="cursor: pointer;">
+                        <div class="produtoContainer" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -849,11 +742,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Meia porção" style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Tábua da casa" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
-                                    <img loading="lazy" alt="" src="images/mix-do-sertao.jpeg" class="imagemProduto">
+                                    <img loading="lazy" alt="" src="images/mix-do-sertao-update.png" class="imagemProduto">
                                 </picture>
                             </div>
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
@@ -873,24 +766,6 @@
                     <p class="cardapioCategoriaTitulo">Sabores do Nordeste</p>
                     <p class="cardapioCategoriaDescricao">Receitas cheias de tradição, tempero e aconchego.</p>
                     <div class="produtos text-center">
-                        <div class="produtoContainer" data-forro-only hidden
-                            data-forro-destaque="R$ 19,00"
-                            data-forro-promocao="Mocotó simples por R$ 19,00"
-                            style="cursor: pointer;">
-                            <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
-                            <div class="container_foto">
-                                <picture>
-                                    <img loading="lazy" alt="" src="images/mocoto.png" class="imagemProduto">
-                                </picture>
-                            </div>
-                            <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
-                                <p class="listaProdutoTitulo">Mocotó simples</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Promoção da Terça do Forró. Caldo de mocotó simples.</p>
-                                <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 19,00</p>
-                                </div>
-                            </div>
-                        </div>
                         <div class="produtoContainer" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
@@ -909,11 +784,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Caldo da noite" style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Noite fria" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
-                                    <img loading="lazy" alt="" src="images/mocoto.png" class="imagemProduto">
+                                    <img loading="lazy" alt="" src="images/caldo-de-mocoto.jpeg" class="imagemProduto">
                                 </picture>
                             </div>
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
@@ -1209,7 +1084,7 @@
                                 <p class="listaProdutoTitulo">Heineken</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Lager, 600 ml</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 20,00</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 22,00</p>
                                 </div>
                             </div>
                         </div>
@@ -1254,7 +1129,7 @@
                                 <p class="listaProdutoTitulo">Original</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Pilsen, 600 ml</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 18,00</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 19,00</p>
                                 </div>
                             </div>
                         </div>
@@ -1269,7 +1144,7 @@
                                 <p class="listaProdutoTitulo">Amstel</p>
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Lager, 600 ml</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 17,00</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 18,00</p>
                                 </div>
                             </div>
                         </div>
@@ -1385,7 +1260,7 @@
                 <div id="caipirinhas-do-beco" class="cardapioCategoria">
                     <p class="cardapioSubcategoriaTitulo">Caipirinhas do Beco</p>
                     <div class="produtos text-center">
-                        <div class="produtoContainer" data-forro-destaque="Drink da noite" style="cursor: pointer;">
+                        <div class="produtoContainer" data-layout-v2-destaque="Happy hour qui e sex 18h–21h · R$ 19,90" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -1394,9 +1269,12 @@
                             </div>
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
                                 <p class="listaProdutoTitulo">Tradicional</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Cachaça, limão-tahiti e açúcar.</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Cachaça, limão-tahiti e açúcar. Happy hour às quintas e sextas, das 18h às 21h, por R$ 19,90.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 24,90</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 19,90 · qui e sex 18h–21h</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 0.95em; color: rgb(120, 120, 120); font-weight: bold; margin-bottom: 0px;">Depois: R$ 24,90</p>
                                 </div>
                             </div>
                         </div>
@@ -1437,7 +1315,9 @@
                                 <p class="threeDots" style="font-size: 0.8em; text-align: left;">Todas por R$ 34,90</p>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Especial de Terça" style="cursor: pointer;">
+                        <div class="produtoContainer"
+                            data-layout-v2-destaque="Famosinha · Happy hour qui e sex 18h–21h · R$ 29,90"
+                            style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -1446,13 +1326,16 @@
                             </div>
                             <div class="divCardProduto" style="justify-content: space-between; margin-top: 5px; padding: 0px 10px;">
                                 <p class="listaProdutoTitulo">Rapadura</p>
-                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Destilado, limão e calda de rapadura, finalizada com raspas de rapadura.</p>
+                                <p class="threeDots" style="font-size: 0.8em; text-align: left;">Destilado, limão e calda de rapadura, finalizada com raspas de rapadura. Happy hour às quintas e sextas, das 18h às 21h, por R$ 29,90.</p>
                                 <div style="display: flex; flex-direction: row; align-items: center;">
-                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 34,90</p>
+                                    <p style="font-size: 1.1em; color: rgb(197, 131, 26); font-weight: bold; margin-bottom: 0px;">R$ 29,90 · qui e sex 18h–21h</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row; align-items: center;">
+                                    <p style="font-size: 0.95em; color: rgb(120, 120, 120); font-weight: bold; margin-bottom: 0px;">Depois: R$ 34,90</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="produtoContainer" data-forro-destaque="Especial de Terça" style="cursor: pointer;">
+                        <div class="produtoContainer" style="cursor: pointer;">
                             <span class="spinner-border spinner-border-sm imagemProduto" style="color: rgb(197, 131, 26); display: none;"></span>
                             <div class="container_foto">
                                 <picture>
@@ -1840,57 +1723,6 @@
             </main>
         </section>
 
-        <section id="pagina-forro" class="pagina-info pagina-forro" data-app-page style="display: none;"
-            aria-hidden="true">
-            <header class="info-app-header">
-                <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu">
-                    <span></span><span></span><span></span>
-                </button>
-                <div><small>Terça é dia de dança</small><h1>Forró no Beco</h1></div>
-            </header>
-            <main class="info-conteudo forro-conteudo">
-                <section class="forro-hero">
-                    <img src="images/forro-beco-hero.webp"
-                        alt="Ambiente nordestino do Beco da Praia decorado com bandeirinhas e balão de São João">
-                    <div class="forro-hero-overlay">
-                        <p>Em Bertioga, com alma nordestina</p>
-                        <h2>Toda terça tem forró no Beco</h2>
-                        <span>A partir das 18h</span>
-                    </div>
-                </section>
-                <section class="forro-chamada">
-                    <p class="info-sobretitulo">Arraste o pé e chegue mais</p>
-                    <h2>Comida boa, música e encontro</h2>
-                    <p>A Terça do Forró reúne sabores nordestinos e aquele clima acolhedor que faz todo mundo se sentir
-                        em casa. Venha jantar, brindar e aproveitar a noite com a gente.</p>
-                    <div class="info-acoes">
-                        <a href="https://wa.me/5513981267849?text=Olá!%20Quero%20reservar%20uma%20mesa%20para%20a%20Terça%20do%20Forró."
-                            target="_blank" rel="noopener noreferrer" class="info-cta info-cta-principal">Reservar para o forró</a>
-                        <a href="https://www.instagram.com/becodapraiaoficial/" target="_blank"
-                            rel="noopener noreferrer" class="info-cta info-cta-secundario">Ver fotos e vídeos no Instagram</a>
-                    </div>
-                </section>
-                <section class="forro-agenda" aria-label="Informações do Forró">
-                    <article><small>Quando</small><strong>Toda terça-feira</strong><span>18h às 23h</span></article>
-                    <article><small>Onde</small><strong>Beco da Praia</strong><span>Centro de Bertioga</span></article>
-                    <article><small>Instagram</small><strong>@becodapraiaoficial</strong><span>Confira a programação</span></article>
-                </section>
-                <section class="forro-mural">
-                    <div>
-                        <p class="info-sobretitulo">Nossa identidade</p>
-                        <h2>Um pedacinho do Nordeste perto do mar</h2>
-                    </div>
-                    <figure>
-                        <img src="images/forro-beco-ilustracao.webp"
-                            alt="Ilustração nordestina inspirada em Luiz Gonzaga e bandeirinhas de São João">
-                        <figcaption>Tradição, afeto e muito xote.</figcaption>
-                    </figure>
-                </section>
-                <a href="https://www.instagram.com/becodapraiaoficial/" target="_blank" rel="noopener noreferrer"
-                    class="forro-instagram-final">Acompanhe @becodapraiaoficial e veja os registros mais recentes →</a>
-            </main>
-        </section>
-
         <section id="pagina-sobre" class="pagina-info" data-app-page style="display: none;" aria-hidden="true">
             <header class="info-app-header">
                 <button type="button" class="app-menu-button" data-open-drawer aria-label="Abrir menu"><span></span><span></span><span></span></button>
@@ -1905,7 +1737,7 @@
                 </section>
                 <section class="info-grid">
                     <article><span aria-hidden="true">✦</span><h3>Sabores da nossa terra</h3><p>Receitas nordestinas, porções generosas e ingredientes cheios de identidade.</p></article>
-                    <article><span aria-hidden="true">♫</span><h3>Cultura que aproxima</h3><p>Às terças, o forró toma conta do Beco e transforma a noite em encontro.</p></article>
+                    <article><span aria-hidden="true">♫</span><h3>Cultura que aproxima</h3><p>Música, decoração e sabores nordestinos que transformam cada visita em encontro.</p></article>
                     <article><span aria-hidden="true">♡</span><h3>Casa acolhedora</h3><p>Um ambiente descontraído para chegar com amigos, família ou para conhecer gente nova.</p></article>
                 </section>
                 <button type="button" class="info-cta info-cta-principal" data-nav-page="pagina-cardapio">Voltar ao cardápio</button>
@@ -1920,9 +1752,9 @@
             <main class="info-conteudo">
                 <section class="info-hero-card"><p class="info-sobretitulo">Estamos esperando você</p><h2>Horário de funcionamento</h2><p>Confira os dias e venha aproveitar o Beco sem pressa.</p></section>
                 <div class="info-lista">
-                    <article class="info-lista-destaque"><div><small>Terça-feira</small><strong>Terça do Forró</strong></div><span>18h às 23h</span></article>
-                    <article><div><small>Sexta-feira</small><strong>Jantar no Beco</strong></div><span>18h às 23h</span></article>
-                    <article><div><small>Sábado e domingo</small><strong>Almoço e jantar</strong></div><span>12h às 22h</span></article>
+                    <article class="info-lista-destaque"><div><small>Quinta e sexta-feira</small><strong>Jantar no Beco · Happy hour 18h às 21h</strong></div><span>18h às 23h</span></article>
+                    <article><div><small>Sábado</small><strong>Almoço e jantar</strong></div><span>12h às 22h</span></article>
+                    <article><div><small>Domingo</small><strong>Almoço e jantar</strong></div><span>12h às 21h</span></article>
                 </div>
                 <p class="info-nota">Em feriados e datas especiais, consulte a programação no Instagram.</p>
             </main>
@@ -2029,7 +1861,7 @@
                     }
 
                     function posicaoScrollCategoria(id) {
-                        if (id === 'mais-pedidos' || id === 'forro-destaques') return 0;
+                        if (id === 'mais-pedidos') return 0;
 
                         const alvo = document.getElementById(id);
                         if (!alvo) return window.scrollY;
@@ -2126,11 +1958,7 @@
                             'sucos'
                         ]);
                         let idAtivo = secaoAtiva.id;
-                        if (idAtivo === 'forro-destaques') {
-                            idAtivo = 'forro-destaques';
-                        } else if (document.body.dataset.cardapioMode === 'forro' && idAtivo === 'caipirinhas-do-beco') {
-                            idAtivo = 'caipirinhas-do-beco';
-                        } else if (!document.body.classList.contains('layout-v2') && categoriasBebidas.has(idAtivo)) {
+                        if (!document.body.classList.contains('layout-v2') && categoriasBebidas.has(idAtivo)) {
                             idAtivo = 'cervejas';
                         }
                         if (idAtivo === 'extras') idAtivo = 'pratos-executivos';
@@ -2212,9 +2040,8 @@
                     setTimeout(atualizarCategoriaPorScroll, 120);
                 </script>
                 <script src="config.js"></script>
-                <script src="layout-v2.js?v=20260904-v1"></script>
+                <script src="layout-v2.js?v=20260928-v1"></script>
                 <script src="navigation.js?v=20260820-app-menu-v4"></script>
-                <script src="forro-menu.js?v=20260825-forro-v5"></script>
                 <script src="orders.js?v=20260820-app-menu-v4"></script>
     </div>
 </body>

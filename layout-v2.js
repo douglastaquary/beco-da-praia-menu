@@ -9,8 +9,7 @@
         coqueteis: 'caipirinhas',
         'agua-e-refrigerantes': 'sem-alcool',
         sucos: 'sem-alcool',
-        'cachacas-do-beco': 'cachacas',
-        'forro-destaques': 'forro'
+        'cachacas-do-beco': 'cachacas'
     };
 
     let activePrimaryGroup = 'cardapio';
@@ -128,10 +127,6 @@
     }
 
     function categoryIdToPrimaryGroup(categoryId) {
-        const groups = groupsConfig();
-        if (document.body.dataset.cardapioMode === 'forro' && groups.forro?.includes(categoryId)) {
-            return 'forro';
-        }
         if (GROUP_BY_CATEGORY[categoryId]) return GROUP_BY_CATEGORY[categoryId];
         return 'cardapio';
     }
@@ -139,10 +134,6 @@
     function filterSecondaryNav(group) {
         const allowed = new Set(groupsConfig()[group] || []);
         document.querySelectorAll('.cardCategoria[href^="#"]').forEach(function (link) {
-            if (link.hasAttribute('data-forro-only') && link.hidden) {
-                link.classList.add('layout-v2-nav-hidden');
-                return;
-            }
             const id = link.getAttribute('href').replace('#', '');
             const show = allowed.has(id);
             link.classList.toggle('layout-v2-nav-hidden', !show);
@@ -217,14 +208,18 @@
     }
 
     function initHeroCarousel(root) {
+        const viewport = root.querySelector('.layout-v2-hero-viewport');
         const track = root.querySelector('.layout-v2-hero-track');
         const dotsHost = root.querySelector('.layout-v2-hero-dots');
-        if (!track || !dotsHost) return null;
+        const prevButton = root.querySelector('.layout-v2-hero-prev');
+        const nextButton = root.querySelector('.layout-v2-hero-next');
+        if (!viewport || !track || !dotsHost) return null;
 
         let slides = [];
         let index = 0;
         let timer = null;
-        let touchStartX = 0;
+        let syncingFromScroll = false;
+        let dragState = null;
 
         function collectSlides() {
             slides = Array.from(track.querySelectorAll('.layout-v2-hero-slide')).filter(function (slide) {
@@ -236,6 +231,7 @@
                 slide.classList.toggle('is-active', slideIndex === index);
             });
             renderDots();
+            goTo(index, false, true);
             restartAutoplay();
         }
 
@@ -254,14 +250,52 @@
             });
         }
 
-        function goTo(nextIndex, userTriggered) {
-            if (!slides.length) return;
-            index = (nextIndex + slides.length) % slides.length;
+        function updateActiveClasses() {
             slides.forEach(function (slide, slideIndex) {
                 slide.classList.toggle('is-active', slideIndex === index);
             });
-            renderDots();
+            dotsHost.querySelectorAll('.layout-v2-hero-dot').forEach(function (dot, dotIndex) {
+                dot.classList.toggle('is-active', dotIndex === index);
+            });
+        }
+
+        function goTo(nextIndex, userTriggered, instant) {
+            if (!slides.length) return;
+            index = (nextIndex + slides.length) % slides.length;
+            const target = slides[index];
+            syncingFromScroll = true;
+            if (instant) {
+                const previous = track.style.scrollBehavior;
+                track.style.scrollBehavior = 'auto';
+                track.scrollLeft = target.offsetLeft;
+                track.style.scrollBehavior = previous || '';
+            } else {
+                track.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+            }
+            updateActiveClasses();
+            window.setTimeout(function () {
+                syncingFromScroll = false;
+            }, instant ? 50 : 420);
             if (userTriggered) restartAutoplay();
+        }
+
+        function syncIndexFromScroll() {
+            if (!slides.length || syncingFromScroll) return;
+            const center = track.scrollLeft + (track.clientWidth / 2);
+            let nearest = 0;
+            let nearestDistance = Infinity;
+            slides.forEach(function (slide, slideIndex) {
+                const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
+                const distance = Math.abs(slideCenter - center);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearest = slideIndex;
+                }
+            });
+            if (nearest !== index) {
+                index = nearest;
+                updateActiveClasses();
+            }
         }
 
         function restartAutoplay() {
@@ -272,15 +306,61 @@
             }, window.BECO_LAYOUT_V2?.heroAutoplayMs || 5500);
         }
 
-        track.addEventListener('touchstart', function (event) {
-            touchStartX = event.changedTouches[0]?.clientX || 0;
+        track.addEventListener('scroll', function () {
+            syncIndexFromScroll();
         }, { passive: true });
 
-        track.addEventListener('touchend', function (event) {
-            const delta = (event.changedTouches[0]?.clientX || 0) - touchStartX;
-            if (Math.abs(delta) < 40) return;
-            goTo(index + (delta < 0 ? 1 : -1), true);
-        }, { passive: true });
+        track.addEventListener('pointerdown', function (event) {
+            if (event.pointerType !== 'mouse' || event.button !== 0) return;
+            if (event.target.closest('button')) return;
+            dragState = {
+                pointerId: event.pointerId,
+                startX: event.clientX,
+                startScroll: track.scrollLeft,
+                moved: false
+            };
+            track.classList.add('is-dragging');
+            track.setPointerCapture(event.pointerId);
+            window.clearInterval(timer);
+        });
+
+        track.addEventListener('pointermove', function (event) {
+            if (!dragState || event.pointerId !== dragState.pointerId) return;
+            const delta = event.clientX - dragState.startX;
+            if (Math.abs(delta) > 6) dragState.moved = true;
+            track.scrollLeft = dragState.startScroll - delta;
+        });
+
+        function endDrag(event) {
+            if (!dragState || event.pointerId !== dragState.pointerId) return;
+            const wasMoved = dragState.moved;
+            dragState = null;
+            track.classList.remove('is-dragging');
+            syncIndexFromScroll();
+            goTo(index, true);
+            if (!wasMoved) return;
+            event.preventDefault?.();
+        }
+
+        track.addEventListener('pointerup', endDrag);
+        track.addEventListener('pointercancel', endDrag);
+
+        track.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                goTo(index - 1, true);
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                goTo(index + 1, true);
+            }
+        });
+
+        prevButton?.addEventListener('click', function () {
+            goTo(index - 1, true);
+        });
+        nextButton?.addEventListener('click', function () {
+            goTo(index + 1, true);
+        });
 
         root.querySelectorAll('[data-layout-scroll]').forEach(function (button) {
             button.addEventListener('click', function () {
@@ -683,28 +763,6 @@
         });
     }
 
-    function syncForroUI(carousel) {
-        const isForro = document.body.dataset.cardapioMode === 'forro';
-        const forroPrimaryTab = document.querySelector('.layout-v2-primary-tab[data-layout-group="forro"]');
-
-        document.querySelectorAll('.layout-v2-hero-slide[data-forro-only]').forEach(function (slide) {
-            slide.hidden = !isForro;
-        });
-        if (forroPrimaryTab) forroPrimaryTab.hidden = !isForro;
-
-        carousel?.refresh();
-
-        if (isForro && activePrimaryGroup === 'cardapio') {
-            applyPrimaryGroup('forro', { scrollTo: false });
-        } else if (!isForro && activePrimaryGroup === 'forro') {
-            applyPrimaryGroup('cardapio', { scrollTo: false });
-        } else {
-            filterSecondaryNav(activePrimaryGroup);
-        }
-
-        updateNavHeights();
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
         const enabled = isEnabled();
         if (params.get('layout') === 'v2') persistPreference(true);
@@ -731,23 +789,16 @@
         document.querySelectorAll('.cardCategoria.layout-v2-only').forEach(function (link) {
             link.hidden = false;
         });
-        const caipiLink = document.querySelector('.cardCategoria[href="#caipirinhas-do-beco"]');
-        if (caipiLink) {
-            caipiLink.hidden = false;
-            caipiLink.removeAttribute('data-forro-only');
-        }
-
         hookCategorySelection();
 
-        const carousel = initHeroCarousel(shell || document);
+        initHeroCarousel(shell || document);
         if (primaryNav) initPrimaryTabs(primaryNav);
         initVenueActions();
         initSearch();
         initProductEnhancements();
         cervejaTabsController = initCervejaTabs();
-        syncForroUI(carousel);
-        applyPrimaryGroup(document.body.dataset.cardapioMode === 'forro' ? 'forro' : 'cardapio', { scrollTo: false });
-        cervejaTabsController?.syncCategory(document.body.dataset.cardapioMode === 'forro' ? 'forro-destaques' : 'mais-pedidos');
+        applyPrimaryGroup('cardapio', { scrollTo: false });
+        cervejaTabsController?.syncCategory('mais-pedidos');
         updateNavHeights();
 
         const navInner = document.querySelector('.cardapio-nav-inner');
@@ -758,12 +809,6 @@
         }
 
         window.addEventListener('resize', updateNavHeights);
-
-        const observer = new MutationObserver(function () {
-            syncForroUI(carousel);
-            initProductEnhancements();
-        });
-        observer.observe(document.body, { attributes: true, attributeFilter: ['data-cardapio-mode'] });
 
         window.becoLayoutV2 = {
             active: true,
