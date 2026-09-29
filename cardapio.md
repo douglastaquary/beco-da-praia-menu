@@ -19,7 +19,7 @@
 |------|----------------------|-------|
 | Trio Nordestino (Serve 2 pessoas) | O queridinho da casa. Baião de dois, carne de sol artesanal e mandioca cozida na manteiga de garrafa. | R$ 99,90 |
 | Baião de Dois (Serve até 3 pessoas) | O nosso "feijão com arroz" incrementado com queijo coalho, calabresa, bacon e carne seca. | R$ 87,00 |
-| Arrumadinho (Serve 2 pessoas) | Feijão-fradinho temperado, vinagrete fresquinho, farofa crocante e carne seca desfiada refogada na cebola com manteiga de garrafa. | R$ 62,00 |
+| Arrumadinho (Serve 2 pessoas) | Feijão-fradinho temperado, vinagrete fresquinho, farofa crocante e carne seca desfiada refogada na cebola com manteiga de garrafa. | R$ 75,00 |
 
 ## Porções do Beco
 
@@ -79,10 +79,10 @@
 
 | Nome | Categoria/Descrição | Valor |
 |------|----------------------|-------|
-| Heineken | Lager, 600 ml | R$ 20,00 |
+| Heineken | Lager, 600 ml | R$ 22,00 |
 | Baden Baden Cristal | Pilsen, 600 ml | R$ 27,00 |
-| Original | Pilsen, 600 ml | R$ 18,00 |
-| Amstel | Lager, 600 ml | R$ 17,00 |
+| Original | Pilsen, 600 ml | R$ 19,00 |
+| Amstel | Lager, 600 ml | R$ 18,00 |
 | Corona | Lager, long neck, 330 ml | R$ 14,00 |
 | Heineken | Lager, long neck, 330 ml | R$ 14,00 |
 | Amstel Ultra | Lager, sem glúten, long neck, 275 ml | R$ 13,00 |

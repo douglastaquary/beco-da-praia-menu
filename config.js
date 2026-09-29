@@ -27,14 +27,6 @@ window.BECO_LAYOUT_V2 = {
             'agua-e-refrigerantes',
             'sucos'
         ],
-        cachacas: ['cachacas-do-beco'],
-        forro: [
-            'forro-destaques',
-            'caipirinhas-do-beco',
-            'entradinhas',
-            'porcoes-do-beco',
-            'bem-nordestinos',
-            'cervejas'
-        ]
+        cachacas: ['cachacas-do-beco']
     }
 };
