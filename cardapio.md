@@ -25,7 +25,7 @@
 
 | Nome | Categoria/Descrição | Valor |
 |------|----------------------|-------|
-| Carne de sol | Tirinhas de carne de sol artesanal (não é carne seca), macias e cheias de sabor. Acompanha batata frita ou mandioca frita, queijo coalho, vinagrete fresco e farofa crocante. | MEIA: R$ 59,00 / INTEIRA: R$ 97,00 |
+| Carne de sol | Tirinhas de carne de sol artesanal (não é carne seca), macias e cheias de sabor. Acompanha batata frita ou mandioca frita, queijo coalho, vinagrete fresco e farofa crocante. | MEIA: R$ 65,00 / INTEIRA: R$ 99,00 |
 | Isca de peixe | Deliciosas iscas de peixe empanadas, crocantes por fora e macias por dentro. Acompanha batata frita ou mandioca frita e molho especial da casa. | MEIA: R$ 54,00 / INTEIRA: R$ 92,00 |
 | Mix do sertão | Porção suculenta de carne bovina com linguiça toscana, preparada para realçar o sabor do churrasco. Acompanha batata frita ou mandioca frita e vinagrete fresco. | MEIA: R$ 55,00 / INTEIRA: R$ 95,00 |
 
@@ -93,6 +93,14 @@
 | Amstel | Lager, litrão | R$ 19,00 |
 | Itaipava | Pilsen, litrão | R$ 16,00 |
 
+## Drinks especiais da casa
+
+| Nome | Categoria/Descrição | Valor |
+|------|----------------------|-------|
+| Luar do Sertão | Drink autoral da casa com Aperol, tônica, gelo e rodela de laranja. | R$ 38,00 |
+| Caipirinha de rapadura | Destilado, limão e calda de rapadura, finalizada com raspas de rapadura. | R$ 34,90 |
+| Goiabada com limão | Destilado, calda de goiabada, limão e gelo. | R$ 34,90 |
+
 ## Caipirinhas do Beco
 
 | Nome | Categoria/Descrição | Valor |
@@ -102,8 +110,6 @@
 | Caipirinhas da semana | De segunda a sexta (exceto feriados), uma sugestão com frutas sazonais. Peça com vodka ou saquê se preferir. | R$ 27,90 |
 | Cajú Amigo | Uma combinação tropical irresistível: destilado, compota de caju, suco de caju, limão e gelo. | R$ 39,90 |
 | Caipirinhas especiais | Todas por R$ 34,90 | |
-| Rapadura | Destilado, limão e calda de rapadura, finalizada com raspas de rapadura. | R$ 34,90 |
-| Goiabada com limão | Destilado, calda de goiabada, limão e gelo. | R$ 34,90 |
 | Manga com pimenta | Destilado, manga e gelo finalizada com pimenta dedo-de-moça. | R$ 34,90 |
 
 ## Coquetéis

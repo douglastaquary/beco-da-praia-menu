@@ -20,6 +20,7 @@ window.BECO_LAYOUT_V2 = {
         ],
         cervejas: ['cervejas'],
         caipirinhas: [
+            'drinks-especiais-da-casa',
             'caipirinhas-do-beco',
             'coqueteis'
         ],

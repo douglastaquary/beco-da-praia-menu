@@ -5,6 +5,7 @@
     const params = new URLSearchParams(window.location.search);
     const GROUP_BY_CATEGORY = {
         cervejas: 'cervejas',
+        'drinks-especiais-da-casa': 'caipirinhas',
         'caipirinhas-do-beco': 'caipirinhas',
         coqueteis: 'caipirinhas',
         'agua-e-refrigerantes': 'sem-alcool',
